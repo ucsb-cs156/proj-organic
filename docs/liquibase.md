@@ -7,7 +7,7 @@ The changes can be described in JSON and are stored in `src/resources/db/migrati
 
 Each file is a description of the database changes to each of the defined entities. For all possible changes you can do to the database you can check: https://docs.liquibase.com/change-types/home.html
 
-The key here is consistance, always create the database changelog file after you create a new entity or modify it.
+The key here is consistency; always create/update the corresponding database changelog file after you create a new entity or modify it.
 
 ## Commands
 
@@ -40,6 +40,9 @@ This can be used to mark a version of the database that can be used when doing r
 mvn liquibase:rollback --tag=myTag
 ```
 This command can be used to rollback the database to a previousily marked tag
+
+The command `mvn liquibase:checkSumClear` is also a useful command when building out a migration, as the checksum of a migration will change as you update the contents of that migration.
+
 
 ## Preconditions
 ```
