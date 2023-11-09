@@ -38,29 +38,24 @@ import org.springframework.web.bind.annotation.RestController;
   @Autowired
   private UserRepository userRepository;
 
-  // @Autowired
-  // private UserEmailRepository userEmailRepository;
-
-  // @Autowired
-  // OAuth2AuthorizedClientService clientService;
-
   @Operation(summary = &quot;Get information about current user&quot;)
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @GetMapping(&quot;&quot;)
   public CurrentUser getCurrentUser() {
-<span class="fc" id="L51">    return super.getCurrentUser();</span>
+<span class="fc" id="L45">    return super.getCurrentUser();</span>
   }
 
   @Operation(summary = &quot;Update user's last online time&quot;)
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @PostMapping(&quot;/last-online&quot;)
   public ResponseEntity&lt;Instant&gt; updateLastOnline() {
-<span class="nc" id="L58">    User user = super.getCurrentUser().getUser();</span>
-<span class="nc" id="L59">    Instant timeNow = Instant.now();</span>
-<span class="nc bnc" id="L60" title="All 2 branches missed.">    if (user != null) {</span>
-<span class="nc" id="L61">      user.setLastOnline(timeNow);</span>
+<span class="nc" id="L52">    User user = super.getCurrentUser().getUser();</span>
+<span class="nc" id="L53">    Instant timeNow = Instant.now();</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">    if (user != null) {</span>
+<span class="nc" id="L55">      user.setLastOnline(timeNow);</span>
+<span class="nc" id="L56">      userRepository.save(user);</span>
     }
-<span class="nc" id="L63">    return ResponseEntity.ok().body(timeNow);</span>
+<span class="nc" id="L58">    return ResponseEntity.ok().body(timeNow);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
