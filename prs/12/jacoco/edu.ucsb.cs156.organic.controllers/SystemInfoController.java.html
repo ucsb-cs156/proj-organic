@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = &quot;System Information&quot;)
 @RequestMapping(&quot;/api/systemInfo&quot;)
 @RestController
-<span class="nc" id="L16">public class SystemInfoController extends ApiController {</span>
+<span class="fc" id="L16">public class SystemInfoController extends ApiController {</span>
 
     @Autowired
     private SystemInfoService systemInfoService;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
     @Operation(summary = &quot;Get global information about the application&quot;)
     @GetMapping(&quot;&quot;)
     public SystemInfo getSystemInfo() {
-<span class="nc" id="L24">        return systemInfoService.getSystemInfo();</span>
+<span class="fc" id="L24">        return systemInfoService.getSystemInfo();</span>
     }
 
 }

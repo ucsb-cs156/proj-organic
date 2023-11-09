@@ -49,13 +49,11 @@ import org.springframework.web.bind.annotation.RestController;
   @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @PostMapping(&quot;/last-online&quot;)
   public ResponseEntity&lt;Instant&gt; updateLastOnline() {
-<span class="nc" id="L52">    User user = super.getCurrentUser().getUser();</span>
-<span class="nc" id="L53">    Instant timeNow = Instant.now();</span>
-<span class="nc bnc" id="L54" title="All 2 branches missed.">    if (user != null) {</span>
-<span class="nc" id="L55">      user.setLastOnline(timeNow);</span>
-<span class="nc" id="L56">      userRepository.save(user);</span>
-    }
-<span class="nc" id="L58">    return ResponseEntity.ok().body(timeNow);</span>
+<span class="fc" id="L52">    User user = super.getCurrentUser().getUser();</span>
+<span class="fc" id="L53">    Instant timeNow = Instant.now();</span>
+<span class="fc" id="L54">    user.setLastOnline(timeNow);</span>
+<span class="fc" id="L55">    userRepository.save(user);</span>
+<span class="fc" id="L56">    return ResponseEntity.ok().body(timeNow);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
