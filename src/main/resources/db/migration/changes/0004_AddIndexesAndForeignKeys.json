@@ -2,8 +2,8 @@
     "databaseChangeLog": [
         {
             "changeSet": {
-              "id": "changeset-0004",
-              "author": "matt (generated)",
+              "id": "changeset-0004a",
+              "author": "MPriston",
               "changes": [
                 {
                   "createIndex": {
@@ -14,7 +14,7 @@
                         }
                       }]
                     ,
-                    "indexName": "FK8WOD0WRCEOIFBBPWONE12SMEV_INDEX_9",
+                    "indexName": "USEREMAILS_USER_GITHUB_ID_INDEX",
                     "tableName": "USEREMAILS"
                   }
                 }]
@@ -24,8 +24,8 @@
           
           {
             "changeSet": {
-              "id": "ZZ-2",
-              "author": "matt (generated)",
+              "id": "changeset-0004b",
+              "author": "MPriston",
               "changes": [
                 {
                   "createIndex": {
@@ -36,7 +36,7 @@
                         }
                       }]
                     ,
-                    "indexName": "FKKJPYGUUYD5SHXTABV9V5JPE6X_INDEX_2",
+                    "indexName": "JOBS_CREATED_BY_ID_INDEX",
                     "tableName": "JOBS"
                   }
                 }]
@@ -46,14 +46,14 @@
           
           {
             "changeSet": {
-              "id": "ZZ-3",
-              "author": "matt (generated)",
+              "id": "changeset-0004c",
+              "author": "MPriston",
               "changes": [
                 {
                   "addForeignKeyConstraint": {
                     "baseColumnNames": "USER_GITHUB_ID",
                     "baseTableName": "USEREMAILS",
-                    "constraintName": "FK8WOD0WRCEOIFBBPWONE12SMEV",
+                    "constraintName": "USEREMAILS_USER_GITHUB_ID_FK",
                     "deferrable": false,
                     "initiallyDeferred": false,
                     "onDelete": "RESTRICT",
@@ -69,14 +69,14 @@
           
           {
             "changeSet": {
-              "id": "ZZ-4",
-              "author": "matt (generated)",
+              "id": "changeset-0004d",
+              "author": "MPriston",
               "changes": [
                 {
                   "addForeignKeyConstraint": {
                     "baseColumnNames": "CREATED_BY_ID",
                     "baseTableName": "JOBS",
-                    "constraintName": "FKKJPYGUUYD5SHXTABV9V5JPE6X",
+                    "constraintName": "JOBS_CREATED_BY_ID_FK",
                     "deferrable": false,
                     "initiallyDeferred": false,
                     "onDelete": "RESTRICT",
