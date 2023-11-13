@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156/proj-organic
 owner: ucsb-cs156
 repo_name: proj-organic
-pull_requests: [{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"pc-add-login-to-welcome-link","number":18,"title":"Pc add login to welcome link","url":"https://github.com/ucsb-cs156/proj-organic/pull/18"}]
+pull_requests: [{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"pc-add-emails-to-profile","number":19,"title":"Pc add emails to profile","url":"https://github.com/ucsb-cs156/proj-organic/pull/19"},{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"pc-add-login-to-welcome-link","number":18,"title":"Pc add login to welcome link","url":"https://github.com/ucsb-cs156/proj-organic/pull/18"}]
