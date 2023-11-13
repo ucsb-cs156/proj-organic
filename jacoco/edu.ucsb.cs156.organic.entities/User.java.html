@@ -7,9 +7,6 @@ import javax.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.time.Instant;
 import java.util.List;
 
@@ -39,7 +36,7 @@ public class User {
 
   @Override
   public String toString() {
-<span class="fc" id="L42">    return String.format(&quot;User: githubId=%d githubLogin=%s&quot;, githubId, githubLogin);</span>
+<span class="fc" id="L39">    return String.format(&quot;User: githubId=%d githubLogin=%s&quot;, githubId, githubLogin);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
