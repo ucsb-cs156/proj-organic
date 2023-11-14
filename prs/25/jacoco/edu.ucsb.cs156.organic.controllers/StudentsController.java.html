@@ -80,8 +80,8 @@ import java.util.Optional;
                         @Parameter(name = &quot;file&quot;) @RequestParam(&quot;file&quot;) MultipartFile file)
                         throws JsonProcessingException, IOException, CsvException {
 
-<span class="nc" id="L83">                Course course = courseRepository.findById(courseId)</span>
-<span class="nc" id="L84">                                .orElseThrow(() -&gt; new EntityNotFoundException(Course.class, courseId.toString()));</span>
+<span class="fc" id="L83">                Course course = courseRepository.findById(courseId)</span>
+<span class="pc" id="L84">                                .orElseThrow(() -&gt; new EntityNotFoundException(Course.class, courseId.toString()));</span>
 
 <span class="nc" id="L86">                int counts[] = { 0, 0 };</span>
 
