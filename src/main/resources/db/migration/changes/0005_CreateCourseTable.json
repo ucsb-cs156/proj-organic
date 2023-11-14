@@ -1,7 +1,7 @@
 { "databaseChangeLog": [
   {
     "changeSet": {
-      "id": "changeset-0005a",
+      "id": "changeset_0005a",
       "author": "pconrad",
       "preConditions": [
         {
@@ -26,7 +26,7 @@
                   "autoIncrement": true,
                   "constraints": {
                     "primaryKey": true,
-                    "primaryKeyName": "CONSTRAINT_6"
+                    "primaryKeyName": "ID"
                   },
                   "name": "ID",
                   "type": "BIGINT"
@@ -78,7 +78,7 @@
   
   {
     "changeSet": {
-      "id": "changeset-0005b",
+      "id": "changeset_0005b",
       "author": "pconrad",
       "preConditions": [
         {
@@ -100,29 +100,119 @@
             "columns": [
               {
                 "column": {
-                  "autoIncrement": true,
                   "constraints": {
                     "primaryKey": true,
-                    "primaryKeyName": "CONSTRAINT_2"
+                    "primaryKeyName": "COURSE_ID"
                   },
-                  "name": "ID",
-                  "type": "BIGINT"
-                }
-              },
-              {
-                "column": {
                   "name": "COURSE_ID",
                   "type": "BIGINT"
                 }
               },
               {
                 "column": {
-                  "name": "GITHUB_ID",
+                  "constraints": {
+                    "primaryKey": true,
+                    "primaryKeyName": "USER_GITHUB_ID"
+                  },
+                  "name": "USER_GITHUB_ID",
                   "type": "INT"
                 }
               }]
             ,
             "tableName": "COURSE_STAFF"
+          }
+        }]
+      
+    }
+  },
+  
+ 
+  
+  {
+    "changeSet": {
+      "id": "changeset_0005c",
+      "author": "pconrad",
+      "changes": [
+        {
+          "createIndex": {
+            "columns": [
+              {
+                "column": {
+                  "name": "USER_GITHUB_ID"
+                }
+              }]
+            ,
+            "indexName": "COURSE_STAFF_USER_GITHUB_ID_INDEX",
+            "tableName": "COURSE_STAFF"
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "changeset_0005d",
+      "author": "pconrad",
+      "changes": [
+        {
+          "createIndex": {
+            "columns": [
+              {
+                "column": {
+                  "name": "COURSE_ID"
+                }
+              }]
+            ,
+            "indexName": "COURSE_STAFF_COURSE_ID_INDEX",
+            "tableName": "COURSE_STAFF"
+          }
+        }]
+      
+    }
+  },
+  
+  
+  {
+    "changeSet": {
+      "id": "changeset_0005e",
+      "author": "pconrad",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "USER_GITHUB_ID",
+            "baseTableName": "COURSE_STAFF",
+            "constraintName": "COURSE_STAFF_USER_GITHUB_ID_FK",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "GITHUB_ID",
+            "referencedTableName": "USERS",
+            "validate": true
+          }
+        }]
+      
+    }
+  },
+  
+  {
+    "changeSet": {
+      "id": "changeset_0005f",
+      "author": "pconrad",
+      "changes": [
+        {
+          "addForeignKeyConstraint": {
+            "baseColumnNames": "COURSE_ID",
+            "baseTableName": "COURSE_STAFF",
+            "constraintName": "COURSE_STAFF_COURSE_ID_FK",
+            "deferrable": false,
+            "initiallyDeferred": false,
+            "onDelete": "RESTRICT",
+            "onUpdate": "RESTRICT",
+            "referencedColumnNames": "ID",
+            "referencedTableName": "COURSES",
+            "validate": true
           }
         }]
       

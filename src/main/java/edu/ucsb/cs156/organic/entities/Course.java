@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -22,4 +23,9 @@ public class Course {
   private LocalDateTime start;
   private LocalDateTime end;
   private String githubOrg;
+
+ 
+  @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE)
+  Set<CourseStaff> staffMembers;
+
 }

@@ -9,6 +9,7 @@ import org.hibernate.annotations.FetchMode;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -30,6 +31,9 @@ public class User {
 
   @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)  @Fetch(FetchMode.JOIN)
   private List<UserEmail> emails;
+
+  @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+  Set<CourseStaff> coursesStaffed;
 
   @Builder.Default
   private Instant lastOnline = Instant.now();
