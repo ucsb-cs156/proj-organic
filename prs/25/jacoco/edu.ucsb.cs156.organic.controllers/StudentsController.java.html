@@ -15,7 +15,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.ucsb.cs156.organic.errors.EntityNotFoundException;
 
-
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -85,60 +85,47 @@ import java.util.Optional;
 
 <span class="fc" id="L86">                int counts[] = { 0, 0 };</span>
 
-<span class="fc" id="L88">                InputStream inputStream = new BufferedInputStream(file.getInputStream());</span>
-<span class="fc" id="L89">                InputStreamReader reader = new InputStreamReader(inputStream);</span>
-<span class="fc" id="L90">                CSVReader csvReader = new CSVReader(reader);</span>
-<span class="fc" id="L91">                csvReader.skip(2);</span>
-<span class="fc" id="L92">                List&lt;String[]&gt; myEntries = csvReader.readAll();</span>
-<span class="fc bfc" id="L93" title="All 2 branches covered.">                for (String[] row : myEntries) {</span>
-<span class="fc" id="L94">                        Student student = fromEgradesCSVRow(row);</span>
-<span class="fc" id="L95">                        student.setCourseId(course.getId());</span>
-<span class="fc" id="L96">                        Status s = upsertStudent(student, course);</span>
-<span class="fc" id="L97">                        counts[s.ordinal()]++;</span>
-<span class="fc" id="L98">                }</span>
-<span class="fc" id="L99">                closeNoPitest(csvReader);</span>
-
-<span class="fc" id="L101">                return Map.of(</span>
-<span class="fc" id="L102">                                &quot;filename&quot;, file.getOriginalFilename(),</span>
-<span class="fc" id="L103">                                &quot;message&quot;, String.format(&quot;Inserted %d new students, Updated %d students&quot;, counts[Status.INSERTED.ordinal()], counts[Status.UPDATED.ordinal()]));</span>
-                                               
+<span class="fc" id="L88">                try (InputStream inputStream = new BufferedInputStream(file.getInputStream());</span>
+<span class="fc" id="L89">                                InputStreamReader reader = new InputStreamReader(inputStream);</span>
+<span class="fc" id="L90">                                CSVReader csvReader = new CSVReader(reader);) {</span>
+<span class="fc" id="L91">                        csvReader.skip(2);</span>
+<span class="fc" id="L92">                        List&lt;String[]&gt; myEntries = csvReader.readAll();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                        for (String[] row : myEntries) {</span>
+<span class="fc" id="L94">                                Student student = fromEgradesCSVRow(row);</span>
+<span class="fc" id="L95">                                student.setCourseId(course.getId());</span>
+<span class="fc" id="L96">                                Status s = upsertStudent(student, course);</span>
+<span class="fc" id="L97">                                counts[s.ordinal()]++;</span>
+<span class="fc" id="L98">                        }</span>
+                }
+<span class="fc" id="L100">                return Map.of(</span>
+<span class="fc" id="L101">                                &quot;filename&quot;, file.getOriginalFilename(),</span>
+<span class="fc" id="L102">                                &quot;message&quot;, String.format(&quot;Inserted %d new students, Updated %d students&quot;,</span>
+<span class="fc" id="L103">                                                counts[Status.INSERTED.ordinal()], counts[Status.UPDATED.ordinal()]));</span>
 
         }
 
-        /**
-         * This method is excluded from pitest coverage in the pom.xml file
-         * We do this because we don't know of a good way to unit test for whether the
-         * CSVReader is closed or not, but closing it is considered good practice.
-         * 
-         * @param csvReader
-         * @throws IOException
-         */
-        public void closeNoPitest(CSVReader csvReader) throws IOException {
-<span class="fc" id="L117">                csvReader.close();</span>
-<span class="fc" id="L118">        }</span>
-
         public Student fromEgradesCSVRow(String[] row) {
-<span class="fc" id="L121">                return Student.builder()</span>
-<span class="fc" id="L122">                                .fname(row[5])</span>
-<span class="fc" id="L123">                                .lname(row[4])</span>
-<span class="fc" id="L124">                                .studentId(row[1])</span>
-<span class="fc" id="L125">                                .email(row[10])</span>
-<span class="fc" id="L126">                                .build();</span>
+<span class="fc" id="L108">                return Student.builder()</span>
+<span class="fc" id="L109">                                .fname(row[5])</span>
+<span class="fc" id="L110">                                .lname(row[4])</span>
+<span class="fc" id="L111">                                .studentId(row[1])</span>
+<span class="fc" id="L112">                                .email(row[10])</span>
+<span class="fc" id="L113">                                .build();</span>
         }
 
         public Status upsertStudent(Student student, Course course) {
-<span class="fc" id="L130">                Optional&lt;Student&gt; existingStudent = studentRepository.findByCourseIdAndStudentId(course.getId(),</span>
-<span class="fc" id="L131">                                student.getStudentId());</span>
-<span class="fc bfc" id="L132" title="All 2 branches covered.">                if (existingStudent.isPresent()) {</span>
-<span class="fc" id="L133">                        Student existingStudentObj = existingStudent.get();</span>
-<span class="fc" id="L134">                        existingStudentObj.setFname(student.getFname());</span>
-<span class="fc" id="L135">                        existingStudentObj.setLname(student.getLname());</span>
-<span class="fc" id="L136">                        existingStudentObj.setEmail(student.getEmail());</span>
-<span class="fc" id="L137">                        studentRepository.save(existingStudentObj);</span>
-<span class="fc" id="L138">                        return Status.UPDATED;</span>
+<span class="fc" id="L117">                Optional&lt;Student&gt; existingStudent = studentRepository.findByCourseIdAndStudentId(course.getId(),</span>
+<span class="fc" id="L118">                                student.getStudentId());</span>
+<span class="fc bfc" id="L119" title="All 2 branches covered.">                if (existingStudent.isPresent()) {</span>
+<span class="fc" id="L120">                        Student existingStudentObj = existingStudent.get();</span>
+<span class="fc" id="L121">                        existingStudentObj.setFname(student.getFname());</span>
+<span class="fc" id="L122">                        existingStudentObj.setLname(student.getLname());</span>
+<span class="fc" id="L123">                        existingStudentObj.setEmail(student.getEmail());</span>
+<span class="fc" id="L124">                        studentRepository.save(existingStudentObj);</span>
+<span class="fc" id="L125">                        return Status.UPDATED;</span>
                 } else {
-<span class="fc" id="L140">                        studentRepository.save(student);</span>
-<span class="fc" id="L141">                        return Status.INSERTED;</span>
+<span class="fc" id="L127">                        studentRepository.save(student);</span>
+<span class="fc" id="L128">                        return Status.INSERTED;</span>
                 }
 
         }
