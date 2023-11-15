@@ -42,8 +42,8 @@ import java.util.Optional;
 <span class="fc" id="L42">@Slf4j</span>
 <span class="fc" id="L43">public class StudentsController extends ApiController {</span>
 
-<span class="nc" id="L45">        public enum Status {</span>
-<span class="nc" id="L46">                INSERTED, UPDATED</span>
+<span class="fc" id="L45">        public enum Status {</span>
+<span class="fc" id="L46">                INSERTED, UPDATED</span>
         };
 
         @Autowired
@@ -81,52 +81,52 @@ import java.util.Optional;
                         throws JsonProcessingException, IOException, CsvException {
 
 <span class="fc" id="L83">                Course course = courseRepository.findById(courseId)</span>
-<span class="pc" id="L84">                                .orElseThrow(() -&gt; new EntityNotFoundException(Course.class, courseId.toString()));</span>
+<span class="fc" id="L84">                                .orElseThrow(() -&gt; new EntityNotFoundException(Course.class, courseId.toString()));</span>
 
-<span class="nc" id="L86">                int counts[] = { 0, 0 };</span>
+<span class="fc" id="L86">                int counts[] = { 0, 0 };</span>
 
-<span class="nc" id="L88">                InputStream inputStream = new BufferedInputStream(file.getInputStream());</span>
-<span class="nc" id="L89">                InputStreamReader reader = new InputStreamReader(inputStream);</span>
-<span class="nc" id="L90">                CSVReader csvReader = new CSVReader(reader);</span>
-<span class="nc" id="L91">                csvReader.skip(2);</span>
-<span class="nc" id="L92">                List&lt;String[]&gt; myEntries = csvReader.readAll();</span>
-<span class="nc bnc" id="L93" title="All 2 branches missed.">                for (String[] row : myEntries) {</span>
-<span class="nc" id="L94">                        Student student = fromEgradesCSVRow(row);</span>
-<span class="nc" id="L95">                        student.setCourseId(course.getId());</span>
-<span class="nc" id="L96">                        Status s = upsertStudent(student, course);</span>
-<span class="nc" id="L97">                        counts[s.ordinal()]++;</span>
-<span class="nc" id="L98">                }</span>
-<span class="nc" id="L99">                csvReader.close();</span>
+<span class="fc" id="L88">                InputStream inputStream = new BufferedInputStream(file.getInputStream());</span>
+<span class="fc" id="L89">                InputStreamReader reader = new InputStreamReader(inputStream);</span>
+<span class="fc" id="L90">                CSVReader csvReader = new CSVReader(reader);</span>
+<span class="fc" id="L91">                csvReader.skip(2);</span>
+<span class="fc" id="L92">                List&lt;String[]&gt; myEntries = csvReader.readAll();</span>
+<span class="fc bfc" id="L93" title="All 2 branches covered.">                for (String[] row : myEntries) {</span>
+<span class="fc" id="L94">                        Student student = fromEgradesCSVRow(row);</span>
+<span class="fc" id="L95">                        student.setCourseId(course.getId());</span>
+<span class="fc" id="L96">                        Status s = upsertStudent(student, course);</span>
+<span class="fc" id="L97">                        counts[s.ordinal()]++;</span>
+<span class="fc" id="L98">                }</span>
+<span class="fc" id="L99">                csvReader.close();</span>
 
-<span class="nc" id="L101">                return Map.of(</span>
-<span class="nc" id="L102">                                &quot;filename&quot;, file.getOriginalFilename(),</span>
-<span class="nc" id="L103">                                &quot;message&quot;, String.format(&quot;Inserted %d new students, Updated %d students&quot;, counts[Status.INSERTED.ordinal()], counts[Status.UPDATED.ordinal()]));</span>
+<span class="fc" id="L101">                return Map.of(</span>
+<span class="fc" id="L102">                                &quot;filename&quot;, file.getOriginalFilename(),</span>
+<span class="fc" id="L103">                                &quot;message&quot;, String.format(&quot;Inserted %d new students, Updated %d students&quot;, counts[Status.INSERTED.ordinal()], counts[Status.UPDATED.ordinal()]));</span>
                                                
 
         }
 
         public Student fromEgradesCSVRow(String[] row) {
-<span class="nc" id="L109">                return Student.builder()</span>
-<span class="nc" id="L110">                                .fname(row[5])</span>
-<span class="nc" id="L111">                                .lname(row[4])</span>
-<span class="nc" id="L112">                                .studentId(row[1])</span>
-<span class="nc" id="L113">                                .email(row[10])</span>
-<span class="nc" id="L114">                                .build();</span>
+<span class="fc" id="L109">                return Student.builder()</span>
+<span class="fc" id="L110">                                .fname(row[5])</span>
+<span class="fc" id="L111">                                .lname(row[4])</span>
+<span class="fc" id="L112">                                .studentId(row[1])</span>
+<span class="fc" id="L113">                                .email(row[10])</span>
+<span class="fc" id="L114">                                .build();</span>
         }
 
         public Status upsertStudent(Student student, Course course) {
-<span class="nc" id="L118">                Optional&lt;Student&gt; existingStudent = studentRepository.findByCourseIdAndStudentId(course.getId(),</span>
-<span class="nc" id="L119">                                student.getStudentId());</span>
-<span class="nc bnc" id="L120" title="All 2 branches missed.">                if (existingStudent.isPresent()) {</span>
-<span class="nc" id="L121">                        Student existingStudentObj = existingStudent.get();</span>
-<span class="nc" id="L122">                        existingStudentObj.setFname(student.getFname());</span>
-<span class="nc" id="L123">                        existingStudentObj.setLname(student.getLname());</span>
-<span class="nc" id="L124">                        existingStudentObj.setEmail(student.getEmail());</span>
-<span class="nc" id="L125">                        studentRepository.save(existingStudentObj);</span>
-<span class="nc" id="L126">                        return Status.UPDATED;</span>
+<span class="fc" id="L118">                Optional&lt;Student&gt; existingStudent = studentRepository.findByCourseIdAndStudentId(course.getId(),</span>
+<span class="fc" id="L119">                                student.getStudentId());</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">                if (existingStudent.isPresent()) {</span>
+<span class="fc" id="L121">                        Student existingStudentObj = existingStudent.get();</span>
+<span class="fc" id="L122">                        existingStudentObj.setFname(student.getFname());</span>
+<span class="fc" id="L123">                        existingStudentObj.setLname(student.getLname());</span>
+<span class="fc" id="L124">                        existingStudentObj.setEmail(student.getEmail());</span>
+<span class="fc" id="L125">                        studentRepository.save(existingStudentObj);</span>
+<span class="fc" id="L126">                        return Status.UPDATED;</span>
                 } else {
-<span class="nc" id="L128">                        studentRepository.save(student);</span>
-<span class="nc" id="L129">                        return Status.INSERTED;</span>
+<span class="fc" id="L128">                        studentRepository.save(student);</span>
+<span class="fc" id="L129">                        return Status.INSERTED;</span>
                 }
 
         }
