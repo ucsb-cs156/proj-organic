@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156/proj-organic
 owner: ucsb-cs156
 repo_name: proj-organic
-pull_requests: [{"author":{"id":"MDQ6VXNlcjU2MDk2NzQ0","is_bot":false,"login":"andrewpengucsb","name":""},"headRefName":"f23-6pm-4-main","number":30,"title":"Add production and qa app links for w24 to readme","url":"https://github.com/ucsb-cs156/proj-organic/pull/30"}]
+pull_requests: []
