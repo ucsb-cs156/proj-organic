@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156/proj-organic
 owner: ucsb-cs156
 repo_name: proj-organic
-pull_requests: [{"author":{"id":"MDQ6VXNlcjExMTkwMTc=","is_bot":false,"login":"pconrad","name":"Phill Conrad"},"headRefName":"pc-flaky-test-fix","number":52,"title":"Fix Flaky Test","url":"https://github.com/ucsb-cs156/proj-organic/pull/52"}]
+pull_requests: []
