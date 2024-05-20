@@ -22,17 +22,14 @@ public class SystemInfoServiceImpl extends SystemInfoService {
   @Value("${app.showSwaggerUILink:false}")
   private boolean showSwaggerUILink;
 
-  @Value("${app.sourceRepo}")
-  private String sourceRepo = "https://github.com/ucsb-cs156/proj-organic";
+  @Value("${app.sourceRepo:https://github.com/ucsb-cs156/proj-organic}")
+  private String sourceRepo;
 
-  //@Value("${git.commit.message.short}")
-  private String commitMessage = "PLACEHOLDER";
+  @Value("${git.commit.message.short:unknown}")
+  private String commitMessage;
 
-  //@Value("${git.branch}")
-  private String branch = "PLACEHOLDER";
-
-  //@Value("${git.commit.id}")
-  private String commitId = "PLACEHOLDER";
+  @Value("${git.commit.id.abbrev:unknown}")
+  private String commitId;
 
   public SystemInfo getSystemInfo() {
     SystemInfo si = SystemInfo.builder()
