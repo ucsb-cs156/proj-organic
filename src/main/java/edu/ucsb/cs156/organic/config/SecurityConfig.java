@@ -9,16 +9,19 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -36,9 +39,9 @@ import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 @Slf4j
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
   @Value("${app.admin.githubLogins}")
   private final List<String> adminGithubLogins = new ArrayList<String>();
@@ -55,25 +58,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   // @Autowired
   // private LoginSuccessHandler loginSuccessHandler;
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http.authorizeRequests(authorize -> authorize
-        .anyRequest()
-        .permitAll())
-        .exceptionHandling(handlingConfigurer -> handlingConfigurer
-            .authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
-        .oauth2Login(
-            oauth2 -> oauth2.userInfoEndpoint(userInfo -> userInfo.userAuthoritiesMapper(this.userAuthoritiesMapper())))
-        .csrf(csrf -> csrf
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-        .logout(logout -> logout
-            .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/"));
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+            .exceptionHandling(handling -> handling.authenticationEntryPoint(new Http403ForbiddenEntryPoint()))
+            .oauth2Login(oauth2 -> oauth2.userInfoEndpoint(userInfo -> userInfo.userAuthoritiesMapper(this.userAuthoritiesMapper())))
+            .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+            .logout(logout -> logout.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/"));
+    return http.build();
   }
 
-  @Override
-  public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/h2-console/**");
+  @Bean
+  public WebSecurityCustomizer webSecurityCustomizer() {
+    return web -> web.ignoring().requestMatchers("/h2-console/**");
   }
 
   private GrantedAuthoritiesMapper userAuthoritiesMapper() {
