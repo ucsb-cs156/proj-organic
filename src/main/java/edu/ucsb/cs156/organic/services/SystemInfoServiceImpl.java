@@ -25,6 +25,15 @@ public class SystemInfoServiceImpl extends SystemInfoService {
   @Value("${app.sourceRepo}")
   private String sourceRepo = "https://github.com/ucsb-cs156/proj-organic";
 
+  //@Value("${git.commit.message.short}")
+  private String commitMessage = "PLACEHOLDER";
+
+  //@Value("${git.branch}")
+  private String branch = "PLACEHOLDER";
+
+  //@Value("${git.commit.id}")
+  private String commitId = "PLACEHOLDER";
+
   public SystemInfo getSystemInfo() {
     SystemInfo si = SystemInfo.builder()
     .springH2ConsoleEnabled(this.springH2ConsoleEnabled)
@@ -33,7 +42,7 @@ public class SystemInfoServiceImpl extends SystemInfoService {
     .commitMessage(this.commitMessage)
     .branch(this.branch)
     .commitId(this.commitId)
-    .githubUrl(commitId != null && soruceRepo != null ? soruceRepo + "/commits/" + commitId : null)
+    .githubUrl(commitId != null && sourceRepo != null ? sourceRepo + "/commits/" + commitId : null)
     .build();
   log.info("getSystemInfo returns {}",si);
   return si;
