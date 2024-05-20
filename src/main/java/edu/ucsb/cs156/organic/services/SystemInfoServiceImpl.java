@@ -25,7 +25,6 @@ public class SystemInfoServiceImpl extends SystemInfoService {
   @Value("${app.sourceRepo}")
   private String sourceRepo = "https://github.com/ucsb-cs156/proj-organic";
 
-<<<<<<< HEAD
   //@Value("${git.commit.message.short}")
   private String commitMessage = "PLACEHOLDER";
 
@@ -34,16 +33,6 @@ public class SystemInfoServiceImpl extends SystemInfoService {
 
   //@Value("${git.commit.id}")
   private String commitId = "PLACEHOLDER";
-=======
-  @Value("${git.commit.message.short}")
-  private String commitMessage = "PLACEHOLDER";
-
-  @Value("${git.branch}")
-  private String branch = "PLACEHOLDER";
-
-  @Value("${git.commit.id}")
-  private String commitIde = "PLACEHOLDER";
->>>>>>> c835d39ce311ae6427228e10e7d1151fd39965a0
 
   public SystemInfo getSystemInfo() {
     SystemInfo si = SystemInfo.builder()
