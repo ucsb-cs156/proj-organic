@@ -14,7 +14,7 @@ public class FrontendController {
   }
 
   @GetMapping("/csrf")
-  public ResponseEntity<?> csrf() {
+  public ResponseEntity<String> csrf() {
       return ResponseEntity.notFound().build();
   }
 
