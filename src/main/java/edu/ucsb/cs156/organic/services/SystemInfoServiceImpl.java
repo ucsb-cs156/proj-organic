@@ -30,6 +30,10 @@ public class SystemInfoServiceImpl extends SystemInfoService {
     .springH2ConsoleEnabled(this.springH2ConsoleEnabled)
     .showSwaggerUILink(this.showSwaggerUILink)
     .sourceRepo(this.sourceRepo)
+    .commitMessage(this.commitMessage)
+    .branch(this.branch)
+    .commitId(this.commitId)
+    .githubUrl(commitId != null && soruceRepo != null ? soruceRepo + "/commits/" + commitId : null)
     .build();
   log.info("getSystemInfo returns {}",si);
   return si;
