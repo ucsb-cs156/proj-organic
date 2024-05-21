@@ -1,6 +1,6 @@
 import React from 'react';
 import StaffForm from "main/components/Staff/StaffForm',"
-import { staffFixtures } from 'fixtures/staffFixtures';
+import { staffFixture } from 'fixtures/staffFixture';
 
 export default {
     title: 'components/Staff/StaffForm',
@@ -27,7 +27,7 @@ Create.args = {
 export const Update = Template.bind({});
 
 Update.args = {
-    initialContents: staffFixtures.oneStaff,
+    initialContents: staffFixture.oneStaff,
     buttonLabel: "Update",
     submitAction: (data) => {
         console.log("Submit was clicked with data: ", data); 

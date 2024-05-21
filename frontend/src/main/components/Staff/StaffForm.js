@@ -23,7 +23,7 @@ function StaffForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 <Form.Group className="mb-3" >
                     <Form.Label htmlFor="id">Id</Form.Label>
                     <Form.Control
-                        data-testid="Staff-id"
+                        data-testid="StaffForm-id"
                         id="id"
                         type="text"
                         {...register("id")}

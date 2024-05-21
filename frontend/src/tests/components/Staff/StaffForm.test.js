@@ -18,7 +18,7 @@ describe("StaffForm tests", () => {
                 <StaffForm/>
             </Router>
         );
-        await screen.findByText(/Id/);
+        await screen.findByText(/courseId/);
         await screen.findByText(/Create/);
     });
 
@@ -73,8 +73,8 @@ describe("StaffForm tests", () => {
         );
         await screen.findByTestId("StaffForm-courseId");
 
-        const idField = screen.getByTestId("StaffForm-courseId");
-        const nameField = screen.getByTestId("StaffForm-githubId");
+        const courseIdField = screen.getByTestId("StaffForm-courseId");
+        const githubIdField = screen.getByTestId("StaffForm-githubId");
         const submitButton = screen.getByTestId("StaffForm-submit");
 
         fireEvent.change(courseIdField, { target: { value: 'CMPSC 156' } });
