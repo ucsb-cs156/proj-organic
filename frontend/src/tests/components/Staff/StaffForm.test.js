@@ -1,7 +1,7 @@
 import { render, screen, waitFor,fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import StaffForm from "main/components/Staff/StaffForm";
-import { staffFixture } from "fixtures/staffFixtures";
+import { staffFixture } from "fixtures/staffFixture";
 
 const mockedNavigate = jest.fn();
 
