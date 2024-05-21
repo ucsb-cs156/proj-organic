@@ -77,7 +77,7 @@ describe("StaffForm tests", () => {
         const githubIdField = screen.getByTestId("StaffForm-githubId");
         const submitButton = screen.getByTestId("StaffForm-submit");
 
-        fireEvent.change(courseIdField, { target: { value: 'CMPSC 156' } });
+        fireEvent.change(courseIdField, { target: { value: '1' } });
         fireEvent.change(githubIdField, { target: { value: 'richardfang888' } });
         fireEvent.click(submitButton);
 

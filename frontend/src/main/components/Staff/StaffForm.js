@@ -12,8 +12,8 @@ function StaffForm({ initialContents, submitAction, buttonLabel = "Create" }) {
   const navigate = useNavigate();
 
   // edit to add regex if needed; change Form register pattern and feedback to match
-  const courseId_regex = '';
-  const githubId_regex = '';
+  // const courseId_regex = '';
+  // const githubId_regex = '';
 
   return (
     <Form onSubmit={handleSubmit(submitAction)}>
