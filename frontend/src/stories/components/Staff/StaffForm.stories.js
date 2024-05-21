@@ -1,5 +1,5 @@
 import React from 'react';
-import StaffForm from "main/components/Staff/StaffForm',"
+import StaffForm from "main/components/Staff/StaffForm";
 import { staffFixture } from 'fixtures/staffFixture';
 
 export default {
