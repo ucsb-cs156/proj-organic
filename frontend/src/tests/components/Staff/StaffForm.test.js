@@ -1,7 +1,7 @@
 import { render, screen, waitFor,fireEvent } from '@testing-library/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import StaffForm from "main/components/Staff/StaffForm";
-import { staffFixtures } from 'fixtures/staffFixtures';
+import { staffFixture } from "fixtures/staffFixtures";
 
 const mockedNavigate = jest.fn();
 
@@ -25,7 +25,7 @@ describe("StaffForm tests", () => {
     test("renders correctly when passing in a Staff", async () => {
         render(
             <Router  >
-                <StaffForm initialContents={schoolsFixtures.oneStaff} />
+                <StaffForm initialContents={staffFixture.oneStaff} />
             </Router>
         );
         await screen.findByTestId(/StaffForm-id/);
