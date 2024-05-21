@@ -18,7 +18,7 @@ describe("StaffForm tests", () => {
                 <StaffForm/>
             </Router>
         );
-        await screen.findByText(/courseId/);
+        await screen.findByText(/course ID/);
         await screen.findByText(/Create/);
     });
 
