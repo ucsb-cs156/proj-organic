@@ -35,7 +35,7 @@ function StaffForm({ initialContents, submitAction, buttonLabel = "Create" }) {
         )}
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="courseId">courseId</Form.Label>
+            <Form.Label htmlFor="courseId">course ID</Form.Label>
             <Form.Control
               data-testid="StaffForm-courseId"
               id="courseId"
@@ -50,7 +50,7 @@ function StaffForm({ initialContents, submitAction, buttonLabel = "Create" }) {
         </Col>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label htmlFor="githubId">githubId</Form.Label>
+            <Form.Label htmlFor="githubId">github ID</Form.Label>
             <Form.Control
               data-testid="StaffForm-githubId"
               id="githubId"
