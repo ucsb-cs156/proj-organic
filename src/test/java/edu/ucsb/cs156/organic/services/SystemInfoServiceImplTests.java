@@ -30,7 +30,7 @@ class SystemInfoServiceImplTests  {
     SystemInfo si = systemInfoService.getSystemInfo();
     assertTrue(si.getSpringH2ConsoleEnabled());
     assertTrue(si.getShowSwaggerUILink());
-    assertEquals("https://github.com/ucsb-cs156-s24/proj-organic-s24-5pm-4", si.getSourceRepo());
+    assertEquals("https://github.com/ucsb-cs156/proj-organic", si.getSourceRepo());
     assertTrue(si.getGithubUrl().startsWith(si.getSourceRepo()));
     assertTrue(si.getGithubUrl().endsWith(si.getCommitId()));
     assertTrue(si.getGithubUrl().contains("/commit/"));
