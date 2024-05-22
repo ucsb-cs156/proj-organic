@@ -37,7 +37,6 @@ public class SystemInfoServiceImpl extends SystemInfoService {
     .showSwaggerUILink(this.showSwaggerUILink)
     .sourceRepo(this.sourceRepo)
     .commitMessage(this.commitMessage)
-    .branch(this.branch)
     .commitId(this.commitId)
     .githubUrl(commitId != null && sourceRepo != null ? sourceRepo + "/commits/" + commitId : null)
     .build();
