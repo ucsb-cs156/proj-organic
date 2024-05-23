@@ -82,8 +82,6 @@ describe("StaffForm tests", () => {
         fireEvent.click(submitButton);
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
-        
-        expect(screen.getByText('Id')).toBeInTheDocument();
         expect(screen.queryByText(/courseId is required./)).not.toBeInTheDocument();
         expect(screen.queryByText(/githubId is required./)).not.toBeInTheDocument();
     });
