@@ -75,9 +75,6 @@ public class SecurityConfig {
   @Autowired
   UserRepository userRepository;
 
-  // @Autowired
-  // private LoginSuccessHandler loginSuccessHandler;
-
   // https://docs.spring.io/spring-security/reference/servlet/exploits/csrf.html#csrf-integration-javascript-spa
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
