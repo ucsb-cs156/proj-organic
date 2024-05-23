@@ -20,7 +20,6 @@ RUN node --version
 RUN npm --version
 
 COPY . /home/app
-gi
 
 ENV PRODUCTION=true
 RUN mvn -B -DskipTests -Pproduction -f /home/app/pom.xml clean package
