@@ -29,7 +29,7 @@ export default function CourseIndexPage() {
       // Stryker disable next-line all : don't test internal caching of React Query
       [`/api/courses?id=${id}/staff`],
       // Stryker disable next-line all : GET is the default
-      { method: "GET", url: "/api/courses/getStaff", param: { id } },
+      { method: "GET", url: "/api/courses/getStaff", params: { courseId: parseInt(id) } },
       []
     );
 
@@ -44,43 +44,3 @@ export default function CourseIndexPage() {
       </BasicLayout>
     )
 }
-
-
-
-
-
-
-
-
-
-
-/* 
-import React from "react";
-import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import StaffTable from "main/components/Staff/StaffTable"
-import { useBackend } from "main/utils/useBackend";
-import { useParams } from "react-router-dom";
-
-const CoursesStaffPage = () => {
-    let { id } = useParams();
-
-    const { data: staff, error: _error, status: _status } =
-        useBackend(
-            // Stryker disable next-line all : don't test internal caching of React Query
-            [`/api/courses?id=${id}/staff`],
-            // Stryker disable next-line StringLiteral,ObjectLiteral : since "GET" is default, "" is an equivalent mutation
-            { method: "GET", url: `/api/courses/getStaff`, params: { id: staff.id } },
-            // Stryker disable next-line all
-            []
-        )
-
-    return (
-        <BasicLayout>
-            <h2>Staff</h2>
-            <StaffTable staff={staff}/>
-        </BasicLayout>
-    );
-};
-
-export default CoursesStaffPage;
-*/
