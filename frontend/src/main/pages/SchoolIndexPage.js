@@ -1,5 +1,6 @@
 import React from 'react'
 import { useBackend } from 'main/utils/useBackend';
+//import { useNavigate } from 'react-router-dom';
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import SchoolTable from 'main/components/School/SchoolTable';
@@ -9,6 +10,7 @@ import { useCurrentUser} from 'main/utils/currentUser';
 export default function SchoolIndexPage() {
 
     const { data: currentUser } = useCurrentUser();
+    //const navigate = useNavigate();
   
     const createButton = () => {  
       
@@ -41,6 +43,6 @@ export default function SchoolIndexPage() {
             <SchoolTable school={school} currentUser={currentUser} />
           </div>
         </BasicLayout>
-      )
+      );
   }
   
