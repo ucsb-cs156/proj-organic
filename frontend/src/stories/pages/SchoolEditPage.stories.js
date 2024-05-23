@@ -2,7 +2,7 @@
 import React from 'react';
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { coursesFixtures } from 'fixtures/coursesFixtures';
+import { coursesFixtures } from 'fixtures/schoolFixtures';
 import { rest } from "msw";
 
 import CoursesEditPage from 'main/pages/CoursesEditPage';
