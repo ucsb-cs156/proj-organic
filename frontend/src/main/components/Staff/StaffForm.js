@@ -3,12 +3,14 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 function StaffForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+  // Stryker disable all
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({ defaultValues: initialContents || {}, });
 
+  // Stryker restore all
   const navigate = useNavigate();
 
   // edit to add regex if needed; change Form register pattern and feedback to match

@@ -31,6 +31,8 @@ describe("StaffForm tests", () => {
         await screen.findByTestId(/StaffForm-id/);
         expect(screen.getByText(/Id/)).toBeInTheDocument();
         expect(screen.getByTestId(/StaffForm-id/)).toHaveValue("1");
+        expect(screen.getByTestId(/StaffForm-courseId/)).toHaveValue("1");
+        expect(screen.getByTestId(/StaffForm-githubId/)).toHaveValue("scottpchow23");
     });
 
     // test("Correct Error messsages on bad input", async () => {
@@ -77,11 +79,13 @@ describe("StaffForm tests", () => {
         const githubIdField = screen.getByTestId("StaffForm-githubId");
         const submitButton = screen.getByTestId("StaffForm-submit");
 
-        fireEvent.change(courseIdField, { target: { value: '1' } });
-        fireEvent.change(githubIdField, { target: { value: 'richardfang888' } });
+        fireEvent.change(courseIdField, { target: { value: '2' } });
+        fireEvent.change(githubIdField, { target: { value: 'richardfang999' } });
         fireEvent.click(submitButton);
 
-        await screen.findByTestId(/StaffForm-courseId/);
+        await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
+        
+        await screen.findByTestId(/StaffForm-id/);
         expect(screen.queryByText(/courseId is required./)).not.toBeInTheDocument();
         expect(screen.queryByText(/githubId is required./)).not.toBeInTheDocument();
     });
