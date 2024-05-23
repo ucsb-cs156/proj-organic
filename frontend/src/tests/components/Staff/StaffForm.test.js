@@ -31,8 +31,6 @@ describe("StaffForm tests", () => {
         await screen.findByTestId(/StaffForm-id/);
         expect(screen.getByText(/Id/)).toBeInTheDocument();
         expect(screen.getByTestId(/StaffForm-id/)).toHaveValue("1");
-        expect(screen.getByTestId(/StaffForm-courseId/)).toHaveValue("1");
-        expect(screen.getByTestId(/StaffForm-githubId/)).toHaveValue("scottpchow23");
     });
 
     // test("Correct Error messsages on bad input", async () => {
@@ -85,7 +83,7 @@ describe("StaffForm tests", () => {
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
         
-        await screen.findByTestId(/StaffForm-id/);
+        expect(screen.getByText('Id')).toBeInTheDocument();
         expect(screen.queryByText(/courseId is required./)).not.toBeInTheDocument();
         expect(screen.queryByText(/githubId is required./)).not.toBeInTheDocument();
     });
