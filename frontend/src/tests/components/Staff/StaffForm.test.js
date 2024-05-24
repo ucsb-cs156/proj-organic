@@ -59,7 +59,7 @@ describe("StaffForm tests", () => {
         const submitButton = screen.getByTestId("StaffForm-submit");
 
         fireEvent.click(submitButton);
-        expect(screen.getByText(/githubId is required./)).toBeInTheDocument();
+        await screen.getByText(/githubId is required./);
     });
 
     test("No Error messsages on good input", async () => {
