@@ -4,6 +4,8 @@ package edu.ucsb.cs156.organic.services;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Service;
 
 import edu.ucsb.cs156.organic.models.SystemInfo;
@@ -14,6 +16,9 @@ import edu.ucsb.cs156.organic.models.SystemInfo;
 @Slf4j
 @Service("systemInfo")
 @ConfigurationProperties
+@PropertySources(
+  @PropertySource("classpath:git.properties")
+)
 public class SystemInfoServiceImpl extends SystemInfoService {
   
   @Value("${spring.h2.console.enabled:false}")
@@ -22,7 +27,7 @@ public class SystemInfoServiceImpl extends SystemInfoService {
   @Value("${app.showSwaggerUILink:false}")
   private boolean showSwaggerUILink;
 
-  @Value("${app.sourceRepo:https://github.com/ucsb-cs156/proj-organic}")
+  @Value("${app.sourceRepo}")
   private String sourceRepo;
 
   @Value("${git.commit.message.short:unknown}")
@@ -41,6 +46,8 @@ public class SystemInfoServiceImpl extends SystemInfoService {
     .githubUrl(commitId != null && sourceRepo != null ? sourceRepo + "/commits/" + commitId : null)
     .build();
   log.info("getSystemInfo returns {}",si);
+  //System.out.println(sourceRepo);
+  log.info("sourceRepo = {}", sourceRepo);
   return si;
   }
 

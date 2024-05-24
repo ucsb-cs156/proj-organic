@@ -171,6 +171,10 @@
                 <configuration>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.commit.message.short$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+                    </includeOnlyProperties>
                     <commitIdGenerationMode>full</commitIdGenerationMode>
                 </configuration>
             </plugin>
@@ -404,6 +408,14 @@
                         </executions>
                     </plugin>
                 </plugins>
+                <resources>     
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>                      
+                            <include>**/*.properties</include>                  
+                        </includes>
+                    </resource>            
+                </resources>
             </build>
         </profile>
     </profiles>
