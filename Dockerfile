@@ -20,7 +20,6 @@ RUN node --version
 RUN npm --version
 
 COPY . /home/app
-RUN la -al /home/app ; exit 0
 RUN cd /home/app && git status && git log | head -20; exit 0
 
 ENV PRODUCTION=true
