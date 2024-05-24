@@ -40,8 +40,6 @@ public class SystemInfoServiceImpl extends SystemInfoService {
   }
 
   public SystemInfo getSystemInfo() {
-    //Dotenv dotenv = Dotenv.load();
-    //if (dotenv.get("REPOSITORY") != null) { sourceRepo = dotenv.get("REPOSITORY"); }
     SystemInfo si = SystemInfo.builder()
     .springH2ConsoleEnabled(this.springH2ConsoleEnabled)
     .showSwaggerUILink(this.showSwaggerUILink)
