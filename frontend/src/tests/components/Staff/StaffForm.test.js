@@ -18,7 +18,7 @@ describe("StaffForm tests", () => {
                 <StaffForm/>
             </Router>
         );
-        await screen.findByText(/course ID/);
+        await screen.findByText(/github ID/);
         await screen.findByText(/Create/);
     });
 
@@ -59,8 +59,6 @@ describe("StaffForm tests", () => {
         const submitButton = screen.getByTestId("StaffForm-submit");
 
         fireEvent.click(submitButton);
-
-        await screen.findByText(/courseId is required./);
         expect(screen.getByText(/githubId is required./)).toBeInTheDocument();
     });
 
@@ -71,18 +69,15 @@ describe("StaffForm tests", () => {
                 <StaffForm submitAction={mockSubmitAction} />
             </Router>
         );
-        await screen.findByTestId("StaffForm-courseId");
+        await screen.findByTestId("StaffForm-githubId");
 
-        const courseIdField = screen.getByTestId("StaffForm-courseId");
         const githubIdField = screen.getByTestId("StaffForm-githubId");
         const submitButton = screen.getByTestId("StaffForm-submit");
 
-        fireEvent.change(courseIdField, { target: { value: '2' } });
         fireEvent.change(githubIdField, { target: { value: 'richardfang999' } });
         fireEvent.click(submitButton);
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
-        expect(screen.queryByText(/courseId is required./)).not.toBeInTheDocument();
         expect(screen.queryByText(/githubId is required./)).not.toBeInTheDocument();
     });
 
