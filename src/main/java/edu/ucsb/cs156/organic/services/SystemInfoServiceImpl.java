@@ -1,5 +1,6 @@
 package edu.ucsb.cs156.organic.services;
 
+//import io.github.cdimascio.dotenv.Dotenv;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,9 +17,10 @@ import edu.ucsb.cs156.organic.models.SystemInfo;
 @Slf4j
 @Service("systemInfo")
 @ConfigurationProperties
-@PropertySources(
-  @PropertySource("classpath:git.properties")
-)
+@PropertySources({
+  @PropertySource("classpath:git.properties"),
+  @PropertySource("classpath:application.properties")
+})
 public class SystemInfoServiceImpl extends SystemInfoService {
   
   @Value("${spring.h2.console.enabled:false}")
@@ -26,6 +28,9 @@ public class SystemInfoServiceImpl extends SystemInfoService {
 
   @Value("${app.showSwaggerUILink:false}")
   private boolean showSwaggerUILink;
+
+  @Value("${app.admin.githubLogins}")
+  private String adminLogins;
 
   @Value("${app.sourceRepo}")
   private String sourceRepo;
@@ -37,6 +42,8 @@ public class SystemInfoServiceImpl extends SystemInfoService {
   private String commitId;
 
   public SystemInfo getSystemInfo() {
+    //Dotenv dotenv = Dotenv.load();
+    //if (dotenv.get("REPOSITORY") != null) { sourceRepo = dotenv.get("REPOSITORY"); }
     SystemInfo si = SystemInfo.builder()
     .springH2ConsoleEnabled(this.springH2ConsoleEnabled)
     .showSwaggerUILink(this.showSwaggerUILink)
@@ -47,6 +54,7 @@ public class SystemInfoServiceImpl extends SystemInfoService {
     .build();
   log.info("getSystemInfo returns {}",si);
   //System.out.println(sourceRepo);
+  log.info("adminLogins = {}",adminLogins);
   log.info("sourceRepo = {}", sourceRepo);
   return si;
   }
