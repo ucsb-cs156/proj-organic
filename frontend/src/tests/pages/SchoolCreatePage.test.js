@@ -108,7 +108,7 @@ describe("SchoolCreatePage tests", () => {
                 "termError": "error-1"
         });
 
-        expect(mockToast).toBeCalledWith("New school created - id: 1");
+        expect(mockToast).toBeCalledWith("New school created - id: abb");
         expect(mockNavigate).toBeCalledWith({ "to": "/schools" });
     });
 

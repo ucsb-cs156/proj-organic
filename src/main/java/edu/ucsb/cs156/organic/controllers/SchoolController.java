@@ -95,7 +95,7 @@ public class SchoolController extends ApiController{
 
     @Operation(summary= "Delete a school")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("delete")
+    @DeleteMapping("/delete")
     public Object deleteSchool(
             @Parameter(name="abbrev") @RequestParam String abbrev) {
                 School school = schoolRepository.findById(abbrev)
