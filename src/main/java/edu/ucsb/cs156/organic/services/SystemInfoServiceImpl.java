@@ -1,7 +1,5 @@
 package edu.ucsb.cs156.organic.services;
 
-//import io.github.cdimascio.dotenv.Dotenv;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -18,8 +16,7 @@ import edu.ucsb.cs156.organic.models.SystemInfo;
 @Service("systemInfo")
 @ConfigurationProperties
 @PropertySources({
-  @PropertySource("classpath:git.properties"),
-  @PropertySource("classpath:application.properties")
+  @PropertySource("classpath:git.properties")
 })
 public class SystemInfoServiceImpl extends SystemInfoService {
   
@@ -28,9 +25,6 @@ public class SystemInfoServiceImpl extends SystemInfoService {
 
   @Value("${app.showSwaggerUILink:false}")
   private boolean showSwaggerUILink;
-
-  @Value("${app.admin.githubLogins}")
-  private String adminLogins;
 
   @Value("${app.sourceRepo}")
   private String sourceRepo;
@@ -53,9 +47,6 @@ public class SystemInfoServiceImpl extends SystemInfoService {
     .githubUrl(commitId != null && sourceRepo != null ? sourceRepo + "/commits/" + commitId : null)
     .build();
   log.info("getSystemInfo returns {}",si);
-  //System.out.println(sourceRepo);
-  log.info("adminLogins = {}",adminLogins);
-  log.info("sourceRepo = {}", sourceRepo);
   return si;
   }
 
