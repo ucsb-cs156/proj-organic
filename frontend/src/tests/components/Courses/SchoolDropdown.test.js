@@ -18,7 +18,7 @@ const ModelForm = ({schools}) =>{
         handleSubmit
     } = formState;
 
-    const onSubmit = (data) => {
+    const onSubmit = () => {
         /*
         This is here so the form doesn't get angry about not having a submit,
         as we want to test the dropdown, not the mocked form
