@@ -7,7 +7,7 @@ import { rest } from "msw";
 import CourseIndexPage from "main/pages/CourseIndexPage";
 
 export default {
-    title: 'pages/Course/CourseIndexPage',
+    title: 'pages/Courses/CourseIndexPage',
     component: CourseIndexPage
 };
 
