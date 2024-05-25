@@ -52,6 +52,10 @@ describe("Tests as a standalone school dropdown", () =>{
         await screen.findByText(/School/);
 
         expect(screen.getByTestId("SchoolDropdownExample-school")).toBeInTheDocument();
+
+        const school1 = screen.queryByTestId("SchoolDropdownExample-option-0");
+
+        expect(school1).not.toBeInTheDocument();
     })
     test("Won't let you submit blank", async () => {
         render(
