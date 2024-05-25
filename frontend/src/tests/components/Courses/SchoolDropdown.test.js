@@ -41,7 +41,31 @@ const ModelForm = ({schools}) =>{
 }
 
 
+
 describe("Tests as a standalone school dropdown", () =>{
+
+    test("Works without schools passed in", async () => {
+        render(
+            <ModelForm />
+        )
+
+        await screen.findByText(/School/);
+
+        expect(screen.getByTestId("SchoolDropdownExample-school")).toBeInTheDocument();
+    })
+    test("Won't let you submit blank", async () => {
+        render(
+            <ModelForm />
+        )
+        await screen.findByText(/School/);
+
+        expect(screen.getByTestId("SchoolDropdownExample-school")).toBeInTheDocument();
+
+        const submit = screen.getByTestId(/SchoolDropdownExample-submit/);
+        fireEvent.click(submit);
+
+        await screen.findByText(/School is required/);
+    })
 
     test("Renders 3 schools correctly", async () => {
         render(
