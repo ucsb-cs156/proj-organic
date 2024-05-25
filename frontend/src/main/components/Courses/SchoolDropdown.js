@@ -5,7 +5,7 @@ import {useFormContext} from "react-hook-form";
 //This is roughly based on the schedule dropdown from Courses, available
 //at https://github.com/ucsb-cs156/proj-courses/blob/main/frontend/src/main/components/PersonalSchedules/PersonalScheduleDropdown.js
 
-const SchoolDropdown = ({schools, testId}) => {
+const SchoolDropdown = ({schools = [], testId}) => {
     const {
         register,
         formState: {errors}
