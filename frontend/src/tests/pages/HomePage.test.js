@@ -110,8 +110,8 @@ describe('HomePage greetings for not logged in users at different times of the d
       { hour: 9, expectedGreeting: "Good morning, cgaucho" },
       { hour: 14, expectedGreeting: "Good afternoon, cgaucho" },
       { hour: 19, expectedGreeting: "Good evening, cgaucho" },
-      { hour: 12, expectedGreeting: "Good morning, cgaucho" },
-      { hour: 18, expectedGreeting: "Good afternoon, cgaucho" },
+      { hour: 12, expectedGreeting: "Good afternoon, cgaucho" },
+      { hour: 18, expectedGreeting: "Good evening, cgaucho" },
     ];
   
     testCases.forEach(({ hour, expectedGreeting }) => {
@@ -168,8 +168,8 @@ describe('HomePage greetings for not logged in users at different times of the d
       { hour: 4, expectedGreeting: "Good morning, pconrad" },
       { hour: 14, expectedGreeting: "Good afternoon, pconrad" },
       { hour: 19, expectedGreeting: "Good evening, pconrad" },
-      { hour: 12, expectedGreeting: "Good morning, pconrad" },
-      { hour: 18, expectedGreeting: "Good afternoon, pconrad" },
+      { hour: 12, expectedGreeting: "Good afternoon, pconrad" },
+      { hour: 18, expectedGreeting: "Good evening, pconrad" },
     ];
   
     testCases.forEach(({ hour, expectedGreeting }) =>  {
@@ -194,7 +194,7 @@ describe('HomePage greetings for not logged in users at different times of the d
         const infoElement = screen.getByTestId("homePage-info");
         expect(
           infoElement.textContent
-        ).toMatch(/This app is intended as a replacement for the ucsb-cs-github-linker app used in many courses at UCSB, as well as some courses at other universities./); 
+      ).toMatch(/This app is intended as a replacement for the ucsb-cs-github-linker app used in many courses at UCSB, as well as some courses at other universities./); 
       });
     });
   });
