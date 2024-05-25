@@ -21,7 +21,7 @@ const SchoolDropdown = ({schools, testId}) => {
             {schools.map(function (object, i) {
                 const key = `${testId}-option-${i}`
                 return(
-                    <option key={key} data-testid={key} value={object.abbrev}>
+                    <option key={key} data-testid={key} value={object.name}>
                         {object.name}
                     </option>
                 );
