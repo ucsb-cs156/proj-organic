@@ -27,8 +27,8 @@ public class SystemInfoServiceImpl extends SystemInfoService {
   @Value("${app.showSwaggerUILink:false}")
   private boolean showSwaggerUILink;
 
-  @Value("${app.sourceRepo}")
-  private String sourceRepo = "https://github.com/ucsb-cs156-s24/proj-organic-s24-5pm-4";
+  @Value("${app.sourceRepo:https://github.com/ucsb-cs156/proj-courses}")
+  private String sourceRepo;
 
   @Value("${git.commit.message.short:unknown}")
   private String commitMessage;
