@@ -13,14 +13,13 @@ const SchoolDropdown = ({schools, testId}) => {
 
     return (<Form.Group>
         <Form.Label htmlFor="school">School</Form.Label>
-        <Form.Control data-testid={`${testId}-schooldropdown`} id="school"  as="select"
+        <Form.Control data-testid={`${testId}-school`} id="school"  as="select"
           isInvalid={Boolean(errors.school)}
           {...register("school", {required: true, minLength: 2})}
         >
             <option value=""></option>
             {schools.map(function (object, i) {
                 const key = `${testId}-option-${i}`
-                console.log("This ran");
                 return(
                     <option key={key} data-testid={key} value={object.abbrev}>
                         {object.name}
