@@ -318,6 +318,8 @@ describe("CourseIndexPage tests", () => {
             </QueryClientProvider>
         );
 
+        await screen.findByTestId(`CoursesTable-cell-row-0-col-Show-button`);
+
         const showButton = screen.getByTestId(`CoursesTable-cell-row-0-col-Show-button`);
         expect(showButton).toBeInTheDocument();
     });
@@ -336,6 +338,7 @@ describe("CourseIndexPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
+        await screen.findByTestId(`CoursesTable-cell-row-0-col-Show-button`);
 
         const showButton = screen.getByTestId(`CoursesTable-cell-row-0-col-Show-button`);
         expect(showButton).toBeInTheDocument();
