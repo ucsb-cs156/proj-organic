@@ -9,6 +9,25 @@
 
 # W24 Production Deployments
 
+# Partial Test Commands
+Add After - mvn pitest:mutationCoverage
+
+For tests on one class:
+
+```
+
+ -DtargetClasses=edu.ucsb.cs156.organic.controllers.CLASS_NAME
+
+```
+
+You must use the class name, not the file name.
+
+For tests on a package:
+```
+
+ -DtargetClasses=edu.ucsb.cs156organic.controllers.*
+ 
+```
 
 | Team | Link       | 
 |------|------------|
