@@ -4,14 +4,14 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { coursesFixtures } from "fixtures/coursesFixtures";
 import { rest } from "msw";
 
-import CourseShowPage from "main/pages/CourseShowPage";
+import CoursesShowPage from "main/pages/CoursesShowPage";
 
 export default {
-    title: 'pages/Courses/CourseShowPage',
-    component: CourseShowPage
+    title: 'pages/Courses/CoursesShowPage',
+    component: CoursesShowPage
 };
 
-const Template = () => <CourseShowPage/>;
+const Template = () => <CoursesShowPage/>;
 
 export const Default = Template.bind({});
 Default.parameters = {
