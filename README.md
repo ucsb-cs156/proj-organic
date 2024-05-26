@@ -9,24 +9,26 @@
 
 # W24 Production Deployments
 
-# Partial Test Commands
-Add After - mvn pitest:mutationCoverage
+## Partial pitest runs
 
-For tests on one class:
+This repo has support for partial pitest runs
 
-```
-
- -DtargetClasses=edu.ucsb.cs156.organic.controllers.CLASS_NAME
+For example, to run pitest on just one class, use:
 
 ```
-
-You must use the class name, not the file name.
-
-For tests on a package:
+mvn pitest:mutationCoverage -DtargetClasses=edu.ucsb.cs156.example.controllers.RestaurantsController
 ```
 
- -DtargetClasses=edu.ucsb.cs156organic.controllers.*
- 
+To run pitest on just one package, use:
+
+```
+mvn pitest:mutationCoverage -DtargetClasses=edu.ucsb.cs156.example.controllers.*
+```
+
+To run full mutation test coverage, as usual, use:
+
+```
+mvn pitest:mutationCoverage
 ```
 
 | Team | Link       | 
