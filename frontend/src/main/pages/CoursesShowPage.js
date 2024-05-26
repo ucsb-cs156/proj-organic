@@ -24,7 +24,7 @@ export default function CoursesShowPage() {
         );
     //this ensures the table row doesn't show up when there's no backend
     let passIn;
-    if(courses.length != 0){
+    if(courses.length !== 0){
         passIn = [courses]
     }else{
         passIn = courses;
