@@ -68,7 +68,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
 
         // act
         render(
@@ -88,7 +88,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
 
         // act
         render(
@@ -156,7 +156,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
         axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
 
         // act
@@ -188,7 +188,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
         axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
 
         // act
@@ -220,7 +220,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
 
         // act
         render(

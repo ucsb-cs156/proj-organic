@@ -22,12 +22,19 @@ export default function CoursesShowPage() {
             },
     []
         );
+    //this ensures the table row doesn't show up when there's no backend
+    let passIn;
+    if(courses.length != 0){
+        passIn = [courses]
+    }else{
+        passIn = courses;
+    }
 
     return (
         <BasicLayout>
             <div className="pt-2">
                 <h1>Course</h1>
-                <CoursesTable courses={courses} currentUser={currentUser} />
+                <CoursesTable courses={passIn} currentUser={currentUser} />
             </div>
         </BasicLayout>
     )

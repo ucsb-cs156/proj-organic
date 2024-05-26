@@ -23,7 +23,7 @@ Default.parameters = {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
         rest.get('/api/courses/get', (_req, res, ctx) => {
-            return res(ctx.json([coursesFixtures.threeCourses[0]]));
+            return res(ctx.json(coursesFixtures.threeCourses[0]));
         }),
     ],
 }
