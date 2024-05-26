@@ -303,6 +303,25 @@ describe("CourseIndexPage tests", () => {
 
     });
 
+    test("Show button appears for user", async () => {
+        // arrange
+        setupUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/all").reply(200, coursesFixtures.threeCourses);
+
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CourseIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        const showButton = screen.getByTestId(`CoursesTable-cell-row-0-col-Show-button`);
+        expect(showButton).toBeInTheDocument();
+    })
+
 });
 
 

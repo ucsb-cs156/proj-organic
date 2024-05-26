@@ -327,4 +327,19 @@ describe("UserTable tests", () => {
 
   })
 
+
+  test("No show button when disabled", async() => {
+    const currentUser = currentUserFixtures.adminUser;
+
+    render(
+        <QueryClientProvider client={queryClient}>
+          <MemoryRouter>
+            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} showEnabled={false} />
+          </MemoryRouter>
+        </QueryClientProvider>
+    )
+
+    const showButton = screen.queryByTestId(`CoursesTable-cell-row-0-col-Show-button`);
+    expect(showButton).not.toBeInTheDocument();
+  })
 });

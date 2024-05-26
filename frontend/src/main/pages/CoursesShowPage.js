@@ -13,8 +13,8 @@ export default function CoursesShowPage() {
         useBackend(
             // Stryker disable next-line all : don't test internal caching of React Query
             [`/api/courses?id=${id}`],
-            // Stryker disable next-line all : GET is the default
-            {
+
+            { // Stryker disable next-line all : GET is the default
                 method: "GET", url: "/api/courses/get",
                 params: {
                     id

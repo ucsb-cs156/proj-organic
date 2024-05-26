@@ -22,6 +22,19 @@ jest.mock('react-toastify', () => {
     };
 });
 
+const mockNavigate = jest.fn();
+jest.mock('react-router-dom', () => {
+    const originalModule = jest.requireActual('react-router-dom');
+    return {
+        __esModule: true,
+        ...originalModule,
+        useParams: () => ({
+            id: 17
+        }),
+        Navigate: (x) => { mockNavigate(x); return null; }
+    };
+});
+
 describe("CoursesShowPage tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
@@ -55,7 +68,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get").reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
 
         // act
         render(
@@ -75,7 +88,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get").reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
 
         // act
         render(
@@ -95,7 +108,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get").timeout();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).timeout();
         const restoreConsole = mockConsole();
 
         // act
@@ -119,7 +132,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get").timeout();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).timeout();
         const restoreConsole = mockConsole();
 
         // act
@@ -143,7 +156,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get").reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
         axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
 
         // act
@@ -175,7 +188,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get").reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
         axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
 
         // act
@@ -207,7 +220,7 @@ describe("CoursesShowPage tests", () => {
         // arrange
         setupUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get").reply(200, [coursesFixtures.threeCourses[0]]);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, [coursesFixtures.threeCourses[0]]);
 
         // act
         render(
