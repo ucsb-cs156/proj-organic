@@ -107,11 +107,11 @@ describe('HomePage greetings for not logged in users at different times of the d
       axiosMock.reset();
         });
     const testCases = [
-      { hour: 9, expectedGreeting: "Good morning" },
-      { hour: 14, expectedGreeting: "Good afternoon" },
-      { hour: 19, expectedGreeting: "Good evening" },
-      { hour: 12, expectedGreeting: "Good afternoon" },
-      { hour: 18, expectedGreeting: "Good evening" },
+      { hour: 9, expectedGreeting: "Good morning, Please Sign in to Proceed" },
+      { hour: 14, expectedGreeting: "Good afternoon, Please Sign in to Proceed" },
+      { hour: 19, expectedGreeting: "Good evening, Please Sign in to Proceed" },
+      { hour: 12, expectedGreeting: "Good afternoon, Please Sign in to Proceed" },
+      { hour: 18, expectedGreeting: "Good evening, Please Sign in to Proceed" },
     ];
   
     testCases.forEach(({ hour, expectedGreeting }) => {
@@ -128,6 +128,7 @@ describe('HomePage greetings for not logged in users at different times of the d
         expect(screen.getByTestId("HomePage-main-div")).toBeInTheDocument();
 
         const greetingElement = screen.getByTestId("homePage-title");
+        expect(greetingElement.textContent).toContain("Please Sign in to Proceed");
         expect(greetingElement.textContent).toMatch(new RegExp(expectedGreeting, 'i'));
       });
     });
@@ -165,11 +166,11 @@ describe('HomePage greetings for not logged in users at different times of the d
 
 
     const testCases = [
-      { hour: 4, expectedGreeting: "Good morning pconrad" },
-      { hour: 14, expectedGreeting: "Good afternoon pconrad" },
-      { hour: 19, expectedGreeting: "Good evening pconrad" },
+      { hour: 4, expectedGreeting: "Good morning, pconrad" },
+      { hour: 14, expectedGreeting: "Good afternoon, pconrad" },
+      { hour: 19, expectedGreeting: "Good evening, pconrad" },
       { hour: 12, expectedGreeting: "Good afternoon pconrad" },
-      { hour: 18, expectedGreeting: "Good evening pconrad" },
+      { hour: 18, expectedGreeting: "Good evening, pconrad" },
     ];
   
     testCases.forEach(({ hour, expectedGreeting }) =>  {
