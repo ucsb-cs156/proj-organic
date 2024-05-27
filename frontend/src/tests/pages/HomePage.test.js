@@ -191,6 +191,7 @@ describe('HomePage greetings for not logged in users at different times of the d
 
         const greetingElement = screen.getByTestId("homePage-title");
         expect(greetingElement.textContent).toMatch(new RegExp(expectedGreeting, 'i'));
+        expect(greetingElement.textContent).toContain("pconrad");
         const infoElement = screen.getByTestId("homePage-info");
         expect(
           infoElement.textContent
