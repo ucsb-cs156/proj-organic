@@ -16,6 +16,8 @@ import SchoolIndexPage from "main/pages/SchoolIndexPage";
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
 import CourseIndexPage from "main/pages/CourseIndexPage";
 
+import StaffIndexPage from "main/pages/StaffIndexPage";
+
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import NotFoundPage from "main/pages/NotFoundPage";
 
@@ -27,6 +29,7 @@ function App() {
       <Route path="/admin/schools" element={<SchoolIndexPage />} />
       <Route path="/admin/users" element={<AdminUsersPage />} />
       <Route path="/admin/jobs" element={<AdminJobsPage />} />
+      <Route path="/staff" element={<StaffIndexPage />} />
     </>
   ) : null;
 
