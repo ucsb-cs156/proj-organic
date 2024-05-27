@@ -14,7 +14,7 @@ export default function SchoolEditPage({storybook=false}) {
       [`/api/schools?abbrev=${abbrev}`],
       {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
-        url: `/api/schools/get`,
+        url: `/api/schools`,
         params: {
           abbrev
         }

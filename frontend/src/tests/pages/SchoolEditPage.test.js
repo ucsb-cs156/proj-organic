@@ -43,7 +43,7 @@ describe("SchoolEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/schools/get", { params: { abbrev: "abb" } }).timeout();
+            axiosMock.onGet("/api/schools", { params: { abbrev: "abb" } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -74,7 +74,7 @@ describe("SchoolEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/schools/get", { params: { abbrev: "abb" } }).reply(200, {
+            axiosMock.onGet("/api/schools", { params: { abbrev: "abb" } }).reply(200, {
                 abbrev: "abb",
                 name: "name-17",
                 termRegex: "reg-17",
@@ -134,14 +134,14 @@ describe("SchoolEditPage tests", () => {
             
             expect(mockNavigate).toBeCalledWith({ "to": "/schools" });
 
-            expect(axiosMock.history.put.length).toBe(1); // times called
+            expect(axiosMock.history.put.length).toBe(1); 
             expect(axiosMock.history.put[0].params).toEqual({ abbrev: 'abb' });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 name: "new-name-17",
                 termRegex: "new-reg-17",
                 termDescription: "new-description-17",
                 termError: "new-error-17" 
-            })); // posted object
+            })); 
 
 
         });

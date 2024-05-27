@@ -6,17 +6,28 @@ import { toast } from "react-toastify";
 
 export default function SchoolCreatePage({storybook=false}) {
 
-    const objectToAxiosParams = (school) => ({
-        url: "/api/schools/post",
-        method: "POST",
-        params: {
-        abbrev: school.abbrev,
-        name: school.name,
-        termRegex: school.termRegex,
-        termDescription: school.termDescription,
-        termError: school.termError
-        }
-    });
+    const encodeParams = (params) => {
+        return Object.keys(params)
+            .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+            .join('&');
+    };
+
+
+    const objectToAxiosParams = (school) => {
+        const params ={
+            abbrev: school.abbrev,
+            name: school.name,
+            termRegex: school.termRegex,
+            termDescription: school.termDescription,
+            termError: school.termError
+        };
+        const queryString = encodeParams(params);
+        return {
+            url: `/api/schools/post?${queryString}`,
+            method: "POST",
+            data: queryString
+        };
+    };
 
     const onSuccess = (school) => {
         toast(`New school created - id: ${school.abbrev}`);

@@ -41,6 +41,8 @@ describe("SchoolCreatePage tests", () => {
         axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
     });
 
+    
+
     const queryClient = new QueryClient();
     test("renders without crashing", () => {
         render(
@@ -56,11 +58,10 @@ describe("SchoolCreatePage tests", () => {
 
         const queryClient = new QueryClient();
         const school = {
-            id: 1,
             abbrev: "abb",
             name: "name-1",
-            termRegex: "reg-1",
-            termDescription: "description-1",
+            termRegex: "[WSMF]\\d\\d",
+            termDescription: "F23",
             termError: "error-1"
         };
 
@@ -88,8 +89,8 @@ describe("SchoolCreatePage tests", () => {
        
         fireEvent.change(abbrevField, { target: { value: 'abb' } });
         fireEvent.change(nameField, { target: { value: 'name-1' } });
-        fireEvent.change(termRegexField, { target: { value: 'reg-1' } });
-        fireEvent.change(termDescriptionField, { target: { value: 'description-1' } });
+        fireEvent.change(termRegexField, { target: { value: '[WSMF]\d\d' } });
+        fireEvent.change(termDescriptionField, { target: { value: 'F23' } });
         fireEvent.change(termErrorField, { target: { value: 'error-1' } });
       
 
@@ -103,8 +104,8 @@ describe("SchoolCreatePage tests", () => {
             {
                 "abbrev": "abb",
                 "name": "name-1",
-                "termRegex": "reg-1",
-                "termDescription": "description-1",
+                "termRegex": "[WSMF]\d\d",
+                "termDescription": "F23",
                 "termError": "error-1"
         });
 

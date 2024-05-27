@@ -10,7 +10,6 @@ import { useCurrentUser} from 'main/utils/currentUser';
 export default function SchoolIndexPage() {
 
     const { data: currentUser } = useCurrentUser();
-    //const navigate = useNavigate();
   
     const createButton = () => {  
       
