@@ -169,7 +169,7 @@ describe('HomePage greetings for not logged in users at different times of the d
       { hour: 4, expectedGreeting: "Good morning, pconrad" },
       { hour: 14, expectedGreeting: "Good afternoon, pconrad" },
       { hour: 19, expectedGreeting: "Good evening, pconrad" },
-      { hour: 12, expectedGreeting: "Good afternoon pconrad" },
+      { hour: 12, expectedGreeting: "Good afternoon, pconrad" },
       { hour: 18, expectedGreeting: "Good evening, pconrad" },
     ];
   
