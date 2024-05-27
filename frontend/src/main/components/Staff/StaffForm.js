@@ -49,7 +49,7 @@ function StaffForm({ initialContents, submitAction, buttonLabel = "Create" }) {
               {...register("githubId", { required: true })}
             />
             <Form.Control.Feedback type="invalid">
-              {errors.githubId && 'githubId is required.'}
+              {errors.githubId && 'GithubId is required.'}
             </Form.Control.Feedback>
           </Form.Group>
         </Col>

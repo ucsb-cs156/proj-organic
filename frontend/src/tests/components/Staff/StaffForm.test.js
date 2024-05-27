@@ -78,7 +78,7 @@ describe("StaffForm tests", () => {
         fireEvent.click(submitButton);
 
         await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
-        expect(screen.queryByText(/githubId is required./)).not.toBeInTheDocument();
+        expect(screen.queryByText(/GithubId is required./)).not.toBeInTheDocument();
     });
 
     test("that navigate(-1) is called when Cancel is clicked", async () => {
