@@ -22,7 +22,7 @@ export default function CoursesTable({ courses, currentUser }) {
     };
 
     const courseCallback = (cell) => {
-        navigate(`/courses/${cell.row.values.id}`);
+        navigate(`/courses/show/${cell.row.values.id}`);
     };
 
     // Stryker disable all : hard to test for query caching
@@ -41,17 +41,6 @@ export default function CoursesTable({ courses, currentUser }) {
         {
             Header: 'id',
             accessor: 'id',
-            Cell: ({ cell }) => (
-                <a
-                    href={`/courses/${cell.value}`}
-                    onClick={(e) => {
-                        e.preventDefault();
-                         courseCallback(cell);
-                    }}
-                >
-                    {cell.value}
-                </a>
-            )
         },
         {
             Header: 'Name',
@@ -82,6 +71,7 @@ export default function CoursesTable({ courses, currentUser }) {
     ];
 
     if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) {
+        columns.push(ButtonColumn("Show", "primary", courseCallback, "CoursesTable"));
         columns.push(ButtonColumn("Staff", "primary", staffCallback, "CoursesTable"));
         columns.push(ButtonColumn("Edit", "primary", editCallback, "CoursesTable"));
         columns.push(ButtonColumn("Delete", "danger", deleteCallback, "CoursesTable"));
