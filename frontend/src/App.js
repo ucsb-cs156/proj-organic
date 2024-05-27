@@ -29,7 +29,6 @@ function App() {
       <Route path="/admin/schools" element={<SchoolIndexPage />} />
       <Route path="/admin/users" element={<AdminUsersPage />} />
       <Route path="/admin/jobs" element={<AdminJobsPage />} />
-      <Route path="/staff" element={<StaffIndexPage />} />
     </>
   ) : null;
 
@@ -45,6 +44,7 @@ function App() {
       <Route path="/courses/create" element={<CoursesCreatePage />} />
       <Route path="/courses" element={<CourseIndexPage />} />
       <Route path="/courses/edit/:id" element={<CoursesEditPage />} />
+      <Route path="/courses/:id/staff" element={<StaffIndexPage />} />
     </>
   ) : null;
 

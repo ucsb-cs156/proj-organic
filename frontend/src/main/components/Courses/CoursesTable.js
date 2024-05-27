@@ -14,7 +14,7 @@ import React from "react";
     };
 
      const staffCallback = (cell) => {
-        navigate(`staff/${cell.row.values.id}`);
+        navigate(`/courses/${cell.row.values.id}/staff`);
     };
 
      const editCallback = (cell) => {
