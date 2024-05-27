@@ -14,8 +14,9 @@ export default function HomePage() {
 
     const greeting = getPartOfDayGreeting();
 
+
     // Determine the username to display based on currentUser status
-    const username = currentUser && currentUser.loggedIn ? currentUser.root.user.githubLogin : "";
+    const username = currentUser && currentUser.loggedIn ? currentUser.root.user.githubLogin: "";
 
     return (
         <div data-testid={"HomePage-main-div"}>
