@@ -10,7 +10,7 @@ import React from "react";
     const navigate = useNavigate();
 
     const editCallback = (cell) => {
-        navigate(`/courses/edit/${cell.row.values.id}`);
+        navigate(`/courses/${cell.row.values.courseId}/editStaff`);
     };
 
     // Stryker disable all : hard to test for query caching
@@ -42,12 +42,14 @@ import React from "react";
      ];
 
      if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) {
-        columns.push(ButtonColumn("Edit", "primary", editCallback, "CoursesTable"));
-        columns.push(ButtonColumn("Delete", "danger", deleteCallback, "CoursesTable"));
+        columns.push(ButtonColumn("Edit", "primary", editCallback, "StaffTable"));
+        columns.push(ButtonColumn("Delete", "danger", deleteCallback, "StaffTable"));
     }
 
-     return <OurTable
-         data={staff}
-         columns={columns}
-         testid={"StaffTable"} />;
+    return (
+        <>
+            <div>Total Staff: {staff.length}</div>
+          <OurTable data={staff} columns={columns} testid={"StaffTable"} />
+        </>
+      );
     };

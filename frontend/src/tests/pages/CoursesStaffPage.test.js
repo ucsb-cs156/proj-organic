@@ -88,7 +88,7 @@ describe("CoursesStaffPage tests", () => {
         expect(button).toHaveAttribute("style", "float: right;");
     });
 
-    test("Renders with Create Button for instructor user", async () => {
+    test("Renders with Add Staff Button for instructor user", async () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
@@ -112,7 +112,7 @@ describe("CoursesStaffPage tests", () => {
         expect(button).toHaveAttribute("style", "float: right;");
     });
     
-    test("Renders without Create Button for non admin and non instructor user", async () => {
+    test("Renders without Add Staff for non admin and non instructor user", async () => {
         // arrange
         setupUser(); 
         const queryClient = new QueryClient();
@@ -133,7 +133,7 @@ describe("CoursesStaffPage tests", () => {
         });
     });
     
-    test("renders three courses correctly for admin", async () => {    
+    test("renders three staff members correctly for admin", async () => {    
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
@@ -155,7 +155,7 @@ describe("CoursesStaffPage tests", () => {
 
     });
 
-    test("renders three courses correctly for instructor", async () => {      
+    test("renders three staff members correctly for instructor", async () => {      
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
@@ -225,98 +225,98 @@ describe("CoursesStaffPage tests", () => {
         expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
-    // test("what happens when you click delete, admin", async () => {
-    //     // arrange
-    //     setupAdminUser();
-    //     const queryClient = new QueryClient();
-    //     axiosMock.onGet("/api/courses/all").reply(200, staffFixture.threeCourses);
-    //     axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
+    test("what happens when you click delete, admin", async () => {
+        // arrange
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
+        // axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
 
-    //     // act
-    //     render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <CoursesStaffPage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesStaffPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
 
-    //     // assert
-    //     await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+        // assert
+        await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-    //     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
 
-    //     const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    //     expect(deleteButton).toBeInTheDocument();
+        const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+        expect(deleteButton).toBeInTheDocument();
 
-    //     // act
-    //     fireEvent.click(deleteButton);
+        // act
+        fireEvent.click(deleteButton);
 
-    //     // assert
-    //     await waitFor(() => { expect(mockToast).toBeCalledWith("Course with id 1 was deleted") });
+        // assert
+        // await waitFor(() => { expect(mockToast).toBeCalledWith("Course with id 1 was deleted") });
 
-    // });
+    });
 
-    // test("what happens when you click delete, instructor", async () => {
-    //     // arrange
-    //     setupInstructorUser();
-    //     const queryClient = new QueryClient();
-    //     axiosMock.onGet("/api/courses/all").reply(200, staffFixture.threeCourses);
-    //     axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
+    test("what happens when you click delete, instructor", async () => {
+        // arrange
+        setupInstructorUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
+        // axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
 
-    //     // act
-    //     render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <CoursesStaffPage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesStaffPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
 
-    //     // assert
-    //     await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+        // assert
+        await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-    //     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
 
-    //     const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    //     expect(deleteButton).toBeInTheDocument();
+        const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+        expect(deleteButton).toBeInTheDocument();
 
-    //     // act
-    //     fireEvent.click(deleteButton);
+        // act
+        fireEvent.click(deleteButton);
 
-    //     // assert
-    //     await waitFor(() => { expect(mockToast).toBeCalledWith("Course with id 1 was deleted") });
+        // assert
+        // await waitFor(() => { expect(mockToast).toBeCalledWith("Course with id 1 was deleted") });
 
-    // });
+    });
 
-    // test("tests buttons for editing do not show up for user", async () => {
-    //     // arrange
-    //     setupUser();
-    //     const queryClient = new QueryClient();
-    //     axiosMock.onGet("/api/courses/all").reply(200, staffFixture.threeCourses);
+    test("tests buttons for editing do not show up for user", async () => {
+        // arrange
+        setupUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
 
-    //     // act
-    //     render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <CoursesStaffPage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesStaffPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
 
-    //     // assert
-    //     await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
+        // assert
+        await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
 
-    //     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
 
-    //     const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    //     expect(deleteButton).not.toBeInTheDocument();
-    //     expect(screen.queryByText(/Add Staff Member/)).not.toBeInTheDocument();
+        const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
+        expect(deleteButton).not.toBeInTheDocument();
+        expect(screen.queryByText(/Add Staff Member/)).not.toBeInTheDocument();
 
 
-    //     // assert
+        // assert
 
-    // });
+    });
 
 });
 

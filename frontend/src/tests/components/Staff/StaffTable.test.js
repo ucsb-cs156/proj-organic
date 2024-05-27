@@ -1,10 +1,10 @@
+
 import StaffTable from "main/components/Staff/StaffTable"
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
-// import { fireEvent, render, waitFor, screen } from "@testing-library/react";
-import {  render, screen } from "@testing-library/react";
 import { staffFixture } from "fixtures/staffFixture";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
+import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 
 
 const mockedNavigate = jest.fn();
@@ -125,15 +125,109 @@ describe("StaffTable tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
 
-    // const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    // expect(deleteButton).toBeInTheDocument();
-    // expect(deleteButton).toHaveClass("btn-danger");
+    const editButton = screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
+    expect(editButton).toHaveClass("btn-primary");
+
+    const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+    expect(deleteButton).toHaveClass("btn-danger");
+
+    const totalStaffElement = screen.getByText("Total Staff: 3"); // Assuming there are 3 staff members in the fixture
+    expect(totalStaffElement).toBeInTheDocument();
+
+  });
+
+  test("Has the expected colum headers and content for instructorUser", () => {
+
+    const currentUser = currentUserFixtures.instructorUser;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+            <StaffTable staff={staffFixture.threeStaff} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+
+    expectedHeaders.forEach((headerText) => {
+      const header = screen.getByText(headerText);
+      expect(header).toBeInTheDocument();
+    });
+
+    expectedFields.forEach((field) => {
+      const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
+      expect(header).toBeInTheDocument();
+    });
+
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+
+    const editButton = screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
+    expect(editButton).toHaveClass("btn-primary");
+
+    const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+    expect(deleteButton).toHaveClass("btn-danger");
+
+    const totalStaffElement = screen.getByText("Total Staff: 3"); // Assuming there are 3 staff members in the fixture
+    expect(totalStaffElement).toBeInTheDocument();
 
   });
 
 
+  test("Edit button navigates to the edit page for admin user", async () => {
+
+    const currentUser = currentUserFixtures.adminUser;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+            <StaffTable staff={staffFixture.threeStaff} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+    await waitFor(() => { expect(screen.getByTestId(`StaffTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+
+    const editButton = screen.getByTestId(`StaffTable-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
+
+    fireEvent.click(editButton);
+
+    await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith('/courses/1/editStaff'));
+    
+    const totalCoursesElement = screen.getByText("Total Staff: 3"); // Assuming there are 3 staff members in the fixture
+    expect(totalCoursesElement).toBeInTheDocument();
+    
+  });
 
 
-  
+  test("Delete button calls the callback", async () => {
 
+    const currentUser = currentUserFixtures.adminUser;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+            <StaffTable staff={staffFixture.threeStaff} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+
+    );
+
+    await waitFor(() => { expect(screen.getByTestId(`StaffTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+
+    const deleteButton = screen.getByTestId(`StaffTable-cell-row-0-col-Delete-button`);
+    expect(deleteButton).toBeInTheDocument();
+
+    fireEvent.click(deleteButton);
+
+    const totalCoursesElement = screen.getByText("Total Staff: 3"); // Assuming there are 3 staff members in the fixture
+    expect(totalCoursesElement).toBeInTheDocument();
+  });
 });
