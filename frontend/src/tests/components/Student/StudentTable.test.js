@@ -46,25 +46,25 @@ describe("StudentTable tests", () => {
     });
 
     const expectedStudentFname = studentFixture.threeStudents;
-    expectedStudentcourse.forEach((studentMember, index) => {
+    expectedStudentFname.forEach((studentMember, index) => {
       const fnameCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-fname`);
       expect(fnameCell).toHaveTextContent(studentMember.fname);
     });
 
     const expectedStudentLname = studentFixture.threeStudents;
-    expectedStudentcourse.forEach((studentMember, index) => {
+    expectedStudentLname.forEach((studentMember, index) => {
       const lnameCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-lname`);
       expect(lnameCell).toHaveTextContent(studentMember.lname);
     });
 
     const expectedStudentId = studentFixture.threeStudents;
-    expectedStudentcourse.forEach((studentMember, index) => {
+    expectedStudentId.forEach((studentMember, index) => {
       const studentIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-studentId`);
       expect(studentIdCell).toHaveTextContent(studentMember.studentId);
     });
 
     const expectedStudentemail = studentFixture.threeStudents;
-    expectedStudentcourse.forEach((studentMember, index) => {
+    expectedStudentemail.forEach((studentMember, index) => {
       const emailCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-email`);
       expect(emailCell).toHaveTextContent(studentMember.email);
     });
