@@ -75,9 +75,8 @@ describe("SchoolCreatePage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => {
-            expect(screen.getByTestId("SchoolForm-name")).toBeInTheDocument();
-        });
+        
+        expect(await screen.findByText("Create New School")).toBeInTheDocument();
 
         const abbrevField = screen.getByTestId("SchoolForm-abbrev");
         const nameField = screen.getByTestId("SchoolForm-name");
@@ -93,8 +92,6 @@ describe("SchoolCreatePage tests", () => {
         fireEvent.change(termDescriptionField, { target: { value: 'F23' } });
         fireEvent.change(termErrorField, { target: { value: 'error-1' } });
       
-
-        expect(submitButton).toBeInTheDocument();
 
         fireEvent.click(submitButton);
 
