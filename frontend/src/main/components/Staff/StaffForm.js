@@ -35,6 +35,9 @@ function StaffForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 </Form.Group>
             </Col>
         )}
+      </Row>
+      
+      <Row>
         <Col>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="githubId">github ID</Form.Label>
