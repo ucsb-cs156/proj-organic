@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
@@ -9,12 +10,10 @@ export default function CoursesShowPage() {
     let { id } = useParams();
     const { data: currentUser } = useCurrentUser();
 
-    const { data: course, error: _error, status: _status } =
+    const { data: courses, error: _error, status: _status } =
         useBackend(
-            // Stryker disable next-line all : don't test internal caching of React Query
-            [`/api/courses/show?id=${id}`],
-
-            { // Stryker disable next-line all : GET is the default
+            [`/api/courses?id=${id}`],
+            {
                 method: "GET", url: "/api/courses/get",
                 params: {
                     id
@@ -22,16 +21,20 @@ export default function CoursesShowPage() {
             },
     []
         );
+        let checkLength = [];
+        if (courses && courses.length !== 0) {
+            checkLength = [courses];
+        } else if (courses) {
+            checkLength = courses;
+        }
 
-  return (
-    <BasicLayout>
-      <div className="pt-2">
-        <h1>Course Information</h1>
-        {course && (
-          <>
-            <CoursesTable initialContents={course} currentUser={currentUser}/>
-            <div>
-              {/* Course Roster Upload Link */}
+    return (
+        <BasicLayout>
+            <div className="pt-2">
+                <h1>Individual Course Details</h1>
+                <CoursesTable courses={checkLength} currentUser={currentUser} />
+                <br></br>
+                {/* Course Roster Upload Link */}
               <p>
                 <strong>Course Roster Upload:</strong>{" "}
                 <a href={`/courses/${id}/roster-upload`}>Upload Roster</a>
@@ -47,9 +50,6 @@ export default function CoursesShowPage() {
                 <a href={`/courses/${id}/student-roster`}>View Students</a>
               </p>
             </div>
-          </>
-        )}
-      </div>
-    </BasicLayout>
-  );
+        </BasicLayout>
+    );
 }
