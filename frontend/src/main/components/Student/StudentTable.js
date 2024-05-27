@@ -2,7 +2,7 @@ import React from "react";
 import OurTable from "main/components/OurTable"
 
 
- export default function StaffTable({ students }) {
+ export default function StudentTable({ students }) {
 
      // Stryker disable next-line all : TODO try to make a good test for this
 

@@ -27,43 +27,43 @@ describe("StudentTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <StudentTable student={studentFixture.threeStudent} currentUser={currentUser} />
+          <StudentTable students={studentFixture.threeStudents} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
     );
 
-    const expectedStudentgithub = studentFixture.threeStudent;
+    const expectedStudentgithub = studentFixture.threeStudents;
     expectedStudentgithub.forEach((studentMember, index) => {
       const githubIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-githubId`);
       expect(githubIdCell).toHaveTextContent(studentMember.githubId);
     });
 
-    const expectedStudentcourse = studentFixture.threeStudent;
+    const expectedStudentcourse = studentFixture.threeStudents;
     expectedStudentcourse.forEach((studentMember, index) => {
       const courseIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-courseId`);
       expect(courseIdCell).toHaveTextContent(studentMember.courseId);
     });
 
-    const expectedStudentFname = studentFixture.threeStudent;
+    const expectedStudentFname = studentFixture.threeStudents;
     expectedStudentcourse.forEach((studentMember, index) => {
       const fnameCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-fname`);
       expect(fnameCell).toHaveTextContent(studentMember.fname);
     });
 
-    const expectedStudentLname = studentFixture.threeStudent;
+    const expectedStudentLname = studentFixture.threeStudents;
     expectedStudentcourse.forEach((studentMember, index) => {
       const lnameCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-lname`);
       expect(lnameCell).toHaveTextContent(studentMember.lname);
     });
 
-    const expectedStudentId = studentFixture.threeStudent;
+    const expectedStudentId = studentFixture.threeStudents;
     expectedStudentcourse.forEach((studentMember, index) => {
       const studentIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-studentId`);
       expect(studentIdCell).toHaveTextContent(studentMember.studentId);
     });
 
-    const expectedStudentemail = studentFixture.threeStudent;
+    const expectedStudentemail = studentFixture.threeStudents;
     expectedStudentcourse.forEach((studentMember, index) => {
       const emailCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-email`);
       expect(emailCell).toHaveTextContent(studentMember.email);
@@ -102,7 +102,7 @@ describe("StudentTable tests", () => {
     render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
-          <StudentTable student={[]} currentUser={currentUser} />
+          <StudentTable students={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -129,7 +129,7 @@ describe("StudentTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <StudentTable student={studentFixture.threeStudent} currentUser={currentUser} />
+            <StudentTable students={studentFixture.threeStudents} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
