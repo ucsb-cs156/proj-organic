@@ -13,8 +13,8 @@ import React from "react";
         navigate(`/courses/join/${cell.row.values.id}`);
     };
 
-     const staffCallback = () => {
-        navigate(`/staff`);
+     const staffCallback = (cell) => {
+        navigate(`staff/${cell.row.values.id}`);
     };
 
      const editCallback = (cell) => {
