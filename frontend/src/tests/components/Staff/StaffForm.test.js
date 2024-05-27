@@ -33,22 +33,6 @@ describe("StaffForm tests", () => {
         expect(screen.getByTestId(/StaffForm-id/)).toHaveValue("1");
     });
 
-    // test("Correct Error messsages on bad input", async () => {
-    //     render(
-    //         <Router  >
-    //             <StaffForm/>
-    //         </Router>
-    //     );
-    //     await screen.findByTestId("StaffForm-courseId");
-    //     const idField = screen.getByTestId("StaffForm-courseId");
-    //     const submitButton = screen.getByTestId("StaffForm-submit");
-
-    //     fireEvent.change(courIdField, { target: { value: 'Bad-Input' } });
-    //     fireEvent.click(submitButton);
-
-    //     await screen.findByText(/CourseId must be .../);
-    // });
-
     test("Correct Error messsages on missing input", async () => {
         render(
             <Router  >
@@ -59,7 +43,9 @@ describe("StaffForm tests", () => {
         const submitButton = screen.getByTestId("StaffForm-submit");
 
         fireEvent.click(submitButton);
-        expect(screen.getByText(/githubId is required./)).toBeInTheDocument();
+        await waitFor(() => {
+            expect(screen.getByText(/GithubId is required./)).toBeInTheDocument();
+        });
     });
 
     test("No Error messsages on good input", async () => {
