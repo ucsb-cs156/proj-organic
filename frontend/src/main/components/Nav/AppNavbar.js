@@ -50,7 +50,6 @@ export default function AppNavbar({ currentUser, systemInfo, doLogout, currentUr
               )
             }
           </Nav>
-
           <Navbar.Collapse className="justify-content-between">
             <Nav className="mr-auto">
               {
