@@ -89,7 +89,7 @@ describe("SchoolCreatePage tests", () => {
        
         fireEvent.change(abbrevField, { target: { value: 'abb' } });
         fireEvent.change(nameField, { target: { value: 'name-1' } });
-        fireEvent.change(termRegexField, { target: { value: '[WSMF]\d\d' } });
+        fireEvent.change(termRegexField, { target: { value: '[WSMF]\\d\\d' } });
         fireEvent.change(termDescriptionField, { target: { value: 'F23' } });
         fireEvent.change(termErrorField, { target: { value: 'error-1' } });
       
@@ -104,7 +104,7 @@ describe("SchoolCreatePage tests", () => {
             {
                 "abbrev": "abb",
                 "name": "name-1",
-                "termRegex": "[WSMF]\d\d",
+                "termRegex": "[WSMF]\\d\\d",
                 "termDescription": "F23",
                 "termError": "error-1"
         });
