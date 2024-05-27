@@ -15,13 +15,13 @@ export default function HomePage() {
     const greeting = getPartOfDayGreeting();
 
     // Determine the username to display based on currentUser status
-    const username = currentUser && currentUser.loggedIn ? currentUser.root.user.githubLogin : "cgaucho";
+    const username = currentUser && currentUser.loggedIn ? currentUser.root.user.githubLogin : "";
 
     return (
         <div data-testid={"HomePage-main-div"}>
             <BasicLayout>
                 <h1 data-testid="homePage-title" style={{ fontSize: "75px", borderRadius: "7px", backgroundColor: "white", opacity: ".9" }} className="text-center border-0 my-3">
-                    {greeting}, {username}
+                    {greeting} {username}
                 </h1>
                 <h2 data-testid="homePage-info">
                     This app is intended as a replacement for the <a href="https://ucsb-cs-github-linker.herokuapp.com">ucsb-cs-github-linker</a> app used in many courses at UCSB, as well as some courses at other universities.

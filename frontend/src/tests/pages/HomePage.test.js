@@ -59,7 +59,7 @@ describe("HomePage tests", () => {
         const greetingElement = screen.getByTestId("homePage-title");
         expect(
             greetingElement.textContent
-        ).toMatch(/Good (morning|afternoon|evening), cgaucho/); 
+        ).toMatch(/Good (morning|afternoon|evening)/); 
         const infoElement = screen.getByTestId("homePage-info");
         expect(
           infoElement.textContent
@@ -107,11 +107,11 @@ describe('HomePage greetings for not logged in users at different times of the d
       axiosMock.reset();
         });
     const testCases = [
-      { hour: 9, expectedGreeting: "Good morning, cgaucho" },
-      { hour: 14, expectedGreeting: "Good afternoon, cgaucho" },
-      { hour: 19, expectedGreeting: "Good evening, cgaucho" },
-      { hour: 12, expectedGreeting: "Good afternoon, cgaucho" },
-      { hour: 18, expectedGreeting: "Good evening, cgaucho" },
+      { hour: 9, expectedGreeting: "Good morning" },
+      { hour: 14, expectedGreeting: "Good afternoon" },
+      { hour: 19, expectedGreeting: "Good evening" },
+      { hour: 12, expectedGreeting: "Good afternoon" },
+      { hour: 18, expectedGreeting: "Good evening" },
     ];
   
     testCases.forEach(({ hour, expectedGreeting }) => {
@@ -165,11 +165,11 @@ describe('HomePage greetings for not logged in users at different times of the d
 
 
     const testCases = [
-      { hour: 4, expectedGreeting: "Good morning, pconrad" },
-      { hour: 14, expectedGreeting: "Good afternoon, pconrad" },
-      { hour: 19, expectedGreeting: "Good evening, pconrad" },
-      { hour: 12, expectedGreeting: "Good afternoon, pconrad" },
-      { hour: 18, expectedGreeting: "Good evening, pconrad" },
+      { hour: 4, expectedGreeting: "Good morning pconrad" },
+      { hour: 14, expectedGreeting: "Good afternoon pconrad" },
+      { hour: 19, expectedGreeting: "Good evening pconrad" },
+      { hour: 12, expectedGreeting: "Good afternoon pconrad" },
+      { hour: 18, expectedGreeting: "Good evening pconrad" },
     ];
   
     testCases.forEach(({ hour, expectedGreeting }) =>  {
