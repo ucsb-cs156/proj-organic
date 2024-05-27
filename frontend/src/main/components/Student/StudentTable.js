@@ -34,10 +34,6 @@ import OurTable from "main/components/OurTable"
          {
             Header: 'email',
             accessor: 'email',
-         },
-         {
-            Header: 'githubId',
-            accessor: 'githubId',
          }
   
      ];
