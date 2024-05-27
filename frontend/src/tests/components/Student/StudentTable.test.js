@@ -1,6 +1,5 @@
 import StudentTable from "main/components/Student/StudentTable"
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
-// import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import {  render, screen } from "@testing-library/react";
 import { studentFixture } from "fixtures/studentFixture";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -148,10 +147,6 @@ describe("StudentTable tests", () => {
 
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-
-    // const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    // expect(deleteButton).toBeInTheDocument();
-    // expect(deleteButton).toHaveClass("btn-danger");
 
   });
   
