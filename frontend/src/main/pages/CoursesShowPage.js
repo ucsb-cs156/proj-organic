@@ -12,45 +12,39 @@ export default function CoursesShowPage() {
 
     const { data: courses, error: _error, status: _status } =
         useBackend(
-            [`/api/courses?id=${id}`],
+            [],
             {
                 method: "GET", url: "/api/courses/get",
                 params: {
                     id
                 },
             },
-    []
+            []
         );
-        let checkLength = [];
-        if (courses && courses.length !== 0) {
-            checkLength = [courses];
-        } else if (courses) {
-            checkLength = courses;
-        }
 
     return (
         <BasicLayout>
             <div className="pt-2">
                 <h1>Individual Course Information</h1>
-                <CoursesTable courses={checkLength} currentUser={currentUser} />
+                <CoursesTable courses={courses ? [courses] : []} currentUser={currentUser} />
                 <br></br>
                 <p>As an admin or instructor, you can navigate from the /courses page to a specific page for each course. This allows you to see a page dedicated to your specific course, which includes functionalities such as uploading the student roster, adding students or staff, and other course-related tasks. </p>
                 <br></br>
                 {/* Course Roster Upload Link */}
-              <p>
-                <strong>Course Roster Upload:</strong>
-                <a href={`/courses/${id}/roster-upload`}>Upload Roster</a>
-              </p>
-              {/* Staff Roster */}
-              <p>
-                <strong>Staff Roster:</strong>
-                <a href={`/courses/${id}/staff-roster`}>View Staff</a>
-              </p>
-              {/* Student Roster */}
-              <p>
-                <strong>Student Roster:</strong>
-                <a href={`/courses/${id}/student-roster`}>View Students</a>
-              </p>
+                <p>
+                    <strong>Course Roster Upload:</strong>
+                    <a href={`/courses/${id}/roster-upload`}>Upload Roster</a>
+                </p>
+                {/* Staff Roster */}
+                <p>
+                    <strong>Staff Roster:</strong>
+                    <a href={`/courses/${id}/staff-roster`}>View Staff</a>
+                </p>
+                {/* Student Roster */}
+                <p>
+                    <strong>Student Roster:</strong>
+                    <a href={`/courses/${id}/student-roster`}>View Students</a>
+                </p>
             </div>
         </BasicLayout>
     );

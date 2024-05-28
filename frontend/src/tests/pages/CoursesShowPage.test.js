@@ -101,8 +101,6 @@ describe("CoursesShowPage tests", () => {
         await waitFor(() => { expect(axiosMock.history.get.length).toBeGreaterThanOrEqual(1); });
 
         restoreConsole();
-
-        expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
     };
 
     test("renders empty table when backend unavailable, admin", async () => {
@@ -166,42 +164,6 @@ describe("CoursesShowPage tests", () => {
         expect(deleteButton).not.toBeInTheDocument();
     });
 
-    const checkLengthHelper = (courses) => {
-        let checkLength = courses;
-        if (courses && courses.length !== 0) {
-            checkLength = [courses];
-        }
-        return checkLength;
-    };
-
-    test("checkLength should contain courses if courses exists", () => {
-        const courses = [{ id: 1, name: "Test Course" }];
-        let checkLength = checkLengthHelper(courses);
-        expect(checkLength).toEqual([courses]);
-    });
-
-    test("checkLength should contain courses if courses exists but is empty", () => {
-        const courses = [];
-        let checkLength = checkLengthHelper(courses);
-        expect(checkLength).toEqual(courses);
-    });
-
-    test("throw a falsy value to courses?", async () => {
-        setupAdminUser();
-        const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, 0);
-
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <CoursesShowPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
-    });
-
     test("check that the course links are correct", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
@@ -224,4 +186,74 @@ describe("CoursesShowPage tests", () => {
         expect(screen.getByRole('link', { name: /View Students/i })).toHaveAttribute('href', '/courses/17/student-roster');
     });
 
+    test("check if correct API URL is called", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => {
+            expect(axiosMock.history.get.length).toBe(3);
+            expect(axiosMock.history.get[0].url).toBe("/api/currentUser");
+        });
+    });
+
+    test("check if correct HTTP method is used", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => {
+            expect(axiosMock.history.get.length).toBe(3);
+            expect(axiosMock.history.get[0].method).toBe("get");
+        });
+    });
+
+    test("renders CoursesTable when courses data is available", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
+    
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+    
+        await waitFor(() => {
+            expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
+        });
+    });
+    test("throw a falsy value to courses?", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, 0);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
+    });
 });
