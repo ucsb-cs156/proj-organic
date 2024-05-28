@@ -17,7 +17,6 @@ import CourseIndexPage from "main/pages/CourseIndexPage";
 
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
 import SchoolIndexPage from "main/pages/SchoolIndexPage";
-// import SchoolEditPage from "main/pages/SchoolEditPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import NotFoundPage from "main/pages/NotFoundPage";
@@ -52,7 +51,6 @@ function App() {
     <>
       <Route path="/schools/create" element={<SchoolCreatePage />} />
       <Route path="/schools" element={<SchoolIndexPage />} />
-      {/* <Route path="/schools/edit/:id" element={<SchoolEditPage />} /> */}
     </>
   ) : null;
 
