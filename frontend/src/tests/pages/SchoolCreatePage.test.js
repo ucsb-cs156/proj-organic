@@ -65,7 +65,7 @@ describe("SchoolCreatePage tests", () => {
             termError: "error-1"
         };
 
-        axiosMock.onPost("/api/schools/post").reply(202, school);
+        axiosMock.onPost("/api/schools/post").reply(200, school);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -97,14 +97,14 @@ describe("SchoolCreatePage tests", () => {
 
         await waitFor(() => expect(axiosMock.history.post.length).toBe(1));
 
-        expect(axiosMock.history.post[0].params).toEqual(
-            {
+        expect(axiosMock.history.post[0].data).toEqual(
+            JSON.stringify({
                 "abbrev": "abb",
                 "name": "name-1",
                 "termRegex": "[WSMF]\\d\\d",
                 "termDescription": "F23",
                 "termError": "error-1"
-        });
+        }));
 
         expect(mockToast).toBeCalledWith("New school created - id: abb");
         expect(mockNavigate).toBeCalledWith({ "to": "/schools" });
