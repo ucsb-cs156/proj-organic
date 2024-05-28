@@ -201,6 +201,8 @@ describe("CoursesShowPage tests", () => {
 
         await waitFor(() => {
             expect(axiosMock.history.get.length).toBe(3);
+        });
+        await waitFor(() => {
             expect(axiosMock.history.get[0].url).toBe("/api/currentUser");
         });
     });
@@ -220,6 +222,8 @@ describe("CoursesShowPage tests", () => {
 
         await waitFor(() => {
             expect(axiosMock.history.get.length).toBe(3);
+        });
+        await waitFor(() => {
             expect(axiosMock.history.get[0].method).toBe("get");
         });
     });
@@ -244,7 +248,7 @@ describe("CoursesShowPage tests", () => {
     test("throw a falsy value to courses?", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, 0);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, []);
 
         render(
             <QueryClientProvider client={queryClient}>
@@ -254,6 +258,6 @@ describe("CoursesShowPage tests", () => {
             </QueryClientProvider>
         );
 
-        expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
+        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
     });
 });
