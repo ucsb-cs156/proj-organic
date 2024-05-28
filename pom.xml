@@ -411,7 +411,10 @@
                     <resource>
                         <directory>src/main/resources</directory>
                         <includes>                      
-                            <include>**/*.properties</include>                  
+                            <include>**/*.properties</include>
+                            <include>db/migration/changes/*.json</include>                  
+                            <include>db/migration/*.json</include>                  
+
                         </includes>
                     </resource>            
                 </resources>
