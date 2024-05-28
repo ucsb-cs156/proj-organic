@@ -20,12 +20,12 @@ import OurTable from "main/components/OurTable"
             accessor:'studentId',
          },
          {
-             Header: 'fname',
-             accessor: 'fname',
+             Header: 'firstName',
+             accessor: 'firstName',
          },
          {
-            Header: 'lname',
-            accessor: 'lname',
+            Header: 'lastName',
+            accessor: 'lastName',
          },
          {
             Header: 'email',

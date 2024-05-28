@@ -15,8 +15,8 @@ jest.mock('react-router-dom', () => ({
 
 describe("StudentTable tests", () => {
   const queryClient = new QueryClient();
-  const expectedHeaders = ["id", "courseId", "studentId", "fname", "lname", "email", "githubID"];
-  const expectedFields = ["id", "courseId", "studentId", "fname", "lname", "email", "githubID"]; 
+  const expectedHeaders = ["id", "courseId", "studentId", "firstName", "lastName", "email", "githubId"];
+  const expectedFields = ["id", "courseId", "studentId", "firstName", "lastName", "email", "githubId"]; 
   const testId = "StudentTable";
 
   test("Has the expected column headers and content", () => {
@@ -34,39 +34,38 @@ describe("StudentTable tests", () => {
 
     const expectedStudentcourse = studentFixtures.threeStudents;
     expectedStudentcourse.forEach((studentMember, index) => {
-      const courseIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-courseId`);
-      expect(courseIdCell).toHaveTextContent(studentMember.courseId);
+      const courseIdC = screen.getByTestId(`StudentTable-cell-row-${index}-col-courseId`);
+      expect(courseIdC).toHaveTextContent(studentMember.courseId);
     });
 
     const expectedStudentId = studentFixtures.threeStudents;
     expectedStudentId.forEach((studentMember, index) => {
-      const studentIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-studentId`);
-      expect(studentIdCell).toHaveTextContent(studentMember.studentId);
-    });
-
-    const expectedStudentgithub = studentFixtures.threeStudents;
-    expectedStudentgithub.forEach((studentMember, index) => {
-      const githubIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-githubId`);
-      expect(githubIdCell).toHaveTextContent(studentMember.githubId);
+      const studentIdC = screen.getByTestId(`StudentTable-cell-row-${index}-col-studentId`);
+      expect(studentIdC).toHaveTextContent(studentMember.studentId);
     });
 
     const expectedStudentFname = studentFixtures.threeStudents;
     expectedStudentFname.forEach((studentMember, index) => {
-      const fnameCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-fname`);
-      expect(fnameCell).toHaveTextContent(studentMember.fname);
+      const fnameC = screen.getByTestId(`StudentTable-cell-row-${index}-col-firstName`);
+      expect(fnameC).toHaveTextContent(studentMember.firstName);
     });
 
     const expectedStudentLname = studentFixtures.threeStudents;
     expectedStudentLname.forEach((studentMember, index) => {
-      const lnameCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-lname`);
-      expect(lnameCell).toHaveTextContent(studentMember.lname);
+      const lnameC = screen.getByTestId(`StudentTable-cell-row-${index}-col-lastName`);
+      expect(lnameC).toHaveTextContent(studentMember.lastName);
     });
-
 
     const expectedStudentemail = studentFixtures.threeStudents;
     expectedStudentemail.forEach((studentMember, index) => {
-      const emailCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-email`);
-      expect(emailCell).toHaveTextContent(studentMember.email);
+      const emailC = screen.getByTestId(`StudentTable-cell-row-${index}-col-email`);
+      expect(emailC).toHaveTextContent(studentMember.email);
+    });
+
+    const expectedStudentgithub = studentFixtures.threeStudents;
+    expectedStudentgithub.forEach((studentMember, index) => {
+      const githubIdC = screen.getByTestId(`StudentTable-cell-row-${index}-col-githubId`);
+      expect(githubIdC).toHaveTextContent(studentMember.githubId);
     });
 
     expectedHeaders.forEach((headerText) => {
