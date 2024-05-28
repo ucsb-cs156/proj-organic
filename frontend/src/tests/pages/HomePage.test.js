@@ -66,10 +66,11 @@ describe("HomePage tests", () => {
     
         const greetingElement = screen.getByTestId("homePage-title");
         expect(
-            greetingElement.textContent
-        ).toMatch(/Good (morning|afternoon|evening)/); 
+          greetingElement.textContent
+        ).toMatch(/Good (morning|afternoon|evening), Please Sign In First to Proceed/);
         const homePageInfoElement = screen.getByTestId("homePage-info");
         expect(homePageInfoElement).toBeInTheDocument();
+        
 
   // Check if the home page info is rendered correctly
         expect(homePageInfoElement).toHaveTextContent(
@@ -100,11 +101,11 @@ describe('HomePage greetings for not logged in users at different times of the d
       axiosMock.reset();
         });
     const testCases = [
-      { hour: 9, expectedGreeting: "Good morning" },
-      { hour: 14, expectedGreeting: "Good afternoon" },
-      { hour: 19, expectedGreeting: "Good evening" },
-      { hour: 12, expectedGreeting: "Good morning" },
-      { hour: 18, expectedGreeting: "Good afternoon" },
+      { hour: 9, expectedGreeting: "Good morning, Please Sign In First to Proceed" },
+      { hour: 14, expectedGreeting: "Good afternoon, Please Sign In First to Proceed" },
+      { hour: 19, expectedGreeting: "Good evening, Please Sign In First to Proceed" },
+      { hour: 12, expectedGreeting: "Good morning, Please Sign In First to Proceed" },
+      { hour: 18, expectedGreeting: "Good afternoon, Please Sign In First to Proceed" },
     ];
   
     testCases.forEach(({ hour, expectedGreeting }) => {
