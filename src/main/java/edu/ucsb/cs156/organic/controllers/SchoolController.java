@@ -113,7 +113,7 @@ public class SchoolController extends ApiController{
     public School postSchool(
         @Parameter(name = "school", description="school in json format") @RequestBody School school
         )
-        {
+    {
 
         if (!school.getAbbrev().equals(school.getAbbrev().toLowerCase())){
             throw new IllegalArgumentException("Invalid abbrev format. Abbrev must be all lowercase");
