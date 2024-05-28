@@ -12,6 +12,7 @@ export default function CoursesShowPage() {
 
     const { data: courses, error: _error, status: _status } =
         useBackend(
+            // Stryker disable next-line all : don't test internal caching of React Query
             [],
             {
                 method: "GET", url: "/api/courses/get",
@@ -19,6 +20,7 @@ export default function CoursesShowPage() {
                     id
                 },
             },
+            // Stryker disable next-line all : don't test internal caching of React Query
             []
         );
 
