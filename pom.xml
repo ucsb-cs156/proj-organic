@@ -298,11 +298,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <includeProperties>
-                        <param>^git.commit.message.short$</param>
-                        <param>^git.commit.id.(abbrev|full)$</param>
-                        <param>^git.build.(time|version)$</param>
-                    </includeProperties>
+                    <includeOnlyProperties>
+                        <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
+                        <includeOnlyProperty>^git.commit.message.short$</includeOnlyProperty>
+                    </includeOnlyProperties>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
                     <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
                     <commitIdGenerationMode>full</commitIdGenerationMode>
