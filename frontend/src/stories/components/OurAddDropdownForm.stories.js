@@ -7,9 +7,7 @@ export default {
 };
 
 const Template = (args) => {
-    //console.log(args);
     return <OurAddDropdownForm {...args} />;
-    //return <OurAddDropdownForm content = {[]} label = "empty"/>
 };
 
 export const Sample = Template.bind({});
