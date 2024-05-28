@@ -43,7 +43,15 @@ describe("HomePage tests", () => {
         );
 
         const title = screen.getByTestId("homePage-title");
-        expect(title).toHaveAttribute("style", "font-size: 75px; border-radius: 7px; background-color: white; opacity: 0.9;");
+        expect(title).toHaveStyle(`
+        font-size: 75px;
+        border-radius: 7px;
+        background-color: white;
+        opacity: 0.9;
+        padding: 10px;
+        text-align: center;
+        margin: 3rem 0;
+    `);
     });
 
     test('shows greeting for logged-in users with dynamic time of day', () => {
