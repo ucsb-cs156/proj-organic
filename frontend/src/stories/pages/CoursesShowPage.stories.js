@@ -14,8 +14,44 @@ export default {
 
 const Template = () => <CoursesShowPage storybook={true}/>;
 
-export const Default = Template.bind({});
-Default.parameters = {
+export const Empty = Template.bind({});
+Empty.parameters = {
+    msw: [
+        rest.get('/api/currentUser', (_req, res, ctx) => {
+            return res( ctx.json(apiCurrentUserFixtures.userOnly));
+        }),
+        rest.get('/api/systemInfo', (_req, res, ctx) => {
+            return res(ctx.json(systemInfoFixtures.showingNeither));
+        }),
+        rest.get('/api/courses/all', (_req, res, ctx) => {
+            return res(ctx.json([]));
+        })/*,
+        rest.put('/api/courses', async (req, res, ctx) => {
+            var reqBody = await req.text();
+            window.alert("PUT: " + req.url + " and body: " + reqBody);
+            return res(ctx.status(200),ctx.json({}));
+        })*/,
+    ],
+}
+export const ThreeItemsOrdinaryUser = Template.bind({});
+
+ThreeItemsOrdinaryUser.parameters = {
+    msw: [
+        rest.get('/api/currentUser', (_req, res, ctx) => {
+            return res( ctx.json(apiCurrentUserFixtures.userOnly));
+        }),
+        rest.get('/api/systemInfo', (_req, res, ctx) => {
+            return res(ctx.json(systemInfoFixtures.showingNeither));
+        }),
+        rest.get('/api/courses/all', (_req, res, ctx) => {
+            return res(ctx.json(coursesFixtures.threeCourses));
+        }),
+    ],
+}
+
+export const ThreeItemsAdminUser = Template.bind({});
+
+ThreeItemsAdminUser.parameters = {
     msw: [
         rest.get('/api/currentUser', (_req, res, ctx) => {
             return res( ctx.json(apiCurrentUserFixtures.adminUser));
@@ -23,12 +59,11 @@ Default.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/courses', (_req, res, ctx) => {
-            return res(ctx.json(coursesFixtures.threeCourses[0]));
+        rest.get('/api/ucsbdates/all', (_req, res, ctx) => {
+            return res(ctx.json(coursesFixtures.threeCourses));
         }),
-        rest.put('/api/courses', async (req, res, ctx) => {
-            var reqBody = await req.text();
-            window.alert("PUT: " + req.url + " and body: " + reqBody);
+        rest.delete('/api/ucsbdates', (req, res, ctx) => {
+            window.alert("DELETE: " + JSON.stringify(req.url));
             return res(ctx.status(200),ctx.json({}));
         }),
     ],
