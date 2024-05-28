@@ -1,3 +1,4 @@
+
 package edu.ucsb.cs156.organic.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -319,7 +320,6 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .termDescription("F24")
                             .termError("error")
                             .build();
-
             String requestBody = objectMapper.writeValueAsString(school);
             when(schoolRepository.save(eq(school))).thenReturn(school);  
 
@@ -352,17 +352,16 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .termDescription("F24")
                             .termError("error")
                             .build();
-
             String requestBody = objectMapper.writeValueAsString(school);
             when(schoolRepository.save(eq(school))).thenReturn(school);  
 
 
             // act
             MvcResult response = mockMvc.perform(post("/api/schools/post")
-                .with(csrf())
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("utf-8")
-                .content(requestBody))
+                            .with(csrf())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .characterEncoding("utf-8")
+                            .content(requestBody))
                             .andExpect(status().is(400)).andReturn(); // only admins can post
                 
 
