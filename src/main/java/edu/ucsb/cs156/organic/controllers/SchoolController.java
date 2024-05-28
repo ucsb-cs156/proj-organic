@@ -116,7 +116,6 @@ public class SchoolController extends ApiController{
     ){
 
         if (!school.getAbbrev().equals(school.getAbbrev().toLowerCase())){
-        if (!school.getAbbrev().equals(school.getAbbrev().toLowerCase())){
             throw new IllegalArgumentException("Invalid abbrev format. Abbrev must be all lowercase");
         }
 

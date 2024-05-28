@@ -257,22 +257,18 @@ public class SchoolControllerTests extends ControllerTestCase{
                             
 
             when(schoolRepository.findById(eq("ucsb"))).thenReturn(Optional.of(school1));
-            when(schoolRepository.findById(eq("ucsb"))).thenReturn(Optional.of(school1));
 
             // act
             MvcResult response = mockMvc.perform(
-                            delete("/api/schools?abbrev=ucsb")
                             delete("/api/schools?abbrev=ucsb")
                                             .with(csrf()))
                             .andExpect(status().isOk()).andReturn();
 
             // assert
             verify(schoolRepository, times(1)).findById("ucsb");
-            verify(schoolRepository, times(1)).findById("ucsb");
             verify(schoolRepository, times(1)).delete(any());
 
             Map<String, Object> json = responseToJson(response);
-            assertEquals("School with id ucsb deleted", json.get("message"));
             assertEquals("School with id ucsb deleted", json.get("message"));
         }
 
@@ -283,20 +279,16 @@ public class SchoolControllerTests extends ControllerTestCase{
                 // arrange
 
                 when(schoolRepository.findById(eq("ucsb"))).thenReturn(Optional.empty());
-                when(schoolRepository.findById(eq("ucsb"))).thenReturn(Optional.empty());
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                delete("/api/schools?abbrev=ucsb")
                                 delete("/api/schools?abbrev=ucsb")
                                                 .with(csrf()))
                                 .andExpect(status().isNotFound()).andReturn();
 
                 // assert
                 verify(schoolRepository, times(1)).findById("ucsb");
-                verify(schoolRepository, times(1)).findById("ucsb");
                 Map<String, Object> json = responseToJson(response);
-                assertEquals("School with id ucsb not found", json.get("message"));
                 assertEquals("School with id ucsb not found", json.get("message"));
         }
 
@@ -330,7 +322,6 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .termError("error")
                             .build();
             String requestBody = objectMapper.writeValueAsString(school);
-            String requestBody = objectMapper.writeValueAsString(school);
             when(schoolRepository.save(eq(school))).thenReturn(school);  
 
 
@@ -348,7 +339,6 @@ public class SchoolControllerTests extends ControllerTestCase{
             verify(schoolRepository, times(1)).save(school);
             String responseString = response.getResponse().getContentAsString();
             assertEquals(requestBody, responseString);
-            assertEquals(requestBody, responseString);
             }
     
     
@@ -358,13 +348,12 @@ public class SchoolControllerTests extends ControllerTestCase{
             // arrange
 
             School school = School.builder()
-                            .abbrev("ucsb")
+                            .abbrev("UCSB")
                             .name("Ubarbara")
                             .termRegex("[WSMF]\\d\\d")
                             .termDescription("F24")
                             .termError("error")
                             .build();
-            String requestBody = objectMapper.writeValueAsString(school);
             String requestBody = objectMapper.writeValueAsString(school);
             when(schoolRepository.save(eq(school))).thenReturn(school);  
 
