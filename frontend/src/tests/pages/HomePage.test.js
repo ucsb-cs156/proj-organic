@@ -114,6 +114,9 @@ describe('HomePage greetings for not logged in users at different times of the d
 
         const greetingElement = screen.getByTestId("homePage-title");
         expect(greetingElement.textContent).toMatch(new RegExp(expectedGreeting, 'i'));
+        expect(
+          greetingElement.textContent
+        ).toMatch(/Good (morning|afternoon|evening)/); 
         const homePageInfoElement = screen.getByTestId("homePage-info");
         expect(homePageInfoElement).toBeInTheDocument();
 
@@ -125,7 +128,62 @@ describe('HomePage greetings for not logged in users at different times of the d
     });
   });
 
+  describe('HomePage greetings for not logged in users at specific time', () => {
+    const originalDate = global.Date;
+    const axiosMock = new AxiosMockAdapter(axios);
+    const queryClient = new QueryClient();
 
+    const mockDateWithHour = (hour) => {
+      global.Date = class extends Date {
+
+        getHours() {
+          return hour;
+        }
+        getDate() { return originalDate.now(); }
+        getMonth() { return originalDate.now(); }
+        getFullYear() { return originalDate.now(); }
+      };
+    };
+  
+    afterEach(() => {
+      global.Date = originalDate;
+      axiosMock.reset();
+        });
+    const testCases = [
+      { hour: 9, expectedGreeting: "Good morning" },
+    ];
+  
+    testCases.forEach(({ hour, expectedGreeting }) => {
+      test(`shows "${expectedGreeting}" for not logged-in user at ${hour} hours`, () => {
+        mockDateWithHour(hour);
+        axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
+        render(
+          <QueryClientProvider client={queryClient}>
+            <MemoryRouter>
+              <HomePage />
+            </MemoryRouter>
+          </QueryClientProvider>
+        );
+        expect(screen.getByTestId("HomePage-main-div")).toBeInTheDocument();
+
+        const greetingElement = screen.getByTestId("homePage-title");
+        //expect(greetingElement.textContent).toMatch(new RegExp(expectedGreeting, 'i'));
+        expect(greetingElement).toHaveTextContent(
+          "Good morning"
+        );
+        expect(
+          greetingElement.textContent
+        ).toMatch(/Good (morning|afternoon|evening)/); 
+        const homePageInfoElement = screen.getByTestId("homePage-info");
+        expect(homePageInfoElement).toBeInTheDocument();
+
+  // Check if the home page info is rendered correctly
+        expect(homePageInfoElement).toHaveTextContent(
+          "This app is intended as a replacement for the ucsb-cs-github-linker app used in many courses at UCSB, as well as some courses at other universities."
+        );
+      });
+    });
+  });
 
   describe('HomePage greetings for logged-in users at different times of the day', () => {
     const originalDate = global.Date;
