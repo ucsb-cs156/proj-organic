@@ -11,11 +11,10 @@ export default function SchoolCreatePage({storybook=false}) {
         method: "POST",
         params: {
         name: school.name,
-        school: school.school,
-        term: school.term,
-        startDate: school.startDate,
-        endDate: school.endDate,
-        githubOrg: school.githubOrg
+        abbrev: school.abbrev,
+        termRegex: school.termRegex,
+        termDescription: school.termDescription,
+        termError: school.termError
         }
     });
 
