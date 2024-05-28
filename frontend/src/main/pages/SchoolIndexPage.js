@@ -1,6 +1,5 @@
 import React from 'react'
 import { useBackend } from 'main/utils/useBackend';
-//import { useNavigate } from 'react-router-dom';
 
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import SchoolTable from 'main/components/School/SchoolTable';
