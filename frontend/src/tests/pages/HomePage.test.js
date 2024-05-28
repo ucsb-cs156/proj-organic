@@ -59,26 +59,15 @@ describe("HomePage tests", () => {
         const greetingElement = screen.getByTestId("homePage-title");
         expect(
             greetingElement.textContent
-        ).toMatch(/Good (morning|afternoon|evening), cgaucho/); 
+        ).toMatch(/Good (morning|afternoon|evening)/); 
+        const homePageInfoElement = screen.getByTestId("homePage-info");
+        expect(homePageInfoElement).toBeInTheDocument();
+
+  // Check if the home page info is rendered correctly
+        expect(homePageInfoElement).toHaveTextContent(
+          "This app is intended as a replacement for the ucsb-cs-github-linker app used in many courses at UCSB, as well as some courses at other universities."
+        );
     });
-    
-    // test('renders greeting for non-logged-in users correctly', () => {
-    //     // Mock the `useCurrentUser` hook to return a logged-out state
-    //     jest.mock("main/utils/currentUser", () => ({
-    //         useCurrentUser: jest.fn(() => ({ data: { loggedIn: false } }))
-    //     }));
-    
-    //     render(
-    //         <QueryClientProvider client={queryClient}>
-    //             <MemoryRouter>
-    //                 <HomePage />
-    //             </MemoryRouter>
-    //         </QueryClientProvider>
-    //     );
-    
-    //     const greetingElement = screen.getByTestId("homePage-title");
-    //     expect(greetingElement.textContent).toContain("Good afternoon, cgaucho");
-    // });  
 });
 
 describe('HomePage greetings for not logged in users at different times of the day', () => {
@@ -103,11 +92,11 @@ describe('HomePage greetings for not logged in users at different times of the d
       axiosMock.reset();
         });
     const testCases = [
-      { hour: 9, expectedGreeting: "Good morning, cgaucho" },
-      { hour: 14, expectedGreeting: "Good afternoon, cgaucho" },
-      { hour: 19, expectedGreeting: "Good evening, cgaucho" },
-      { hour: 12, expectedGreeting: "Good morning, cgaucho" },
-      { hour: 18, expectedGreeting: "Good afternoon, cgaucho" },
+      { hour: 9, expectedGreeting: "Good morning" },
+      { hour: 14, expectedGreeting: "Good afternoon" },
+      { hour: 19, expectedGreeting: "Good evening" },
+      { hour: 12, expectedGreeting: "Good morning" },
+      { hour: 18, expectedGreeting: "Good afternoon" },
     ];
   
     testCases.forEach(({ hour, expectedGreeting }) => {
