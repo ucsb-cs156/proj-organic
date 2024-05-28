@@ -88,7 +88,7 @@ export default function OurAddDropdownForm({
     return (
         <div>
             {label}
-            {content.length != 0 && (
+            {content.length !== 0 && (
                 <div>
                     <Form.Control
                         data-testid={`${testId}-test-dropdown-form`}
@@ -115,7 +115,7 @@ export default function OurAddDropdownForm({
                                         label={innerLabel}
                                         isSelected={
                                             selectedContent &&
-                                            key == selectedContent.key
+                                            key === selectedContent.key
                                         }
                                         rawKey = {key}
                                         // Stryker disable next-line all
@@ -128,7 +128,7 @@ export default function OurAddDropdownForm({
                     )}
                 </div>
             )}
-            {content.length == 0 && (
+            {content.length === 0 && (
                 <div>
                     <Form.Control
                         data-testid={`${testId}-test-dropdown-form`}
