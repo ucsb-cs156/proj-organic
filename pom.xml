@@ -407,6 +407,17 @@
                         </executions>
                     </plugin>
                 </plugins>
+                <resources>     
+                    <resource>
+                        <directory>src/main/resources</directory>
+                        <includes>                      
+                            <include>**/*.properties</include>
+                            <include>db/migration/changes/*.json</include>                  
+                            <include>db/migration/*.json</include>                  
+
+                        </includes>
+                    </resource>            
+                </resources>
             </build>
         </profile>
     </profiles>
