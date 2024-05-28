@@ -248,7 +248,7 @@ describe("CoursesShowPage tests", () => {
     test("throw a falsy value to courses?", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, []);
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, 0);
 
         render(
             <QueryClientProvider client={queryClient}>
