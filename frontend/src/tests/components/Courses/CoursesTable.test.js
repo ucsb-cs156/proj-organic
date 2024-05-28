@@ -327,6 +327,10 @@ describe("UserTable tests", () => {
 
     const totalCoursesElement = screen.getByText("Total Courses: 3"); // Assuming there are 3 courses in the fixture
     expect(totalCoursesElement).toBeInTheDocument();
+
+    await waitFor(() => {
+      expect(mockedNavigate).toHaveBeenCalledWith('/courses/show/1');
+    });
   });
 
 });
