@@ -139,7 +139,6 @@ describe('OurAddDropdownForm Tests', () => {
     });
 
     test('renders correctly with null onChangeFunc', async () => {
-        const changeFunc = jest.fn();
         await waitFor(() =>
             expect(() => {
                 render(
