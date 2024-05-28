@@ -7,6 +7,7 @@ import AxiosMockAdapter from "axios-mock-adapter";
 import HomePage from "main/pages/HomePage";
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
+const testId = "homePage";
 
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
@@ -18,6 +19,7 @@ jest.mock("react-router-dom", () => ({
 }));
 
 describe("HomePage tests", () => {
+    
     const queryClient = new QueryClient();
     const axiosMock = new AxiosMockAdapter(axios);
 
@@ -42,7 +44,7 @@ describe("HomePage tests", () => {
             </QueryClientProvider>
         );
 
-        const title = screen.getByTestId("homePage-title");
+        const title = screen.getByTestId(`${testId}-title`);
         expect(title).toHaveStyle(`
         font-size: 75px;
         border-radius: 7px;
@@ -51,6 +53,16 @@ describe("HomePage tests", () => {
         padding: 10px;
         text-align: center;
         margin: 3rem 0;
+    `);
+       const info = screen.getByTestId(`${testId}-info`);
+        expect(info).toHaveStyle(`
+        padding: 20px;
+        borderRadius: 7px;
+        margin: 20px 0;
+    `);
+    const main = screen.getByTestId(`${testId}-main-div`);
+        expect(main).toHaveStyle(`
+        padding: 15px;
     `);
     });
 
@@ -64,11 +76,11 @@ describe("HomePage tests", () => {
             </QueryClientProvider>
         );
     
-        const greetingElement = screen.getByTestId("homePage-title");
+        const greetingElement = screen.getByTestId(`${testId}-title`);
         expect(
           greetingElement.textContent
         ).toMatch(/Good (morning|afternoon|evening), Please Sign In First to Proceed/);
-        const homePageInfoElement = screen.getByTestId("homePage-info");
+        const homePageInfoElement = screen.getByTestId(`${testId}-info`);
         expect(homePageInfoElement).toBeInTheDocument();
         
 
@@ -119,14 +131,14 @@ describe('HomePage greetings for not logged in users at different times of the d
             </MemoryRouter>
           </QueryClientProvider>
         );
-        expect(screen.getByTestId("HomePage-main-div")).toBeInTheDocument();
+        expect(screen.getByTestId(`${testId}-main-div`)).toBeInTheDocument();
 
-        const greetingElement = screen.getByTestId("homePage-title");
+        const greetingElement = screen.getByTestId(`${testId}-title`);
         expect(greetingElement.textContent).toMatch(new RegExp(expectedGreeting, 'i'));
         expect(
           greetingElement.textContent
         ).toMatch(/Good (morning|afternoon|evening)/); 
-        const homePageInfoElement = screen.getByTestId("homePage-info");
+        const homePageInfoElement = screen.getByTestId(`${testId}-info`);
         expect(homePageInfoElement).toBeInTheDocument();
 
   // Check if the home page info is rendered correctly
@@ -173,9 +185,9 @@ describe('HomePage greetings for not logged in users at different times of the d
             </MemoryRouter>
           </QueryClientProvider>
         );
-        expect(screen.getByTestId("HomePage-main-div")).toBeInTheDocument();
+        expect(screen.getByTestId(`${testId}-main-div`)).toBeInTheDocument();
 
-        const greetingElement = screen.getByTestId("homePage-title");
+        const greetingElement = screen.getByTestId(`${testId}-title`);
         //expect(greetingElement.textContent).toMatch(new RegExp(expectedGreeting, 'i'));
         expect(greetingElement).toHaveTextContent(
           "Good morning"
@@ -183,7 +195,7 @@ describe('HomePage greetings for not logged in users at different times of the d
         expect(
           greetingElement.textContent
         ).toMatch(/Good (morning|afternoon|evening)/); 
-        const homePageInfoElement = screen.getByTestId("homePage-info");
+        const homePageInfoElement = screen.getByTestId(`${testId}-info`);
         expect(homePageInfoElement).toBeInTheDocument();
 
   // Check if the home page info is rendered correctly
@@ -246,11 +258,11 @@ describe('HomePage greetings for not logged in users at different times of the d
         const delay = ms => new Promise(res => setTimeout(res, ms));
         await delay(20);
 
-        expect(screen.getByTestId("HomePage-main-div")).toBeInTheDocument();
+        expect(screen.getByTestId(`${testId}-main-div`)).toBeInTheDocument();
 
-        const greetingElement = screen.getByTestId("homePage-title");
+        const greetingElement = screen.getByTestId(`${testId}-title`);
         expect(greetingElement.textContent).toMatch(new RegExp(expectedGreeting, 'i'));
-        const homePageInfoElement = screen.getByTestId("homePage-info");
+        const homePageInfoElement = screen.getByTestId(`${testId}-info`);
         expect(homePageInfoElement).toBeInTheDocument();
 
   // Check if the home page info is rendered correctly

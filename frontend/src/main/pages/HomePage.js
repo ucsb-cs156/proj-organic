@@ -18,7 +18,7 @@ const styles = {
         margin: "20px 0",
     },
     main: {
-        padding: "20px",
+        padding: "15px",
     }
 };
 
@@ -37,19 +37,18 @@ export default function HomePage() {
 
     return (
         <BasicLayout>
-            <div data-testid="HomePage-main-div" style={styles.main}>
+            <div data-testid="homePage-main-div" style={styles.main}>
                 <h1 
                     data-testid="homePage-title" 
                     style={styles.greeting}
                 >
                     {greeting}, {username}
                 </h1>
-                <div data-testid="info-section" style={styles.infoSection}>
-                    <h2>About Organic</h2>
-                    <h2 data-testid="homePage-info">
-                        This app is intended as a replacement for the <a href="https://ucsb-cs-github-linker.herokuapp.com">ucsb-cs-github-linker</a> app used in many courses at UCSB, as well as some courses at other universities.
-                    </h2>
-                </div>
+                
+                <h2 data-testid="homePage-info" style={styles.infoSection}>
+                    This app is intended as a replacement for the <a href="https://ucsb-cs-github-linker.herokuapp.com">ucsb-cs-github-linker</a> app used in many courses at UCSB, as well as some courses at other universities.
+                </h2>
+                
             </div>
         </BasicLayout>
     );
