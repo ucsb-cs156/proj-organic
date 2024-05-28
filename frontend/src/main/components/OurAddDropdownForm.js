@@ -2,7 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 
-// Stryker disable all
 function DropdownOption({ label, isSelected, onClickFunc, testid, rawKey }) {
     const [isHovered, setIsHovered] = useState(false);
     const handleMouseEnter = () => {
@@ -11,12 +10,15 @@ function DropdownOption({ label, isSelected, onClickFunc, testid, rawKey }) {
     const handleMouseLeave = () => {
         setIsHovered(false);
     };
+    // Stryker disable all
     const divStyle = {
         backgroundColor: isHovered ? 'lightgreen' : 'white',
         transition: 'backgroundColor 0.25s ease',
         'paddingLeft': '2px',
         'paddingRight': '2px',
+        'cursor': 'pointer',
     };
+    // Stryker restore all
     let mainOption;
     if (!isSelected) {
         mainOption = (
@@ -32,9 +34,11 @@ function DropdownOption({ label, isSelected, onClickFunc, testid, rawKey }) {
             </div>
         );
     } else {
+        // Stryker disable all
         let altStyle = divStyle;
         altStyle['backgroundColor'] = 'green';
         altStyle['color'] = 'white';
+        // Stryker restore all
         mainOption = (
             <div key={rawKey} data-testid={testid} style={altStyle} onClick={onClickFunc}>
                 {label}
@@ -43,7 +47,6 @@ function DropdownOption({ label, isSelected, onClickFunc, testid, rawKey }) {
     }
     return <div>{mainOption}</div>;
 }
-// Stryker restore all
 
 export default function OurAddDropdownForm({
     content,
@@ -53,7 +56,6 @@ export default function OurAddDropdownForm({
     onChangeFunc = null,
 }) {
     // Stryker disable all
-    // make it the so content is in alphabetical order
     content.sort((a, b) => {
         if (a.label < b.label) {
             return -1;
@@ -63,7 +65,8 @@ export default function OurAddDropdownForm({
         }
         return 0;
     });
-     // Stryker restore all
+    // Stryker restore all
+    
     const [selectedContent, changeSelectedContent] = useState(basis);
     const [showingDropdown, changeShowingDropdown] = useState(false);
 
@@ -133,10 +136,8 @@ export default function OurAddDropdownForm({
                     <Form.Control
                         data-testid={`${testId}-test-dropdown-form`}
                         type="text"
-                        // Stryker disable all
                         disabled={true}
                         style={{ cursor: 'not-allowed' }}
-                        // Stryker enable all
                     />
                 </div>
             )}
