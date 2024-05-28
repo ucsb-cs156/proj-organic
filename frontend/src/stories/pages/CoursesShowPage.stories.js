@@ -23,7 +23,7 @@ Empty.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/courses/all', (_req, res, ctx) => {
+        rest.get('/api/courses/get', (_req, res, ctx) => {
             return res(ctx.json([]));
         })/*,
         rest.put('/api/courses', async (req, res, ctx) => {
@@ -33,9 +33,9 @@ Empty.parameters = {
         })*/,
     ],
 }
-export const ThreeItemsOrdinaryUser = Template.bind({});
+export const OrdinaryUser = Template.bind({});
 
-ThreeItemsOrdinaryUser.parameters = {
+OrdinaryUser.parameters = {
     msw: [
         rest.get('/api/currentUser', (_req, res, ctx) => {
             return res( ctx.json(apiCurrentUserFixtures.userOnly));
@@ -43,15 +43,15 @@ ThreeItemsOrdinaryUser.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/courses/all', (_req, res, ctx) => {
-            return res(ctx.json(coursesFixtures.threeCourses));
+        rest.get('/api/courses/get', (_req, res, ctx) => {
+            return res(ctx.json(coursesFixtures.oneCourse));
         }),
     ],
 }
 
-export const ThreeItemsAdminUser = Template.bind({});
+export const AdminUser = Template.bind({});
 
-ThreeItemsAdminUser.parameters = {
+AdminUser.parameters = {
     msw: [
         rest.get('/api/currentUser', (_req, res, ctx) => {
             return res( ctx.json(apiCurrentUserFixtures.adminUser));
@@ -59,15 +59,24 @@ ThreeItemsAdminUser.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/ucsbdates/all', (_req, res, ctx) => {
-            return res(ctx.json(coursesFixtures.threeCourses));
-        }),
-        rest.delete('/api/ucsbdates', (req, res, ctx) => {
-            window.alert("DELETE: " + JSON.stringify(req.url));
-            return res(ctx.status(200),ctx.json({}));
-        }),
+        rest.get('/api/courses/get', (_req, res, ctx) => {
+            return res(ctx.json(coursesFixtures.oneCourse));
+        })
     ],
 }
 
+export const InstructorUser = Template.bind({});
 
-
+InstructorUser.parameters = {
+    msw: [
+        rest.get('/api/currentUser', (_req, res, ctx) => {
+            return res( ctx.json(apiCurrentUserFixtures.instructorUser));
+        }),
+        rest.get('/api/systemInfo', (_req, res, ctx) => {
+            return res(ctx.json(systemInfoFixtures.showingNeither));
+        }),
+        rest.get('/api/courses/get', (_req, res, ctx) => {
+            return res(ctx.json(coursesFixtures.oneCourse));
+        })
+    ],
+}
