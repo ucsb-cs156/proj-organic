@@ -1,5 +1,6 @@
 import React from 'react';
 import OurAddDropdownForm from 'main/components/OurAddDropdownForm';
+import { schoolsListFixtures } from 'fixtures/schoolsListFixtures';
 
 export default {
     title: 'components/OurAddDropdownForm',
@@ -22,3 +23,30 @@ Sample.args = {
     basis : {},
     testId : "test-sample-dropdown",
 };
+
+export const Empty = Template.bind({});
+
+Empty.args = {
+    content: [],
+    label : "Sample Empty Dropdown",
+    basis : {},
+    testId : "test-sample-dropdown",
+};
+
+export const OneSchoolRender = Template.bind({});
+
+OneSchoolRender.args = {
+    basis: {},
+    content: schoolsListFixtures.oneSchool,
+    testId : "test-sample-dropdown",
+    label : "Sample One Dropdown",
+};
+
+export const TenSchoolRender = Template.bind({});
+
+TenSchoolRender.args = {
+    basis: schoolsListFixtures.tenSchool,
+    content: schoolsListFixtures.tenSchool,
+    testId : "test-sample-dropdown",
+    label : "Sample Ten Dropdown",
+}
