@@ -183,6 +183,13 @@ describe('HomePage greetings for not logged in users at different times of the d
 
         const greetingElement = screen.getByTestId("homePage-title");
         expect(greetingElement.textContent).toMatch(new RegExp(expectedGreeting, 'i'));
+        const homePageInfoElement = screen.getByTestId("homePage-info");
+        expect(homePageInfoElement).toBeInTheDocument();
+
+  // Check if the home page info is rendered correctly
+        expect(homePageInfoElement).toHaveTextContent(
+          "This app is intended as a replacement for the ucsb-cs-github-linker app used in many courses at UCSB, as well as some courses at other universities."
+        );
       });
     });
   });
