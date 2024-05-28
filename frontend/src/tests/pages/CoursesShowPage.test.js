@@ -239,11 +239,61 @@ describe("CoursesShowPage tests", () => {
         let checkLength = [];
         if (courses && courses.length !== 0) {
             checkLength = [courses];
-        } else if (courses) {
+        } else {
             checkLength = courses;
         }
 
         expect(checkLength).toEqual([courses]);
+    });
+
+    test("checkLength should contain courses if courses exists but is empty", () => {
+        const courses = [];
+        let checkLength = courses;
+        if (courses && courses.length !== 0) {
+            checkLength = [courses];
+        } else {
+            checkLength = courses;
+        }
+
+        expect(checkLength).toEqual(courses);
+    });
+
+    test("throw a falsy value to courses?", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, 0);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        expect(screen.queryByTestId(`${testId}-cell-row-0-col-id`)).not.toBeInTheDocument();
+    });
+
+    test("check that the course links are correct", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
+        });
+
+        expect(screen.getByText("Upload Roster").closest('a')).toHaveAttribute('href', '/courses/17/roster-upload');
+        expect(screen.getByText("View Staff").closest('a')).toHaveAttribute('href', '/courses/17/staff-roster');
+        expect(screen.getByText("View Students").closest('a')).toHaveAttribute('href', '/courses/17/student-roster');
     });
 
 });
