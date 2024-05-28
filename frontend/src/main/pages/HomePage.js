@@ -15,11 +15,12 @@ export default function HomePage() {
     };
     let username;
     const greeting = getPartOfDayGreeting();
-    if (!currentUser || !currentUser.loggedIn){
-        username = ""
+    if (!(!currentUser || !currentUser.loggedIn)){
+        
+        username = ", " + currentUser.root.user.githubLogin
     }
     else{
-        username = ", " + currentUser.root.user.githubLogin
+        username = ""
     }
 
 
