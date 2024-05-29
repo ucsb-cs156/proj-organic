@@ -122,3 +122,5 @@ public class SchoolController extends ApiController{
 
         return savedSchool;
     }
+
+}
