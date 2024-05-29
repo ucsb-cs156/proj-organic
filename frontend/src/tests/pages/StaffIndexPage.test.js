@@ -66,9 +66,9 @@ describe("StaffIndexPage tests", () => {
 
         // assert
         await waitFor( ()=>{
-            expect(screen.getByText(/Create Staff/)).toBeInTheDocument();
+            expect(screen.getByText(/Add Staff/)).toBeInTheDocument();
         });
-        const button = screen.getByText(/Create Staff/);
+        const button = screen.getByText(/Add Staff/);
         expect(button).toHaveAttribute("href", "/staff/create");
         expect(button).toHaveAttribute("style", "float: right;");
     });
@@ -90,9 +90,9 @@ describe("StaffIndexPage tests", () => {
 
         // assert
         await waitFor( ()=>{
-            expect(screen.getByText(/Create Staff/)).toBeInTheDocument();
+            expect(screen.getByText(/Add Staff/)).toBeInTheDocument();
         });
-        const button = screen.getByText(/Create Staff/);
+        const button = screen.getByText(/Add Staff/);
         expect(button).toHaveAttribute("href", "/staff/create");
         expect(button).toHaveAttribute("style", "float: right;");
     });
@@ -114,7 +114,7 @@ describe("StaffIndexPage tests", () => {
 
         // assert
         await waitFor(() => {
-            expect(screen.queryByText(/Create Staff/)).not.toBeInTheDocument();
+            expect(screen.queryByText(/Add Staff/)).not.toBeInTheDocument();
         });
     });
 
@@ -290,7 +290,7 @@ describe("StaffIndexPage tests", () => {
 
         const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
         expect(deleteButton).not.toBeInTheDocument();
-        expect(screen.queryByText(/Create Staff/)).not.toBeInTheDocument();
+        expect(screen.queryByText(/Add Staff/)).not.toBeInTheDocument();
 
     });
 

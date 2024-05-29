@@ -16,7 +16,7 @@ export default function StaffIndexPage() {
               href="/staff/create"
               style={{ float: "right" }}
           >
-              Create Staff 
+              Add Staff 
           </Button>
       )
 
