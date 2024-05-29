@@ -118,6 +118,10 @@ public class SchoolController extends ApiController{
             throw new IllegalArgumentException("Invalid abbrev format. Abbrev must be all lowercase");
         }
 
+        if (!school.getTermDescription().matches(school.getTermRegex())) {
+            throw new IllegalArgumentException("Invalid termDescription format. It must follow the pattern " + school.getTermRegex());
+        }
+
         School savedSchool = schoolRepository.save(school);
 
         return savedSchool;

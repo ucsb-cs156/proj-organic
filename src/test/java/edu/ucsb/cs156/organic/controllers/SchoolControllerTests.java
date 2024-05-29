@@ -324,10 +324,9 @@ public class SchoolControllerTests extends ControllerTestCase{
 
 
             // act
-            MvcResult response = mockMvc.perform(
-                post("/api/schools/post?abbrev=ucsb&name=Ubarbara&termRegex=[WSMF]\\d\\d&termDescription=F24&termError=error")
-                                .with(csrf()))
-                .andExpect(status().isOk()).andReturn();
+            MvcResult response = mockMvc.perform(post("/api/schools/post")
+                            .contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8").content(requestBody).with(csrf()))
+                            .andExpect(status().isOk()).andReturn(); // only admins can post
                 
 
             // assert
