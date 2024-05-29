@@ -1,5 +1,7 @@
 import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable"
+import { useBackendMutation } from "main/utils/useBackend";
+import { cellToAxiosParamsDelete, onDeleteSuccess } from "main/components/Utils/CoursesUtils"
 import { useNavigate } from "react-router-dom";
 import { hasRole } from "main/utils/currentUser";
 
@@ -52,6 +54,7 @@ export default function ShowTable({ courses, currentUser }) {
         columns.push(ButtonColumn("Staff", "primary", staffCallback, "ShowTable"));
         columns.push(ButtonColumn("Edit", "#AAFF00", editCallback, "ShowTable"));
     }
+
 
 
     return (

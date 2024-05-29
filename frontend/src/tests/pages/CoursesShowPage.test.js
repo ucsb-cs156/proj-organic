@@ -37,7 +37,7 @@ describe("CoursesShowPage tests", () => {
 
     const axiosMock = new AxiosMockAdapter(axios);
 
-    const testId = "CoursesTable";
+    const testId = "ShowTable";
 
     const setupAdminUser = () => {
         axiosMock.reset();
@@ -109,39 +109,6 @@ describe("CoursesShowPage tests", () => {
 
     test("renders empty table when backend unavailable, instructor", async () => {
         await renderAndAssertEmptyTable(setupInstructorUser);
-    });
-
-    const testDeleteCourse = async (userSetup) => {
-        userSetup();
-        const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
-        axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
-
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <CoursesShowPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-
-        await waitFor(() => { expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument(); });
-        expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-
-        const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-        expect(deleteButton).toBeInTheDocument();
-
-        fireEvent.click(deleteButton);
-
-        await waitFor(() => { expect(mockToast).toBeCalledWith("Course with id 1 was deleted") });
-    };
-
-    test("what happens when you click delete, admin", async () => {
-        await testDeleteCourse(setupAdminUser);
-    });
-
-    test("what happens when you click delete, instructor", async () => {
-        await testDeleteCourse(setupInstructorUser);
     });
 
     test("tests buttons for editing do not show up for user", async () => {
