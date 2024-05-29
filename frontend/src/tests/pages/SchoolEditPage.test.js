@@ -164,7 +164,7 @@ describe("SchoolEditPage tests", () => {
             );
 
             const abbrevField = screen.getByTestId("SchoolForm-abbrev");
-            const nameField = screen.getByTestId("Scho`olForm-name");
+            const nameField = screen.getByTestId("SchoolForm-name");
             const termRegexField = screen.getByTestId("SchoolForm-termRegex");
             const termDescriptionField = screen.getByTestId("SchoolForm-termDescription");
             const termErrorField = screen.getByTestId("SchoolForm-termError");
