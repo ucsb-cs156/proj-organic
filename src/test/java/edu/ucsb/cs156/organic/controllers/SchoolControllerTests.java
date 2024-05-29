@@ -320,7 +320,7 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .termDescription("F24")
                             .termError("error")
                             .build();
-
+            String requestBody = objectMapper.writeValueAsString(school);
             when(schoolRepository.save(eq(school))).thenReturn(school);  
 
 
