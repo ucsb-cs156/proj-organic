@@ -373,7 +373,7 @@ public class SchoolControllerTests extends ControllerTestCase{
             // arrange
 
             School school = School.builder()
-                            .abbrev("ucsb")
+                            .abbrev("UCSB")
                             .name("Ubarbara")
                             .termRegex("[WSMF]\\d\\d")
                             .termDescription("F24")
