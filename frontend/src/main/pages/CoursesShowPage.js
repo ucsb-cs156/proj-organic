@@ -31,7 +31,7 @@ export default function CoursesShowPage() {
                 <h1>Individual Course Information</h1>
                 <CoursesTable courses={[courses]} currentUser={currentUser} />
                 <br></br>
-                <p>As an admin or instructor, you can navigate from the /courses page to a specific page for each course. This allows you to see a page dedicated to your specific course, which includes functionalities such as uploading the student roster, adding students or staff, and other course-related tasks. </p>
+                <p>As an admin or instructor, you can navigate from the main courses page to a specific page for each course. This allows you to see a page dedicated to your specific course, which includes functionalities such as uploading the student roster, adding students or staff, and other course-related tasks. </p>
                 <br></br>
                 {/* Course Roster Upload Link */}
                 <p>
