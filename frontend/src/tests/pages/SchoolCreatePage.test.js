@@ -58,7 +58,7 @@ describe("SchoolCreatePage tests", () => {
 
         const queryClient = new QueryClient();
         const school = {
-            abbrev: "UCSB",
+            abbrev: "ucsb",
             name: "UC Santa Barbara",
             termRegex: "[WSMF]\\d\\d",
             termDescription: "s24",
@@ -86,7 +86,7 @@ describe("SchoolCreatePage tests", () => {
         const submitButton = screen.getByTestId("SchoolForm-submit");
 
 
-        fireEvent.change(abbrevField, { target: { value: 'UCSB' } });
+        fireEvent.change(abbrevField, { target: { value: 'ucsb' } });
         fireEvent.change(nameField, { target: { value: 'UC Santa Barbara' } });
         fireEvent.change(termRegexField, { target: { value: '[WSMF]\\d\\d' } });
         fireEvent.change(termDescriptionField, { target: { value: 's24' } });
@@ -99,7 +99,7 @@ describe("SchoolCreatePage tests", () => {
 
         expect(axiosMock.history.post[0].data).toEqual(
             JSON.stringify({
-                "abbrev": "UCSB",
+                "abbrev": "ucsb",
                 "name": "UC Santa Barbara",
                 "termRegex": "[WSMF]\\d\\d",
                 "termDescription": "s24",
