@@ -2,8 +2,12 @@ import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable"
 import { formatTime } from "main/utils/dateUtils";
 import { useBackendMutation } from "main/utils/useBackend";
+import { useCurrentUser } from "main/utils/currentUser"; 
+
 
 export default function UsersTable({ users, showToggleButtons = false }) {
+    const currentUser = useCurrentUser();
+
     // toggleAdmin
     function cellToAxiosParamsToggleAdmin(cell) {
         return {
@@ -23,11 +27,18 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     );
     // Stryker restore all 
    
+	// Stryker disable next-line all : TODO try to make a good test for this
+    const toggleAdminCallback = async (cell) => {
+        const userGithubLogin = cell.row.values.githubLogin;
 
-
-    // Stryker disable next-line all : TODO try to make a good test for this
-    const toggleAdminCallback = async(cell) => {
         if (window.confirm("Are you sure you want to toggle the admin status for this user?")) {
+            if (userGithubLogin === currentUser.githubLogin) {
+                const promptResponse = window.prompt("You are toggling admin status for yourself. Please type your GitHub login to confirm:");
+                if (promptResponse !== currentUser.githubLogin) {
+                    alert("Confirmation failed. Admin status not changed.");
+                    return;
+                }
+            }
             toggleAdminMutation.mutate(cell);
         }
     };
