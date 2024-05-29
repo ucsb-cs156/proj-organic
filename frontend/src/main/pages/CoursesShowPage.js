@@ -2,7 +2,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import CoursesTable from 'main/components/Courses/CoursesTable';
+import ShowTable from 'main/components/Courses/ShowTable';
 import { useBackend } from 'main/utils/useBackend';
 import { useCurrentUser } from 'main/utils/currentUser';
 
@@ -22,14 +22,13 @@ export default function CoursesShowPage() {
             },
             []
         );
-    console.log(courses);
          // Stryker restore all
 
     return (
         <BasicLayout>
             <div className="pt-2">
                 <h1>Individual Course Information</h1>
-                <CoursesTable courses={[courses]} currentUser={currentUser} />
+                <ShowTable courses={[courses]} currentUser={currentUser} />
                 <br></br>
                 <p>As an admin or instructor, you can navigate from the main courses page to a specific page for each course. This allows you to see a page dedicated to your specific course, which includes functionalities such as uploading the student roster, adding students or staff, and other course-related tasks. </p>
                 <br></br>

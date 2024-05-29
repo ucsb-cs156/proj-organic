@@ -71,13 +71,13 @@ export default function CoursesTable({ courses, currentUser }) {
     ];
 
     if (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) {
-        columns.push(ButtonColumn("Show", "primary", courseCallback, "CoursesTable"));
+        columns.push(ButtonColumn("Show", "#FFA500", courseCallback, "CoursesTable"));
         columns.push(ButtonColumn("Staff", "primary", staffCallback, "CoursesTable"));
-        columns.push(ButtonColumn("Edit", "primary", editCallback, "CoursesTable"));
+        columns.push(ButtonColumn("Edit", "#AAFF00", editCallback, "CoursesTable"));
         columns.push(ButtonColumn("Delete", "danger", deleteCallback, "CoursesTable"));
     }
 
-    columns.push(ButtonColumn("Join", "primary", joinCallback, "CoursesTable"));
+    columns.push(ButtonColumn("Join", "#BF40BF", joinCallback, "CoursesTable"));
 
 
 
