@@ -1,25 +1,20 @@
 import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
-import SchoolsForm from "main/components/School/SchoolForm";
+import SchoolForm from "main/components/School/SchoolForm";
 import { Navigate } from 'react-router-dom'
 import { useBackendMutation } from "main/utils/useBackend";
 import { toast } from "react-toastify";
 
 export default function SchoolCreatePage({storybook=false}) {
 
+
     const objectToAxiosParams = (school) => ({
         url: "/api/schools/post",
         method: "POST",
-        params: {
-        name: school.name,
-        abbrev: school.abbrev,
-        termRegex: school.termRegex,
-        termDescription: school.termDescription,
-        termError: school.termError
-        }
+        data: school
     });
 
     const onSuccess = (school) => {
-        toast(`New school created - id: ${school.id}`);
+        toast(`New school created - id: ${school.abbrev}`);
     }
 
     const mutation = useBackendMutation(
@@ -44,7 +39,7 @@ export default function SchoolCreatePage({storybook=false}) {
         <div className="pt-2">
             <h1>Create New School</h1>
 
-            <SchoolsForm submitAction={onSubmit} />
+            <SchoolForm submitAction={onSubmit} />
 
         </div>
         </BasicLayout>
