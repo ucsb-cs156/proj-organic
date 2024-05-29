@@ -30,7 +30,7 @@ export default function UsersTable({ users, showToggleButtons = false }) {
 	// Stryker disable next-line all : TODO try to make a good test for this
     const toggleAdminCallback = async (cell) => {
         const userGithubLogin = cell.row.values.githubLogin;
-
+        
         if (userGithubLogin === currentUser.githubLogin) {
             const promptResponse = window.prompt("You are toggling admin status for yourself. Please type your GitHub login to confirm:");
             if (promptResponse !== currentUser.githubLogin) {
@@ -40,7 +40,7 @@ export default function UsersTable({ users, showToggleButtons = false }) {
             toggleAdminMutation.mutate(cell);
             return;
         }
-        if (window.confirm("Are you sure you want to toggle the admin status for this user?")) {
+        if (window.confirm("Are you sure you want to toggle (change) the admin status for this user?")) {
             toggleAdminMutation.mutate(cell);
         }
     };
