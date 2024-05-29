@@ -35,14 +35,14 @@ export default function SchoolEditPage({storybook=false}) {
     });
 
   const onSuccess = (school) => {
-    toast(`Course Updated - id: ${school.id} name: ${school.name}`);
+    toast(`School Updated - id: ${school.abbrev} name: ${school.name}`);
   }
 
   const mutation = useBackendMutation(
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/schools?id=${id}`]
+    [`/api/schools?abbrev=${abbrev}`]
   );
 
   const { isSuccess } = mutation
@@ -58,7 +58,7 @@ export default function SchoolEditPage({storybook=false}) {
   return (
     <BasicLayout>
       <div className="pt-2">
-        <h1>Edit Course</h1>
+        <h1>Edit School</h1>
         {
           school && <SchoolForm initialContents={school} submitAction={onSubmit} buttonLabel="Update" />
         }
