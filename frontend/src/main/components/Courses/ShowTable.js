@@ -53,11 +53,9 @@ export default function ShowTable({ courses, currentUser }) {
         columns.push(ButtonColumn("Edit", "#AAFF00", editCallback, "ShowTable"));
     }
 
-
-
     return (
         <>
-            <div>Total Courses: {courses.length}</div>
+            <div>Total Courses: {courses.length}</div> 
             <OurTable data={courses} columns={columns} testid={"ShowTable"} />
         </>
     );
