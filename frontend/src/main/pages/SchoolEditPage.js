@@ -14,9 +14,9 @@ export default function SchoolEditPage({storybook=false}) {
       [`/api/schools?abbrev=${abbrev}`],
       {  // Stryker disable next-line all : GET is the default, so changing this to "" doesn't introduce a bug
         method: "GET",
-        url: `/api/schools/get`,
+        url: `/api/schools`,
         params: {
-          abbrev
+          abbrev // using abbrev param as key 
         }
       }
     );
@@ -27,6 +27,8 @@ export default function SchoolEditPage({storybook=false}) {
       method: "PUT",
       params: {
         abbrev: school.abbrev,
+      },
+      data: {
         name: school.name,
         termRegex: school.termRegex,
         termDescription: school.termDescription,
@@ -35,14 +37,14 @@ export default function SchoolEditPage({storybook=false}) {
     });
 
   const onSuccess = (school) => {
-    toast(`School Updated - id: ${school.abbrev} name: ${school.name}`);
+    toast(`School Updated - abbrev: ${school.abbrev} name: ${school.name}`);
   }
 
   const mutation = useBackendMutation(
     objectToAxiosPutParams,
     { onSuccess },
     // Stryker disable next-line all : hard to set up test for caching
-    [`/api/schools?abbrev=${school.abbrev}`]
+    [`/api/schools?abbrev=${abbrev}`]
   );
 
   const { isSuccess } = mutation
