@@ -351,13 +351,13 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .termDescription("q24")
                             .termError("error")
                             .build();
-
+            String requestBody = objectMapper.writeValueAsString(school);
             when(schoolRepository.save(eq(school))).thenReturn(school);  
 
 
             // act
-            MvcResult response = mockMvc.perform(post("/api/schools/post?abbrev=ucsb&name=Ubarbara&termRegex=[WSMF]\\d\\d&termDescription=q24&termError=error")
-                                                                .with(csrf()))
+            MvcResult response = mockMvc.perform(post("/api/schools/post")
+                            .contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8").content(requestBody).with(csrf()))
                             .andExpect(status().is(400)).andReturn(); // only admins can post
                 
 
@@ -380,13 +380,13 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .termDescription("F24")
                             .termError("error")
                             .build();
-
+            String requestBody = objectMapper.writeValueAsString(school);
             when(schoolRepository.save(eq(school))).thenReturn(school);  
 
 
             // act
-            MvcResult response = mockMvc.perform(post("/api/schools/post?abbrev=ucsb&name=Ubarbara&termRegex=[WSMF]\\d\\d&termDescription=F24&termError=error")
-                                                                .with(csrf()))
+            MvcResult response = mockMvc.perform(post("/api/schools/post")
+                            .contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8").content(requestBody).with(csrf()))
                             .andExpect(status().is(400)).andReturn(); // only admins can post
                 
 
