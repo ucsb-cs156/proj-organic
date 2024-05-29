@@ -43,7 +43,7 @@ describe("SchoolEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/schools/get", { params: { abbrev: "ucsb" } }).timeout();
+            axiosMock.onGet("/api/schools", { params: { abbrev: "ucsb" } }).timeout();
         });
 
         const queryClient = new QueryClient();
@@ -73,17 +73,17 @@ describe("SchoolEditPage tests", () => {
             axiosMock.resetHistory();
             axiosMock.onGet("/api/currentUser").reply(200, apiCurrentUserFixtures.userOnly);
             axiosMock.onGet("/api/systemInfo").reply(200, systemInfoFixtures.showingNeither);
-            axiosMock.onGet("/api/schools/get", { params: { id: 17 } }).reply(200, {
+            axiosMock.onGet("/api/schools", { params: { abbrev: "ucsb" } }).reply(200, {
                 abbrev: "ucsb",
                 name: "UC Santa Barbara",
-                termRegex: "[WSMF]\\d\\d",
+                termRegex: "[wsmf]\\d\\d",
                 termDescription: "s24",
                 termError: "test" 
             });
             axiosMock.onPut('/api/schools/update').reply(200, {
                 abbrev: "ucsb", // we do not want to change the abbrev as it is our new key param instead of id
                 name: "Edited UC Santa Barbara",
-                termRegex: "[WSMF]\\d\\d",
+                termRegex: "[wsmf]\\d\\d",
                 termDescription: "f24",
                 termError: "edited_test" 
             });
@@ -124,7 +124,7 @@ describe("SchoolEditPage tests", () => {
             expect(nameField).toBeInTheDocument();
             expect(nameField).toHaveValue("UC Santa Barbara");
             expect(termRegexField).toBeInTheDocument();
-            expect(termRegexField).toHaveValue("[WSMF]\\d\\d");
+            expect(termRegexField).toHaveValue("[wsmf]\\d\\d");
             expect(termDescriptionField).toBeInTheDocument();
             expect(termDescriptionField).toHaveValue("s24");
             expect(termErrorField).toBeInTheDocument();
@@ -133,7 +133,7 @@ describe("SchoolEditPage tests", () => {
             expect(submitButton).toHaveTextContent("Update");
 
             fireEvent.change(nameField, { target: { value: "Edited UC Santa Barbara" } });
-            fireEvent.change(termRegexField, { target: { value: "[WSMF]\\d\\d" } });
+            fireEvent.change(termRegexField, { target: { value: "[wsmf]\\d\\d" } });
             fireEvent.change(termDescriptionField, { target: { value: "f24" } });
             fireEvent.change(termErrorField, { target: { value: "edited_test" } });
             fireEvent.click(submitButton);
@@ -144,10 +144,10 @@ describe("SchoolEditPage tests", () => {
             expect(mockNavigate).toBeCalledWith({ "to": "/schools" });
 
             expect(axiosMock.history.put.length).toBe(1); 
-            expect(axiosMock.history.put[0].params).toEqual({ abbrev: 'ucsb' });
+            expect(axiosMock.history.put[0].params).toEqual({ abbrev: "ucsb" });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 name: "Edited UC Santa Barbara",
-                termRegex: "[WSMF]\\d\\d",
+                termRegex: "[wsmf]\\d\\d",
                 termDescription: "f24",
                 termError: "edited_test" 
             })); 
@@ -163,10 +163,8 @@ describe("SchoolEditPage tests", () => {
                 </QueryClientProvider>
             );
 
-            await screen.findByTestId("SchoolForm-name");
-
             const abbrevField = screen.getByTestId("SchoolForm-abbrev");
-            const nameField = screen.getByTestId("SchoolForm-name");
+            const nameField = screen.getByTestId("Scho`olForm-name");
             const termRegexField = screen.getByTestId("SchoolForm-termRegex");
             const termDescriptionField = screen.getByTestId("SchoolForm-termDescription");
             const termErrorField = screen.getByTestId("SchoolForm-termError");
@@ -175,12 +173,12 @@ describe("SchoolEditPage tests", () => {
     
             expect(abbrevField).toHaveValue("ucsb");
             expect(nameField).toHaveValue("UC Santa Barbara");
-            expect(termRegexField).toHaveValue("[WSMF]\\d\\d");
+            expect(termRegexField).toHaveValue("[wsmf]\\d\\d");
             expect(termDescriptionField).toHaveValue("s24");
             expect(termErrorField).toHaveValue("test");
 
             fireEvent.change(nameField, { target: { value: "Edited UC Santa Barbara" } });
-            fireEvent.change(termRegexField, { target: { value: "[WSMF]\\d\\d" } });
+            fireEvent.change(termRegexField, { target: { value: "[wsmf]\\d\\d" } });
             fireEvent.change(termDescriptionField, { target: { value: "f24" } });
             fireEvent.change(termErrorField, { target: { value: "edited_test" } });
             fireEvent.click(submitButton);
