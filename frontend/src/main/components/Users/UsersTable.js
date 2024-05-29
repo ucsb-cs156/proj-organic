@@ -31,14 +31,16 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     const toggleAdminCallback = async (cell) => {
         const userGithubLogin = cell.row.values.githubLogin;
 
-        if (window.confirm("Are you sure you want to toggle the admin status for this user?")) {
-            if (userGithubLogin === currentUser.githubLogin) {
-                const promptResponse = window.prompt("You are toggling admin status for yourself. Please type your GitHub login to confirm:");
-                if (promptResponse !== currentUser.githubLogin) {
-                    alert("Confirmation failed. Admin status not changed.");
-                    return;
-                }
+        if (userGithubLogin === currentUser.githubLogin) {
+            const promptResponse = window.prompt("You are toggling admin status for yourself. Please type your GitHub login to confirm:");
+            if (promptResponse !== currentUser.githubLogin) {
+                alert("Confirmation failed. Admin status not changed.");
+                return;
             }
+            toggleAdminMutation.mutate(cell);
+            return;
+        }
+        if (window.confirm("Are you sure you want to toggle the admin status for this user?")) {
             toggleAdminMutation.mutate(cell);
         }
     };
