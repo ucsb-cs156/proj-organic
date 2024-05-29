@@ -102,7 +102,7 @@ describe("SchoolCreatePage tests", () => {
                 "abbrev": "ucsb",
                 "name": "UC Santa Barbara",
                 "termRegex": "[WSMF]\\d\\d",
-                "termDescription": "s24",
+                "termDescription": "S24",
                 "termError": "test"
         }));
 
