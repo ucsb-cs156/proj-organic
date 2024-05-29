@@ -20,7 +20,7 @@ Sample.args = {
         { label: 'option 3', key: 'option 3' }
     ],
     label : "Sample Dropdown",
-    basis : {},
+    basis : null,
     testId : "test-sample-dropdown",
 };
 
@@ -29,14 +29,14 @@ export const Empty = Template.bind({});
 Empty.args = {
     content: [],
     label : "Sample Empty Dropdown",
-    basis : {},
+    basis : null,
     testId : "test-sample-dropdown",
 };
 
 export const OneSchoolRender = Template.bind({});
 
 OneSchoolRender.args = {
-    basis: {},
+    basis: null,
     content: schoolsListFixtures.oneSchool,
     testId : "test-sample-dropdown",
     label : "Sample One Dropdown",
@@ -45,7 +45,7 @@ OneSchoolRender.args = {
 export const TenSchoolRender = Template.bind({});
 
 TenSchoolRender.args = {
-    basis: schoolsListFixtures.tenSchool,
+    basis: schoolsListFixtures.tenSchool[1],
     content: schoolsListFixtures.tenSchool,
     testId : "test-sample-dropdown",
     label : "Sample Ten Dropdown",
