@@ -22,13 +22,14 @@ export default function CoursesShowPage() {
             },
             []
         );
+    console.log(courses);
          // Stryker restore all
 
     return (
         <BasicLayout>
             <div className="pt-2">
                 <h1>Individual Course Information</h1>
-                <CoursesTable courses={courses ? [courses] : []} currentUser={currentUser} />
+                <CoursesTable courses={[courses]} currentUser={currentUser} />
                 <br></br>
                 <p>As an admin or instructor, you can navigate from the /courses page to a specific page for each course. This allows you to see a page dedicated to your specific course, which includes functionalities such as uploading the student roster, adding students or staff, and other course-related tasks. </p>
                 <br></br>
