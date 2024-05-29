@@ -53,7 +53,7 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").reply(200, []);
+        axiosMock.onGet("/api/courses/getStaff").reply(200, []);
 
         // act
         render(
@@ -77,7 +77,7 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").reply(200, []);
+        axiosMock.onGet("/api/courses/getStaff").reply(200, []);
 
         // act
         render(
@@ -101,7 +101,7 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupUser(); 
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").reply(200, []);
+        axiosMock.onGet("/api/courses/getStaff").reply(200, []);
 
         // act
         render(
@@ -122,7 +122,7 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").reply(200, staffFixture.threeStaff);
+        axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
 
         // act
         render(
@@ -144,7 +144,7 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").reply(200, staffFixture.threeStaff);
+        axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
 
         // act
         render(
@@ -166,7 +166,7 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").timeout();
+        axiosMock.onGet("/api/courses/getStaff").timeout();
         const restoreConsole = mockConsole();
 
         // act
@@ -190,7 +190,7 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").timeout();
+        axiosMock.onGet("/api/courses/getStaff").timeout();
         const restoreConsole = mockConsole();
 
         // act
@@ -214,8 +214,8 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").reply(200, staffFixture.threeStaff);
-        axiosMock.onDelete("/api/staff/delete").reply(200, "Staff with id 1 was deleted");
+        axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
+        axiosMock.onDelete("/api/courses/staff").reply(200, "Staff with id 1 was deleted");
 
         // act
         render(
@@ -243,8 +243,8 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").reply(200, staffFixture.threeStaff);
-        axiosMock.onDelete("/api/staff/delete").reply(200, "Staff with id 1 was deleted");
+        axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
+        axiosMock.onDelete("/api/courses/staff").reply(200, "Staff with id 1 was deleted");
 
         // act
         render(
@@ -272,7 +272,7 @@ describe("StaffIndexPage tests", () => {
         // arrange
         setupUser();
         const queryClient = new QueryClient();
-        axiosMock.onGet("/api/staff/all").reply(200, staffFixture.threeStaff);
+        axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
 
         // act
         render(

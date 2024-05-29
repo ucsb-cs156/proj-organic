@@ -11,7 +11,7 @@ export default function StaffTable({ staff, currentUser }) {
     const deleteMutation = useBackendMutation(
         cellToAxiosParamsDelete,
         { onSuccess: onDeleteSuccess }
-        ["/api/staff/all"]
+        ["/api/courses/getStaff"]
     );
     // Stryker restore all 
 
