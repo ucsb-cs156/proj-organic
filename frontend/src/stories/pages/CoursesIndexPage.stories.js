@@ -4,15 +4,14 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { coursesFixtures } from "fixtures/coursesFixtures";
 import { rest } from "msw";
 
-import CourseIndexPage from "main/pages/CourseIndexPage";
-import {schoolsFixtures} from "../../fixtures/schoolsFixtures";
+import CoursesIndexPage from "main/pages/CoursesIndexPage";
 
 export default {
-    title: 'pages/Course/CourseIndexPage',
-    component: CourseIndexPage
+    title: 'pages/Courses/CoursesIndexPage',
+    component: CoursesIndexPage
 };
 
-const Template = () => <CourseIndexPage storybook={true}/>;
+const Template = () => <CoursesIndexPage storybook={true}/>;
 
 export const Empty = Template.bind({});
 Empty.parameters = {
@@ -23,9 +22,6 @@ Empty.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/schools/all', (_req, res, ctx) => {
-            return res(ctx.json(schoolsFixtures.threeSchools));
-        }),
         rest.get('/api/courses/all', (_req, res, ctx) => {
             return res(ctx.json(coursesFixtures.threeCourses));
         }),
@@ -33,7 +29,6 @@ Empty.parameters = {
             window.alert("DELETE: " + JSON.stringify(req.url));
             return res(ctx.status(200),ctx.json({}));
         }),
-
     ]
 }
 
@@ -46,9 +41,6 @@ ThreeItemsInstructorUser.parameters = {
         }),
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
-        }),
-        rest.get('/api/schools/all', (_req, res, ctx) => {
-            return res(ctx.json(schoolsFixtures.threeSchools));
         }),
         rest.get('/api/courses/all', (_req, res, ctx) => {
             return res(ctx.json(coursesFixtures.threeCourses));
@@ -69,9 +61,6 @@ ThreeItemsAdminUser.parameters = {
         }),
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
-        }),
-        rest.get('/api/schools/all', (_req, res, ctx) => {
-            return res(ctx.json(schoolsFixtures.threeSchools));
         }),
         rest.get('/api/courses/all', (_req, res, ctx) => {
             return res(ctx.json(coursesFixtures.threeCourses));
