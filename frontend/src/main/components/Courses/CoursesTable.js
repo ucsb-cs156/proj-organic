@@ -5,7 +5,7 @@ import React from "react";
  import { useNavigate } from "react-router-dom";
  import { hasRole } from "main/utils/currentUser";
 
- export default function CoursesTable({ courses, currentUser, showEnabled }) {
+ export default function CoursesTable({ courses, currentUser, showEnabled = false, deleteEnabled = false }) {
 
      const navigate = useNavigate();
 
@@ -77,7 +77,9 @@ import React from "react";
          }
          columns.push(ButtonColumn("Staff", "primary", staffCallback, "CoursesTable"));
          columns.push(ButtonColumn("Edit", "primary", editCallback, "CoursesTable"));
-         columns.push(ButtonColumn("Delete", "danger", deleteCallback, "CoursesTable"));
+         if(deleteEnabled) {
+             columns.push(ButtonColumn("Delete", "danger", deleteCallback, "CoursesTable"));
+         }
      }
      
      columns.push(ButtonColumn("Join", "primary", joinCallback, "CoursesTable"));

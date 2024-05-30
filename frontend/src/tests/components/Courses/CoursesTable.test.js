@@ -23,7 +23,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} showEnabled={true}/>
+          <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} showEnabled={true} deleteEnabled={true}/>
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -79,7 +79,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <CoursesTable courses={[]} currentUser={currentUser} showEnabled={true}/>
+          <CoursesTable courses={[]} currentUser={currentUser} showEnabled={true} deleteEnabled={true}/>
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -107,7 +107,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} showEnabled={true}/>
+            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} showEnabled={true} deleteEnabled={true}/>
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -156,7 +156,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} showEnabled={true} />
+            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} showEnabled={true} deleteEnabled={true}/>
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -288,7 +288,7 @@ describe("UserTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} />
+            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} deleteEnabled={true}/>
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -328,18 +328,20 @@ describe("UserTable tests", () => {
   })
 
 
-  test("No show button when disabled", async() => {
+  test("No show and delete button when disabled", async() => {
     const currentUser = currentUserFixtures.adminUser;
 
     render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
-            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} showEnabled={false} />
+            <CoursesTable courses={coursesFixtures.threeCourses} currentUser={currentUser} />
           </MemoryRouter>
         </QueryClientProvider>
     )
 
     const showButton = screen.queryByTestId(`CoursesTable-cell-row-0-col-Show-button`);
+    const deleteButton = screen.queryByTestId(`CoursesTable-cell-row-0-col-Delete-button`);
     expect(showButton).not.toBeInTheDocument();
+    expect(deleteButton).not.toBeInTheDocument();
   })
 });

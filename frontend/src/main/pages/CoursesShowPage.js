@@ -34,7 +34,7 @@ export default function CoursesShowPage() {
         <BasicLayout>
             <div className="pt-2">
                 <h1>Course</h1>
-                <CoursesTable courses={passIn} currentUser={currentUser} />
+                <CoursesTable courses={passIn} currentUser={currentUser}/>
             </div>
         </BasicLayout>
     )

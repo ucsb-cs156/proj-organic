@@ -313,7 +313,7 @@ describe("CoursesIndexPage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CourseIndexPage />
+                    <CoursesIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
@@ -334,7 +334,7 @@ describe("CoursesIndexPage tests", () => {
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
-                    <CourseIndexPage />
+                    <CoursesIndexPage />
                 </MemoryRouter>
             </QueryClientProvider>
         );
