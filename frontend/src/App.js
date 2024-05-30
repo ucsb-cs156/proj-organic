@@ -11,9 +11,9 @@ import CoursesEditPage from "main/pages/CoursesEditPage";
 
 import AdminUsersPage from "main/pages/AdminUsersPage";
 import AdminJobsPage from "main/pages/AdminJobsPage";
+import SchoolIndexPage from "main/pages/SchoolIndexPage";
 
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
-import SchoolIndexPage from "main/pages/SchoolIndexPage";
 import SchoolEditPage from "main/pages/SchoolEditPage";
 
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
@@ -37,15 +37,6 @@ function App() {
     <>
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/courses" element={<CourseIndexPage />} />
-      <Route path="/schools" element={<SchoolIndexPage />} />
-    </>
-  ) : null;
-
-  const schoolRoutes =(hasRole(currentUser, "ROLE_ADMIN")) ? (
-    <>
-      <Route path="/schools/create" element={<SchoolCreatePage />} />
-      <Route path="/schools" element={<SchoolIndexPage />} />
-      <Route path="/schools/edit/:abbrev" element={<SchoolEditPage />} />
     </>
   ) : null;
 
@@ -57,13 +48,21 @@ function App() {
     </>
   ) : null;
 
+  const schoolRoutes =(hasRole(currentUser, "ROLE_ADMIN")) ? (
+    <>
+      <Route path="/schools/create" element={<SchoolCreatePage />} />
+      <Route path="/schools" element={<SchoolIndexPage />} />
+      <Route path="/schools/edit/:abbrev" element={<SchoolEditPage />} />
+    </>
+  ) : null;
+
   const homeRoute = (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_USER")) 
     ? <Route path="/" element={<HomePage />} /> 
     : <Route path="/" element={<LoginPage />} />;
 
   /*  Display the LoadingPage while awaiting currentUser 
       response to prevent the NotFoundPage from displaying */
-      
+
   const updateLastOnlineMutation = useBackendMutation(
     () => ({ method: 'POST', url: '/api/currentUser/last-online' }),
     {}
@@ -77,7 +76,7 @@ function App() {
         updatedOnlineOnMount.current = true;
         updateLastOnlineMutation.mutate();
       }
-      
+
       const interval = setInterval(() => {
         updateLastOnlineMutation.mutate();
       }, 60000);

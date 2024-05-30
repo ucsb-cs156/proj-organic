@@ -4,7 +4,7 @@
 
 | Type | Link       | 
 |------|------------|
-| prod | <https://organic.dokku-00.cs.ucsb.edu/>     | 
+| prod | <https://organic.dokku-00.cs.ucsb.edu/>    | 
 | qa   | <https://organic-qa.dokku-00.cs.ucsb.edu/>  | 
 
 # W24 Production Deployments
