@@ -15,7 +15,7 @@ export default function StaffIndexPage() {
       return (
           <Button
               variant="primary"
-              href="/staff/create"
+              href={`/staff/${id}/create`}
               style={{ float: "right" }}
           >
               Add Staff 

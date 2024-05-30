@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter, Routes, Route } from "react-router-dom";
 import StaffIndexPage from "main/pages/StaffIndexPage";
 
 
@@ -54,22 +54,25 @@ describe("StaffIndexPage tests", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/getStaff").reply(200, []);
+        const courseId = "123"; // Specific courseId for the test
 
         // act
         render(
             <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <StaffIndexPage />
+                <MemoryRouter initialEntries={[`/courses/${courseId}/staff`]}>
+                    <Routes>
+                        <Route path="/courses/:id/staff" element={<StaffIndexPage />} />
+                    </Routes>
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
         // assert
-        await waitFor( ()=>{
+        await waitFor(() => {
             expect(screen.getByText(/Add Staff/)).toBeInTheDocument();
         });
         const button = screen.getByText(/Add Staff/);
-        expect(button).toHaveAttribute("href", "/staff/create");
+        expect(button).toHaveAttribute("href", `/staff/${courseId}/create`);
         expect(button).toHaveAttribute("style", "float: right;");
     });
 
@@ -78,28 +81,31 @@ describe("StaffIndexPage tests", () => {
         setupInstructorUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/getStaff").reply(200, []);
+        const courseId = "123"; // Specific courseId for the test
 
         // act
         render(
             <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <StaffIndexPage />
+                <MemoryRouter initialEntries={[`/courses/${courseId}/staff`]}>
+                    <Routes>
+                        <Route path="/courses/:id/staff" element={<StaffIndexPage />} />
+                    </Routes>
                 </MemoryRouter>
             </QueryClientProvider>
         );
 
         // assert
-        await waitFor( ()=>{
+        await waitFor(() => {
             expect(screen.getByText(/Add Staff/)).toBeInTheDocument();
         });
         const button = screen.getByText(/Add Staff/);
-        expect(button).toHaveAttribute("href", "/staff/create");
+        expect(button).toHaveAttribute("href", `/staff/${courseId}/create`);
         expect(button).toHaveAttribute("style", "float: right;");
     });
 
     test("Renders without Create Button for non admin and non instructor user", async () => {
         // arrange
-        setupUser(); 
+        setupUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/getStaff").reply(200, []);
 
@@ -118,7 +124,7 @@ describe("StaffIndexPage tests", () => {
         });
     });
 
-    test("renders three Staffs correctly for admin", async () => {    
+    test("renders three Staffs correctly for admin", async () => {
         // arrange
         setupAdminUser();
         const queryClient = new QueryClient();
@@ -140,7 +146,7 @@ describe("StaffIndexPage tests", () => {
 
     });
 
-    test("renders three Staffs correctly for instructor", async () => {      
+    test("renders three Staffs correctly for instructor", async () => {
         // arrange
         setupInstructorUser();
         const queryClient = new QueryClient();
