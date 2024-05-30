@@ -1,5 +1,5 @@
 import React from 'react';
-import SchoolForm from "main/components/School/SchoolForm"
+import SchoolForm from "main/components/School/SchoolForm";
 import { schoolsFixtures } from 'fixtures/schoolsFixtures';
 
 export default {
