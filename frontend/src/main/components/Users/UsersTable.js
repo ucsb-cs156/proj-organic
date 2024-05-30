@@ -28,7 +28,7 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     );
     // Stryker restore all 
    
-	// Stryker disable next-line all : TODO try to make a good test for this
+	// Stryker disable all : TODO try to make a good test for this
     const toggleAdminCallback = async (cell) => {
         const userGithubLogin = cell.row.values.githubLogin;
         
