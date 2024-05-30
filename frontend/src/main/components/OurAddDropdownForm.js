@@ -146,7 +146,6 @@ export default function OurAddDropdownForm({
     };
 
     const internalOnChange = (event) => {
-        // Stryker disable next-line all : the form element disables onChange if autocomplete is false
         if(autocomplete){
             // grab the userText 
             const newSelectedContent = event.target.value;
@@ -179,7 +178,7 @@ export default function OurAddDropdownForm({
                         data-testid={`${testId}-test-dropdown-form`}
                         type="text"
                         value={autocomplete ? userTypedContent : (selectedContent !== null ? selectedContent.label : "") }
-                        onChange={autocomplete ? internalOnChange : null}
+                        onChange={internalOnChange}
                         style={validationStyle}
                         onFocus={() => {
                             changeShowingDropdown(true);

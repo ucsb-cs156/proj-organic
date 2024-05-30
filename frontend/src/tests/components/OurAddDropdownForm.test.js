@@ -292,7 +292,7 @@ describe('OurAddDropdownForm Tests', () => {
     });
 
     test("prefix renders only a portion of options", async () => {
-        render(<OurAddDropdownForm content={threeOptions} label="empty" />);
+        render(<OurAddDropdownForm content={threeOptions} label="empty" autocomplete={true}/>);
 
         expect(await screen.findByTestId('testid-test-dropdown-form')).toBeInTheDocument();
         const submitField = screen.getByTestId('testid-test-dropdown-form');
@@ -321,6 +321,22 @@ describe('OurAddDropdownForm Tests', () => {
         const firstSelection = screen.getByTestId('testid-dropdown-form-option-2');
         fireEvent.click(firstSelection);
         fireEvent.click(submitField);
+
+        expect(screen.getByTestId('testid-dropdown-form-option-0')).toHaveTextContent("a");
+        expect(screen.getByTestId('testid-dropdown-form-option-1')).toHaveTextContent("abba");
+        expect(screen.getByTestId('testid-dropdown-form-option-2')).toHaveTextContent("abba concert");
+    });
+
+    test("prefix doesn't renders only a portion of options with autocomplete off 2", async () => {
+        render(<OurAddDropdownForm content={subsetThreeOptions} label="empty" autocomplete={false}/>);
+
+        expect(await screen.findByTestId('testid-test-dropdown-form')).toBeInTheDocument();
+        const submitField = screen.getByTestId('testid-test-dropdown-form');
+        // load in the options
+        fireEvent.select(submitField);
+        expect(await screen.findByTestId('testid-dropdown-form-option-2')).toBeInTheDocument();
+        // trigger onChange which user can't normally do?
+        fireEvent.change(submitField, {target : {value : "abba"}});
 
         expect(screen.getByTestId('testid-dropdown-form-option-0')).toHaveTextContent("a");
         expect(screen.getByTestId('testid-dropdown-form-option-1')).toHaveTextContent("abba");
