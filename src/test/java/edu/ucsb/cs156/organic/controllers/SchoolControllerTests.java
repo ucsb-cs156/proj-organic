@@ -267,7 +267,7 @@ public class SchoolControllerTests extends ControllerTestCase{
             verify(schoolRepository, times(1)).delete(any());
 
             Map<String, Object> json = responseToJson(response);
-            assertEquals("School with id ucsb deleted", json.get("message"));
+            assertEquals("School with abbrev ucsb deleted", json.get("message"));
         }
 
         @WithMockUser(roles = { "ADMIN", "USER" })
