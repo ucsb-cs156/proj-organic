@@ -86,7 +86,7 @@ export default function OurAddDropdownForm({
         if(fixedContent.length > 0){
             changeGhostContent(fixedContent[0]);
         }
-    }, [content, basis]);
+    }, [content, basis, autocomplete]);
     // Stryker restore all
 
     const [selectedContent, changeSelectedContent] = useState(basis);
