@@ -1,14 +1,51 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
+import StaffForm from "main/components/Staff/StaffForm";
+import { Navigate } from 'react-router-dom'
+import { useBackendMutation } from "main/utils/useBackend";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
 
-export default function StaffCreatePage() {
-    const { id } = useParams();
-    
+export default function StaffCreatePage({storybook=false}) {
+    let { courseId } = useParams();
+
+    const objectToAxiosParams = (staff) => ({
+        url: "/api/courses/addStaff",
+        method: "POST",
+        params: {
+        courseId: staff.courseId,
+        githubLogin: staff.githubLogin
+        }
+    });
+
+    const onSuccess = (staff) => {
+        toast(`New staff added - id: ${staff.id}`);
+    }
+
+    const mutation = useBackendMutation(
+        objectToAxiosParams,
+        { onSuccess }, 
+        // Stryker disable next-line all : hard to set up test for caching
+        ["/api/courses/getStaff"] // mutation makes this key stale so that pages relying on it reload
+        );
+
+    const { isSuccess } = mutation
+
+    const onSubmit = async (data) => {
+        mutation.mutate(data);
+    }
+
+    if (isSuccess && !storybook) {
+        return <Navigate to={`/${courseId}/staff`} />
+    }
+
     return (
-        <div>
-            <h1>Placeholder for Staff Creation Page for Course {id}</h1>
-            <p>This page will be finished soon.</p>
-        </div>
-    );
-};
+        <BasicLayout>
+        <div className="pt-2">
+            <h1>Add New Staff</h1>
 
+            <StaffForm submitAction={onSubmit} />
+
+        </div>
+        </BasicLayout>
+    )
+}
