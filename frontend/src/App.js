@@ -11,9 +11,9 @@ import CoursesEditPage from "main/pages/CoursesEditPage";
 
 import AdminUsersPage from "main/pages/AdminUsersPage";
 import AdminJobsPage from "main/pages/AdminJobsPage";
+import SchoolIndexPage from "main/pages/SchoolIndexPage";
 
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
-import SchoolIndexPage from "main/pages/SchoolIndexPage";
 import SchoolEditPage from "main/pages/SchoolEditPage";
 
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
@@ -37,15 +37,6 @@ function App() {
     <>
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/courses" element={<CourseIndexPage />} />
-      <Route path="/schools" element={<SchoolIndexPage />} />
-    </>
-  ) : null;
-
-  const schoolRoutes =(hasRole(currentUser, "ROLE_ADMIN")) ? (
-    <>
-      <Route path="/schools/create" element={<SchoolCreatePage />} />
-      <Route path="/schools" element={<SchoolIndexPage />} />
-      <Route path="/schools/edit/:abbrev" element={<SchoolEditPage />} />
     </>
   ) : null;
 
@@ -54,6 +45,14 @@ function App() {
       <Route path="/courses/create" element={<CoursesCreatePage />} />
       <Route path="/courses" element={<CourseIndexPage />} />
       <Route path="/courses/edit/:id" element={<CoursesEditPage />} />
+    </>
+  ) : null;
+  
+  const schoolRoutes =(hasRole(currentUser, "ROLE_ADMIN")) ? (
+    <>
+      <Route path="/schools/create" element={<SchoolCreatePage />} />
+      <Route path="/schools" element={<SchoolIndexPage />} />
+      <Route path="/schools/edit/:abbrev" element={<SchoolEditPage />} />
     </>
   ) : null;
 
