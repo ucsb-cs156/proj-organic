@@ -95,6 +95,7 @@ export default function OurAddDropdownForm({
     // Stryker disable next-line all : there might be a good test for this but since showingDropdown doesn't render anything on fixedContent.length === 0 this might be harder to test
     const [ghostContent, changeGhostContent] = useState(filteredContent.length > 0 ? filteredContent[0] : null);
 
+
     // Stryker disable all
     const optionWrapperStyle = {
         position: 'absolute',
@@ -157,7 +158,6 @@ export default function OurAddDropdownForm({
             onChangeFunc(event);
         }
     };
-
     const fillGhost = (event) => {
         if(event.key === "Enter" && ghostContent !== null) {
             changeUserTypContent(ghostContent.label);

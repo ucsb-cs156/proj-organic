@@ -61,6 +61,7 @@ describe('OurAddDropdownForm Tests', () => {
         expect(await screen.findByTestId('testid-dropdown-form-option-0')).toHaveStyle({backgroundColor: "green"});
         expect(screen.queryByTestId('testid-dropdown-form-option-1')).not.toBeInTheDocument();
         expect(screen.queryByTestId('testid-dropdown-form-option-2')).not.toBeInTheDocument();
+
     });
 
     test('renders on no inital selected element', async () => {
@@ -179,6 +180,7 @@ describe('OurAddDropdownForm Tests', () => {
         const selectOption = screen.getByTestId('testid-dropdown-form-option-1');
 
         fireEvent.click(selectOption);
+
         expect(await screen.findByTestId('testid-test-dropdown-form')).toBeInTheDocument();
         fireEvent.click(submitField);
 
@@ -203,6 +205,7 @@ describe('OurAddDropdownForm Tests', () => {
 
         const selectOption = screen.getByTestId('testid-dropdown-form-option-2');
         fireEvent.mouseOver(selectOption);
+
 
         expect(await screen.findByTestId('testid-dropdown-form-option-0')).toHaveStyle({backgroundColor: "lightgreen"}); // ghost
         expect(await screen.findByTestId('testid-dropdown-form-option-1')).toHaveStyle({backgroundColor: "white"});
@@ -243,6 +246,7 @@ describe('OurAddDropdownForm Tests', () => {
         expect(await screen.findByTestId('testid-test-dropdown-form')).toBeInTheDocument();
         expect(screen.getByTestId('testid-test-dropdown-form')).toHaveAttribute("disabled");
         expect(screen.getByTestId('testid-test-dropdown-form')).toHaveStyle({"cursor" : "not-allowed"});
+
     });
 
     test("prefix renders only a portion of options", async () => {
