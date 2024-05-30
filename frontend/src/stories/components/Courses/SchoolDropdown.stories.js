@@ -29,7 +29,7 @@ export const Preselected = Template.bind({});
 
 Preselected.args={
     schools: schoolsFixtures.threeSchools,
-    initialContents: {"school":"ucsb"},
+    initialContents: {"school":"UC Santa Barbara"},
     submitAction: (data) => {
         console.log("Submit was clicked with data: ", data);
         window.alert("Submit was clicked with data: " + JSON.stringify(data));
