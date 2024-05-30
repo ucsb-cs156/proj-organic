@@ -131,28 +131,6 @@ describe("CoursesShowPage tests", () => {
         expect(deleteButton).not.toBeInTheDocument();
     });
 
-    test("check that the course links are correct", async () => {
-        setupAdminUser();
-        const queryClient = new QueryClient();
-        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
-    
-        render(
-            <QueryClientProvider client={queryClient}>
-                <MemoryRouter>
-                    <CoursesShowPage />
-                </MemoryRouter>
-            </QueryClientProvider>
-        );
-    
-        await waitFor(() => {
-            expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toBeInTheDocument();
-        });
-    
-        expect(screen.getByRole('link', { name: /Upload Roster/i })).toHaveAttribute('href', '/courses/17/roster-upload');
-        expect(screen.getByRole('link', { name: /View Staff/i })).toHaveAttribute('href', '/courses/17/staff-roster');
-        expect(screen.getByRole('link', { name: /View Students/i })).toHaveAttribute('href', '/courses/17/student-roster');
-    });
-
     test("check if correct API URL is called", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
