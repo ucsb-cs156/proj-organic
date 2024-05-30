@@ -35,17 +35,17 @@ export default function CoursesShowPage() {
                 {/* Course Roster Upload Link */}
                 <p>
                     <strong>Course Roster:</strong>
-                    <a>Upload Roster</a>
+                    <p>Upload Roster</p>
                 </p>
                 {/* Staff Roster */}
                 <p>
                     <strong>Staff Roster:</strong>
-                    <a>View Staff</a>
+                    <p>View Staff</p>
                 </p>
                 {/* Student Roster */}
                 <p>
                     <strong>Student Roster:</strong>
-                    <a>View Students</a>
+                    <p>View Students</p>
                 </p>
             </div>
         </BasicLayout>
