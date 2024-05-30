@@ -6,7 +6,7 @@ import { useCurrentUser } from "main/utils/currentUser";
 
 
 export default function UsersTable({ users, showToggleButtons = false }) {
-    const currentUser = useCurrentUser();
+    const { data: currentUser } = useCurrentUser();
 
     // toggleAdmin
     function cellToAxiosParamsToggleAdmin(cell) {
@@ -31,9 +31,9 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     const toggleAdminCallback = async (cell) => {
         const userGithubLogin = cell.row.values.githubLogin;
         
-        if (userGithubLogin === currentUser.githubLogin) {
+        if (userGithubLogin === currentUser.root.user.githubLogin) {
             const promptResponse = window.prompt("You are toggling admin status for yourself. Please type your GitHub login to confirm:");
-            if (promptResponse !== currentUser.githubLogin) {
+            if (promptResponse !== currentUser.root.user.githubLogin) {
                 alert("Confirmation failed. Admin status not changed.");
                 return;
             }
