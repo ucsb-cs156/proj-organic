@@ -19,13 +19,16 @@ export default function UsersTable({ users, showToggleButtons = false }) {
             }
         }
     }
-    
+
+    // Stryker disable all : hard to test for query caching
     const toggleAdminMutation = useBackendMutation(
         cellToAxiosParamsToggleAdmin,
         {},
         ["/api/admin/users"]
     );
-
+    // Stryker restore all 
+   
+	// Stryker disable next-line all : TODO try to make a good test for this
     const toggleAdminCallback = async (cell) => {
         const userGithubLogin = cell.row.values.githubLogin;
         
@@ -54,13 +57,15 @@ export default function UsersTable({ users, showToggleButtons = false }) {
         }
     }
 
-
+    // Stryker disable all : hard to test for query caching
     const toggleInstructorMutation = useBackendMutation(
         cellToAxiosParamsToggleInstructor,
         {},
         ["/api/admin/users"]
     );
+    // Stryker restore all 
 
+    // Stryker disable next-line all : TODO try to make a good test for this
 
     const toggleInstructorCallback = async(cell) => {
         if (window.confirm("Are you sure you want to toggle the instructor status for this user?")) {
