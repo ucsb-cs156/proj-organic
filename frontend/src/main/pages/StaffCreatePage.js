@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { useParams } from "react-router-dom";
 
 export default function StaffCreatePage({storybook=false}) {
-    let { courseId } = useParams();
+    let { id } = useParams();
 
     const objectToAxiosParams = (staff) => ({
         url: "/api/courses/addStaff",
@@ -35,7 +35,7 @@ export default function StaffCreatePage({storybook=false}) {
     }
 
     if (isSuccess && !storybook) {
-        return <Navigate to={`/${courseId}/staff`} />
+        return <Navigate to={`/courses/${id}/staff`} />
     }
 
     return (
