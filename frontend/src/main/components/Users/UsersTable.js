@@ -31,7 +31,7 @@ export default function UsersTable({ users, showToggleButtons = false }) {
     const toggleAdminCallback = async (cell) => {
         const userGithubLogin = cell.row.values.githubLogin;
         
-        if (userGithubLogin === currentUser.root.user.githubLogin) {
+        if (currentUser?.root?.user?.githubLogin && userGithubLogin === currentUser.root.user.githubLogin) {
             const promptResponse = window.prompt("WARNING! You are toggling admin status for yourself. Once you remove your own admin privileges you will not be able to give them back to yourself and will need another admin to give you privileges back. Please type your GitHub login to confirm:");
             if (promptResponse !== currentUser.root.user.githubLogin) {
                 alert("Confirmation failed. Admin status not changed.");
@@ -40,7 +40,7 @@ export default function UsersTable({ users, showToggleButtons = false }) {
             toggleAdminMutation.mutate(cell);
         }
         else{
-            if (window.confirm("Are you sure you want to toggle (change) the admin status for this user?")) {
+            if (window.confirm("Are you sure you want to toggle the admin status for this user?")) {
                 toggleAdminMutation.mutate(cell);
             }
         }

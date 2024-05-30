@@ -4,6 +4,7 @@ import{ render, screen, fireEvent }  from "@testing-library/react";
 import UsersTable from "main/components/Users/UsersTable";
 import { formatTime } from "main/utils/dateUtils";
 import usersFixtures from "fixtures/usersFixtures";
+import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 describe("UserTable tests", () => {
@@ -118,6 +119,8 @@ describe("UserTable tests", () => {
         const testId = "UsersTable";
         const toggleAdminButton = screen.getByTestId(`${testId}-cell-row-0-col-toggle-admin-button`);
         fireEvent.click(toggleAdminButton);
+
+        //expect(window.prompt).toHaveBeenCalledWith("WARNING! You are toggling admin status for yourself. Once you remove your own admin privileges you will not be able to give them back to yourself and will need another admin to give you privileges back. Please type your GitHub login to confirm:");
 
         expect(window.confirm).toHaveBeenCalledWith("Are you sure you want to toggle the admin status for this user?");
 
