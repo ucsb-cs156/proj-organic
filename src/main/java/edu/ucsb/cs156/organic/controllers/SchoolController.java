@@ -101,7 +101,7 @@ public class SchoolController extends ApiController{
                 .orElseThrow(() -> new EntityNotFoundException(School.class, abbrev));
 
         schoolRepository.delete(school);
-        return genericMessage("School with id %s deleted".formatted(abbrev));
+        return genericMessage("School with abbrev %s deleted".formatted(abbrev));
     }
 
 
