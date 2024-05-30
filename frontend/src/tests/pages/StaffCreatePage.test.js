@@ -26,7 +26,7 @@ jest.mock('react-router-dom', () => {
         __esModule: true,
         ...originalModule,
         useParams: () => ({
-            courseId: 1
+            id: 1
         }),
         Navigate: (x) => { mockNavigate(x); return null; }
     };
@@ -99,7 +99,7 @@ describe("StaffCreatePage tests", () => {
             });
 
         expect(mockToast).toBeCalledWith("New staff added - id: 1");
-        expect(mockNavigate).toBeCalledWith({ "to": "/1/staff" });
+        expect(mockNavigate).toBeCalledWith({ "to": "/courses/1/staff" });
 
     });
 });
