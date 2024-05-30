@@ -9,7 +9,7 @@ import CoursesEditPage from 'main/pages/CoursesEditPage';
 import {schoolsFixtures} from "../../fixtures/schoolsFixtures";
 
 export default {
-    title: 'pages/Courses/CoursesEditPage',
+    title: 'pages/CoursesEditPage',
     component: CoursesEditPage
 };
 
