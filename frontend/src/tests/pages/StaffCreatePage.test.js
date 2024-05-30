@@ -60,7 +60,7 @@ describe("StaffCreatePage tests", () => {
         const queryClient = new QueryClient();
         const Staff = {
             id: 1,
-            courseId: "2",
+            courseId: "1",
             githubLogin: "cgaucho",
         };
 
@@ -75,14 +75,12 @@ describe("StaffCreatePage tests", () => {
         );
 
         await waitFor(() => {
-            expect(screen.getByTestId("StaffForm-courseId")).toBeInTheDocument();
+            expect(screen.getByTestId("StaffForm-githubLogin")).toBeInTheDocument();
         });
 
-        const courseField = screen.getByTestId("StaffForm-courseId");
         const githubField = screen.getByTestId("StaffForm-githubLogin");
         const submitButton = screen.getByTestId("StaffForm-submit");
 
-        fireEvent.change(courseField, { target: { value: 4 } });
         fireEvent.change(githubField, { target: { value: "cgaucho" } });
 
         expect(submitButton).toBeInTheDocument();
@@ -94,7 +92,7 @@ describe("StaffCreatePage tests", () => {
 
         expect(axiosMock.history.post[0].params).toEqual(
             {
-                "courseId": "4",
+                "courseId": 1,
                 "githubLogin": "cgaucho"
             });
 

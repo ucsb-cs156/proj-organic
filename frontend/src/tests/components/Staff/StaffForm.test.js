@@ -49,8 +49,7 @@ describe("StaffForm tests", () => {
 
         fireEvent.click(submitButton);
 
-        await screen.findByText(/courseId is required./);
-        expect(screen.getByText(/courseId is required./)).toBeInTheDocument();
+        await screen.findByText(/githubLogin is required./);
         expect(screen.getByText(/githubLogin is required./)).toBeInTheDocument();
 
     });
@@ -65,13 +64,11 @@ describe("StaffForm tests", () => {
                 <StaffForm submitAction={mockSubmitAction} />
             </Router>
         );
-        await screen.findByTestId("StaffForm-courseId");
+        await screen.findByTestId("StaffForm-githubLogin");
 
-        const courseField = screen.getByTestId("StaffForm-courseId");
         const githubField = screen.getByTestId("StaffForm-githubLogin");
         const submitButton = screen.getByTestId("StaffForm-submit");
 
-        fireEvent.change(courseField, { target: { value: "1" } });
         fireEvent.change(githubField, { target: { value: "cgaucho" } });
         fireEvent.click(submitButton);
 

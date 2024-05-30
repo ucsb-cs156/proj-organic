@@ -12,7 +12,7 @@ export default function StaffCreatePage({storybook=false}) {
         url: "/api/courses/addStaff",
         method: "POST",
         params: {
-        courseId: staff.courseId,
+        courseId: id,
         githubLogin: staff.githubLogin
         }
     });
