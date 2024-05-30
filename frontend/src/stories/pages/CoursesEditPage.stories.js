@@ -6,6 +6,7 @@ import { coursesFixtures } from 'fixtures/coursesFixtures';
 import { rest } from "msw";
 
 import CoursesEditPage from 'main/pages/CoursesEditPage';
+import {schoolsFixtures} from "../../fixtures/schoolsFixtures";
 
 export default {
     title: 'pages/Courses/CoursesEditPage',
@@ -25,6 +26,9 @@ Default.parameters = {
         }),
         rest.get('/api/courses', (_req, res, ctx) => {
             return res(ctx.json(coursesFixtures.threeCourses[0]));
+        }),
+        rest.get('/api/schools/all', (_req, res, ctx) => {
+            return res(ctx.json(schoolsFixtures.threeSchools));
         }),
         rest.put('/api/courses', async (req, res, ctx) => {
             var reqBody = await req.text();
