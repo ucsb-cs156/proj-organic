@@ -6,7 +6,6 @@ import { useCurrentUser } from "main/utils/currentUser";
 
 
 export default function UsersTable({ users, showToggleButtons = false }) {
-    // Stryker disable all : hard to test for query caching
     const { data: currentUser } = useCurrentUser();
 
     // toggleAdmin
