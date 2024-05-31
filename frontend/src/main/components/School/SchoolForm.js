@@ -18,6 +18,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
     // Stryker disable next-line Regex
     const abbrev_regex = /^([a-z._])+$/;
+    const term_regex = /[WSMF]\d\d/;
 
     return (
 
@@ -25,7 +26,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Row>
                 <Col>
                     <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="abbrev">Abbreviation</Form.Label>
+                        <Form.Label htmlFor="abbrev">Abbreviation(All lowercase)</Form.Label>
                         <Form.Control
                             data-testid="SchoolForm-abbrev"
                             id="abbrev"
@@ -56,16 +57,16 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 </Col>
                 <Col>
                     <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="termRegex">Term Regex</Form.Label>
+                        <Form.Label htmlFor="termRegex">Term Regex(Example: W24)</Form.Label>
                         <Form.Control
                             data-testid="SchoolForm-termRegex"
                             id="termRegex"
                             type="text"
                             isInvalid={Boolean(errors.termRegex)}
-                            {...register("termRegex", { required: true })}
+                            {...register("termRegex", { required: true, pattern: term_regex })}
                         />
                         <Form.Control.Feedback type="invalid">
-                            {errors.termRegex && 'Term Regex is required. '}
+                            {errors.termRegex && 'Term Regex has to include a single character for a Quarter and 2 digits for the year.'}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
@@ -74,7 +75,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Row>
                 <Col>
                     <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="termDescription">Term Description</Form.Label>
+                        <Form.Label htmlFor="termDescription">Term Description(Quarter, Semester or Session)</Form.Label>
                         <Form.Control
                             data-testid="SchoolForm-termDescription"
                             id="termDescription"
