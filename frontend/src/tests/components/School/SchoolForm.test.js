@@ -62,7 +62,7 @@ describe("SchoolForm tests", () => {
 
         await screen.findByText(/Abbreviation is required./);
         expect(screen.getByText(/Name is required./)).toBeInTheDocument();
-        expect(screen.getByText(/Term Regex is required./)).toBeInTheDocument();
+        expect(screen.getByText(/Term Regex has to include a single character for a Quarter and 2 digits for the year./)).toBeInTheDocument();
         expect(screen.getByText(/Term Description is required./)).toBeInTheDocument();
         expect(screen.getByText(/Term Error is required./)).toBeInTheDocument();
     });

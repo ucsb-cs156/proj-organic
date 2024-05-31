@@ -77,14 +77,14 @@ describe("SchoolEditPage tests", () => {
             axiosMock.onGet("/api/schools", { params: { abbrev: "abb" } }).reply(200, {
                 abbrev: "abb",
                 name: "name-17",
-                termRegex: "reg-17",
+                termRegex: "W24",
                 termDescription: "description-17",
                 termError: "error-17" 
             });
             axiosMock.onPut('/api/schools/update').reply(200, {
                 abbrev: "abb",
                 name: "new-name-17",
-                termRegex: "new-reg-17",
+                termRegex: "S24",
                 termDescription: "new-description-17",
                 termError: "new-error-17" 
             });
@@ -115,7 +115,7 @@ describe("SchoolEditPage tests", () => {
             expect(nameField).toBeInTheDocument();
             expect(nameField).toHaveValue("name-17");
             expect(termRegexField).toBeInTheDocument();
-            expect(termRegexField).toHaveValue("reg-17");
+            expect(termRegexField).toHaveValue("W24");
             expect(termDescriptionField).toBeInTheDocument();
             expect(termDescriptionField).toHaveValue("description-17");
             expect(termErrorField).toBeInTheDocument();
@@ -124,7 +124,7 @@ describe("SchoolEditPage tests", () => {
             expect(submitButton).toHaveTextContent("Update");
 
             fireEvent.change(nameField, { target: { value: 'new-name-17' } });
-            fireEvent.change(termRegexField, { target: { value: 'new-reg-17' } });
+            fireEvent.change(termRegexField, { target: { value: 'S24' } });
             fireEvent.change(termDescriptionField, { target: { value: 'new-description-17' } });
             fireEvent.change(termErrorField, { target: { value: 'new-error-17' } });
             fireEvent.click(submitButton);
@@ -138,7 +138,7 @@ describe("SchoolEditPage tests", () => {
             expect(axiosMock.history.put[0].params).toEqual({ abbrev: 'abb' });
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 name: "new-name-17",
-                termRegex: "new-reg-17",
+                termRegex: "S24",
                 termDescription: "new-description-17",
                 termError: "new-error-17" 
             })); 
@@ -167,12 +167,12 @@ describe("SchoolEditPage tests", () => {
     
             expect(abbrevField).toHaveValue("abb");
             expect(nameField).toHaveValue("name-17");
-            expect(termRegexField).toHaveValue("reg-17");
+            expect(termRegexField).toHaveValue("W24");
             expect(termDescriptionField).toHaveValue("description-17");
             expect(termErrorField).toHaveValue("error-17");
 
             fireEvent.change(nameField, { target: { value: 'new-name-17' } });
-            fireEvent.change(termRegexField, { target: { value: 'new-reg-17' } });
+            fireEvent.change(termRegexField, { target: { value: 'S24' } });
             fireEvent.change(termDescriptionField, { target: { value: 'new-description-17' } });
             fireEvent.change(termErrorField, { target: { value: 'new-error-17' } });
             fireEvent.click(submitButton);
