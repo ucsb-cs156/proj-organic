@@ -66,7 +66,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                             {...register("termRegex", { required: true, pattern: term_regex })}
                         />
                         <Form.Control.Feedback type="invalid">
-                            {errors.termRegex && 'Term Regex has to include a single character for a Quarter and 2 digits for the year.'}
+                            {errors.termRegex && 'Term regex is required.'}
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
