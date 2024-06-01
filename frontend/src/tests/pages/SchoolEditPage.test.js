@@ -77,14 +77,14 @@ describe("SchoolEditPage tests", () => {
                 abbrev: "ucsb",
                 name: "UC Santa Barbara",
                 termRegex: "[wsmf]\\d\\d",
-                termDescription: "s24",
+                termDescription: "semester",
                 termError: "test" 
             });
             axiosMock.onPut('/api/schools/update').reply(200, {
                 abbrev: "ucsb", // we do not want to change the abbrev as it is our new key param instead of id
                 name: "Edited UC Santa Barbara",
                 termRegex: "[wsmf]\\d\\d",
-                termDescription: "f24",
+                termDescription: "quarter",
                 termError: "edited_test" 
             });
         });
@@ -126,7 +126,7 @@ describe("SchoolEditPage tests", () => {
             expect(termRegexField).toBeInTheDocument();
             expect(termRegexField).toHaveValue("[wsmf]\\d\\d");
             expect(termDescriptionField).toBeInTheDocument();
-            expect(termDescriptionField).toHaveValue("s24");
+            expect(termDescriptionField).toHaveValue("semester");
             expect(termErrorField).toBeInTheDocument();
             expect(termErrorField).toHaveValue("test");
 
@@ -134,7 +134,7 @@ describe("SchoolEditPage tests", () => {
 
             fireEvent.change(nameField, { target: { value: "Edited UC Santa Barbara" } });
             fireEvent.change(termRegexField, { target: { value: "[wsmf]\\d\\d" } });
-            fireEvent.change(termDescriptionField, { target: { value: "f24" } });
+            fireEvent.change(termDescriptionField, { target: { value: "quarter" } });
             fireEvent.change(termErrorField, { target: { value: "edited_test" } });
             fireEvent.click(submitButton);
 
@@ -148,7 +148,7 @@ describe("SchoolEditPage tests", () => {
             expect(axiosMock.history.put[0].data).toBe(JSON.stringify({
                 name: "Edited UC Santa Barbara",
                 termRegex: "[wsmf]\\d\\d",
-                termDescription: "f24",
+                termDescription: "quarter",
                 termError: "edited_test" 
             })); 
         });
@@ -174,12 +174,12 @@ describe("SchoolEditPage tests", () => {
             expect(abbrevField).toHaveValue("ucsb");
             expect(nameField).toHaveValue("UC Santa Barbara");
             expect(termRegexField).toHaveValue("[wsmf]\\d\\d");
-            expect(termDescriptionField).toHaveValue("s24");
+            expect(termDescriptionField).toHaveValue("semester");
             expect(termErrorField).toHaveValue("test");
 
             fireEvent.change(nameField, { target: { value: "Edited UC Santa Barbara" } });
             fireEvent.change(termRegexField, { target: { value: "[wsmf]\\d\\d" } });
-            fireEvent.change(termDescriptionField, { target: { value: "f24" } });
+            fireEvent.change(termDescriptionField, { target: { value: "quarter" } });
             fireEvent.change(termErrorField, { target: { value: "edited_test" } });
             fireEvent.click(submitButton);
 

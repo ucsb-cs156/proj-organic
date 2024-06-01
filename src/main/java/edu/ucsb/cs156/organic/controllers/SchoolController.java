@@ -21,6 +21,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.extern.slf4j.Slf4j;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import java.time.LocalDateTime;
@@ -101,7 +102,7 @@ public class SchoolController extends ApiController{
                 .orElseThrow(() -> new EntityNotFoundException(School.class, abbrev));
 
         schoolRepository.delete(school);
-        return genericMessage("School with abbrev %s deleted".formatted(abbrev));
+        return genericMessage("School with id %s deleted".formatted(abbrev));
     }
 
 
@@ -116,10 +117,6 @@ public class SchoolController extends ApiController{
 
         if (!school.getAbbrev().equals(school.getAbbrev().toLowerCase())){
             throw new IllegalArgumentException("Invalid abbrev format. Abbrev must be all lowercase");
-        }
-
-        if (!school.getTermDescription().matches(school.getTermRegex())) {
-            throw new IllegalArgumentException("Invalid termDescription format. It must follow the pattern " + school.getTermRegex());
         }
 
         School savedSchool = schoolRepository.save(school);
