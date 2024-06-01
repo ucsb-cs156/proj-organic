@@ -172,7 +172,7 @@ describe("CoursesShowPage tests", () => {
         expect(show).not.toBeInTheDocument();
     });
 
-    test("No crashes when no backend for table ", async () => {
+    test("No crashes when no backend for table, and table doesn't have headers", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
@@ -185,6 +185,7 @@ describe("CoursesShowPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
+        expect(screen.queryByTestId(`StudentTable-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
     test("Table renders correctly for admin", async () => {
