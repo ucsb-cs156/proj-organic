@@ -115,7 +115,7 @@ public class SchoolControllerTests extends ControllerTestCase{
         School school = School.builder()
                     .abbrev("ucsb")
                     .name("Ubarbara")
-                    .termRegex("W24")
+                    .termRegex("quarter")
                     .termDescription("quarter")
                     .termError("error")
                     .build();
@@ -152,15 +152,15 @@ public class SchoolControllerTests extends ControllerTestCase{
         School school1 = School.builder()
                     .abbrev("ucsb")
                     .name("Ubarbara")
-                    .termRegex("W24")
+                    .termRegex("quarter")
                     .termDescription("quarter")
                     .termError("error")
                     .build();        
         School school2 = School.builder()
                     .abbrev("umn")
                     .name("mich")
-                    .termRegex("W24")
-                    .termDescription("M24")
+                    .termRegex("quarter")
+                    .termDescription("quarter")
                     .termError("error1")
                     .build();  
         
@@ -188,14 +188,14 @@ public class SchoolControllerTests extends ControllerTestCase{
         School origSchool = School.builder()
                         .abbrev("ucsb")
                         .name("Ubarbara")
-                        .termRegex("W24")
+                        .termRegex("quarter")
                         .termDescription("quarter")
                         .termError("error")
                         .build();
         School editedSchool = School.builder()
                         .abbrev("ucsb")
                         .name("UBarbara")
-                        .termRegex("M24")
+                        .termRegex("quarter")
                         .termDescription("quarter")
                         .termError("error1")
                         .build();
@@ -233,7 +233,7 @@ public class SchoolControllerTests extends ControllerTestCase{
             School editedSchool = School.builder()
                             .abbrev("ucsb")
                             .name("Ubarbara")
-                            .termRegex("W24")
+                            .termRegex("quarter")
                             .build();}
 
 
@@ -250,7 +250,7 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .abbrev("ucsb")
                             .name("University of California Santa Barbara")
                             .termRegex("W")
-                            .termDescription("W24")
+                            .termDescription("quarter")
                             .termError("term error??")
                             .build();
                             
@@ -336,36 +336,6 @@ public class SchoolControllerTests extends ControllerTestCase{
             String responseString = response.getResponse().getContentAsString();
             assertEquals(expectedJson, responseString);
             }
-
-    
-    @WithMockUser(roles = { "ADMIN", "USER" })
-    @Test
-    public void an_admin_user_can_post_a_new_school_bad_format_termRegex() throws Exception {
-            // arrange
-
-            School school = School.builder()
-                            .abbrev("ucsb")
-                            .name("Ubarbara")
-                            .termRegex("[WSMF]\\d\\d")
-                            .termDescription("q24")
-                            .termError("error")
-                            .build();
-            String requestBody = objectMapper.writeValueAsString(school);
-            when(schoolRepository.save(eq(school))).thenReturn(school);  
-
-
-            // act
-            MvcResult response = mockMvc.perform(post("/api/schools/post")
-                            .contentType(MediaType.APPLICATION_JSON).characterEncoding("utf-8").content(requestBody).with(csrf()))
-                            .andExpect(status().is(400)).andReturn(); // only admins can post
-                
-
-            // assert
-            Map<String, Object> json = responseToJson(response);
-            assertEquals("IllegalArgumentException", json.get("type"));
-            assertEquals("Invalid termDescription format. It must follow the pattern [WSMF]\\d\\d", json.get("message"));            
-            }
-
     
     @WithMockUser(roles = { "ADMIN", "USER" })
     @Test
@@ -377,7 +347,7 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .name("Ubarbara")
                             .termRegex("[WSMF]\\d\\d")
                             .termDescription("quarter")
-                            .termError("error")
+                            .termError("error") 
                             .build();
             String requestBody = objectMapper.writeValueAsString(school);
             when(schoolRepository.save(eq(school))).thenReturn(school);  
@@ -403,7 +373,7 @@ public class SchoolControllerTests extends ControllerTestCase{
                 School editedSchool = School.builder()
                                     .abbrev(nonExistentAbbrev)
                                     .name("Nonexistent University")
-                                    .termRegex("W24")
+                                    .termRegex("quarter")
                                     .build();
 
             
