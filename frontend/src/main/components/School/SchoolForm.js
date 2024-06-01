@@ -18,7 +18,6 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
     // Stryker disable next-line Regex
     const abbrev_regex = /^([a-z._])+$/;
-    const term_regex = /[WSMF]\d\d/;
 
     return (
 
