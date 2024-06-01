@@ -26,9 +26,7 @@ describe("StudentsForm Tests", () => {
         await screen.findByTestId("StudentsForm-submit");
 
         const submitButton = screen.getByTestId("StudentsForm-submit");
-        await act(async () => {
-            fireEvent.click(submitButton);
-        });
+        fireEvent.click(submitButton);
         await screen.findByText(/Roster is required/);
     });
 
@@ -42,9 +40,7 @@ describe("StudentsForm Tests", () => {
         const upload = screen.getByTestId("StudentsForm-upload");
         const submitButton = screen.getByTestId("StudentsForm-submit");
         await user.upload(upload, file);
-        await act(async () => {
-            fireEvent.click(submitButton);
-        });
+        fireEvent.click(submitButton);
         expect(screen.queryByText(/Roster is required/)).not.toBeInTheDocument();
 
         expect(upload.files).toHaveLength(1);
