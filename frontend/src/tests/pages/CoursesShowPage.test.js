@@ -182,11 +182,11 @@ describe("CoursesShowPage tests", () => {
         const file = new File(['there'], 'egrades.csv', {type: 'text/csv'});
         setupAdminUser();
         const queryClient = new QueryClient();
-        /*axiosMock.onPost("/api/students/upload/egrades").reply(202, {
+        axiosMock.onPost("/api/students/upload/egrades").reply(202, {
             "filename":"egrades.csv",
             "message":"Inserted 0 new students, Updated 3 students"
-        });*/
-
+        });
+        const user = userEvent.setup();
         render(
             <QueryClientProvider client={queryClient}>
                 <MemoryRouter>
@@ -198,14 +198,42 @@ describe("CoursesShowPage tests", () => {
 
         const upload = screen.getByTestId("StudentsForm-upload");
         const submitButton = screen.getByTestId("StudentsForm-submit");
-        await act(async () => {
-            userEvent.upload(upload, file);
-        });
+        await user.upload(upload, file);
         await act(async () => {
             fireEvent.click(submitButton);
         });
-        console.log(upload.files[0].name);
+        expect(axiosMock.history.post[0].params).toEqual({
+                "courseId": 17
+            }
+        );
+        expect(axiosMock.history.post[0].data.get("file")).toEqual(file);
+        expect(mockToast).toBeCalledWith("Student roster successfully uploaded.");
     });
+
+    test("No crash on timeout", async () => {
+        const file = new File(['there'], 'egrades.csv', {type: 'text/csv'});
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onPost("/api/students/upload/egrades", { params: { courseId: 17 } }).timeout();
+        const user = userEvent.setup();
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        await screen.findByTestId("StudentsForm-upload");
+
+        const upload = screen.getByTestId("StudentsForm-upload");
+        const submitButton = screen.getByTestId("StudentsForm-submit");
+        await user.upload(upload, file);
+        await act(async () => {
+            fireEvent.click(submitButton);
+        });
+
+        expect(mockToast).toBeCalledWith("Error communicating with backend on /api/students/upload/egrades");
+    })
 
 });
 

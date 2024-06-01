@@ -40,18 +40,21 @@ export default function CoursesShowPage() {
         const formData = new FormData();
         formData.append("file", data.upload[0]);
         try {
-            await axios.post("/api/students/upload/egrades?courseId=" + id, formData, {
+            await axios.post("/api/students/upload/egrades", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
+                },
+                params:{
+                    courseId: id
                 }
             });
             toast("Student roster successfully uploaded.");
         }catch(e){
             if (e.response?.data?.message) {
-                toast.error(e.response.data.message);
+                toast(e.response.data.message);
             } else {
                 const errorMessage = `Error communicating with backend on /api/students/upload/egrades`;
-                toast.error(errorMessage);
+                toast(errorMessage);
             }
         }
     }
