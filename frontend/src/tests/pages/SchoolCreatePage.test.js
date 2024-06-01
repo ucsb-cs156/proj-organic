@@ -60,8 +60,8 @@ describe("SchoolCreatePage tests", () => {
         const school = {
             abbrev: "ucsb",
             name: "UC Santa Barbara",
-            termRegex: "[wsmf]\\d\\d",
-            termDescription: "s24",
+            termRegex: "[WSMF]\\d\\d",
+            termDescription: "quarter",
             termError: "test"
         };
 
@@ -88,8 +88,8 @@ describe("SchoolCreatePage tests", () => {
 
         fireEvent.change(abbrevField, { target: { value: 'ucsb' } });
         fireEvent.change(nameField, { target: { value: 'UC Santa Barbara' } });
-        fireEvent.change(termRegexField, { target: { value: '[wsmf]\\d\\d' } });
-        fireEvent.change(termDescriptionField, { target: { value: 's24' } });
+        fireEvent.change(termRegexField, { target: { value: '[WSMF]\\d\\d' } });
+        fireEvent.change(termDescriptionField, { target: { value: 'quarter' } });
         fireEvent.change(termErrorField, { target: { value: 'test' } });
 
 
@@ -101,8 +101,8 @@ describe("SchoolCreatePage tests", () => {
             JSON.stringify({
                 "abbrev": "ucsb",
                 "name": "UC Santa Barbara",
-                "termRegex": "[wsmf]\\d\\d",
-                "termDescription": "s24",
+                "termRegex": "[WSMF]\\d\\d",
+                "termDescription": "quarter",
                 "termError": "test"
         }));
 
