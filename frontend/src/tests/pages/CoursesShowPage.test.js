@@ -1,15 +1,15 @@
-import { render, waitFor, screen } from "@testing-library/react";
+import {render, waitFor, screen, fireEvent} from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 import CoursesShowPage from "main/pages/CoursesShowPage";
-
-
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import { coursesFixtures } from "fixtures/coursesFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
+import userEvent from "@testing-library/user-event";
+import {act} from "react-dom/test-utils";
 
 
 const mockToast = jest.fn();
@@ -36,7 +36,6 @@ jest.mock('react-router-dom', () => {
 });
 
 describe("CoursesShowPage tests", () => {
-
     const axiosMock = new AxiosMockAdapter(axios);
 
     const testId = "CoursesTable";
@@ -169,6 +168,43 @@ describe("CoursesShowPage tests", () => {
         expect(deleteButton).not.toBeInTheDocument();
         const show = screen.queryByTestId(`${testId}-cell-row-0-col-Show-button`);
         expect(show).not.toBeInTheDocument();
+    });
+
+
+    /*
+    Thank you stack overflow for this tip
+    https://stackoverflow.com/questions/61104842/react-testing-library-how
+    -to-simulate-file-upload-to-a-input-type-file-e
+    Told me how to upload a file
+    */
+
+    test("Successfully makes a call to the backend on submit", async () => {
+        const file = new File(['there'], 'egrades.csv', {type: 'text/csv'});
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        /*axiosMock.onPost("/api/students/upload/egrades").reply(202, {
+            "filename":"egrades.csv",
+            "message":"Inserted 0 new students, Updated 3 students"
+        });*/
+
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        await screen.findByTestId("StudentsForm-upload");
+
+        const upload = screen.getByTestId("StudentsForm-upload");
+        const submitButton = screen.getByTestId("StudentsForm-submit");
+        await act(async () => {
+            userEvent.upload(upload, file);
+        });
+        await act(async () => {
+            fireEvent.click(submitButton);
+        });
+        console.log(upload.files[0].name);
     });
 
 });

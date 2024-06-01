@@ -25,5 +25,9 @@ Default.parameters = {
         rest.get('/api/courses/get', (_req, res, ctx) => {
             return res(ctx.json(coursesFixtures.threeCourses[0]));
         }),
+        rest.post('/api/students/upload/egrades', (req, res, ctx) => {
+            window.alert("POST: " + JSON.stringify(req.url));
+            return res(ctx.status(200),ctx.json({}));
+        })
     ],
 }
