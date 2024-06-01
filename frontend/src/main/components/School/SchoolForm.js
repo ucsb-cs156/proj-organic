@@ -25,7 +25,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Row>
                 <Col>
                     <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="abbrev">Abbreviation(All lowercase)</Form.Label>
+                        <Form.Label htmlFor="abbrev">Abbreviation (all lowercase)</Form.Label>
                         <Form.Control
                             data-testid="SchoolForm-abbrev"
                             id="abbrev"
