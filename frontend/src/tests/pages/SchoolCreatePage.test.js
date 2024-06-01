@@ -101,7 +101,7 @@ describe("SchoolCreatePage tests", () => {
             JSON.stringify({
                 "abbrev": "abb",
                 "name": "name-1",
-                "termRegex": "W24",
+                "termRegex": "[WSMF]\\d\\d" ,
                 "termDescription": "F23",
                 "termError": "error-1"
         }));
