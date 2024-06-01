@@ -20,10 +20,10 @@ function StudentsForm({submitAction}){
                                   accept=".csv"
                                   isInvalid={Boolean(errors.upload)}
                         {...register("upload", {required:true})} />
+                    <Form.Control.Feedback type="invalid">
+                        {errors.upload && 'Roster is required. '}
+                    </Form.Control.Feedback>
                 </Form.Group>
-                <Form.Control.Feedback type="invalid">
-                    {errors.upload && 'Roster is required. '}
-                </Form.Control.Feedback>
             </Row>
             <Row>
                 <Button type="submit"
