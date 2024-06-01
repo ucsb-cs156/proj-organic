@@ -115,7 +115,7 @@ public class SchoolControllerTests extends ControllerTestCase{
         School school = School.builder()
                     .abbrev("ucsb")
                     .name("Ubarbara")
-                    .termRegex("quarter")
+                    .termRegex("semester")
                     .termDescription("quarter")
                     .termError("error")
                     .build();
@@ -152,15 +152,15 @@ public class SchoolControllerTests extends ControllerTestCase{
         School school1 = School.builder()
                     .abbrev("ucsb")
                     .name("Ubarbara")
-                    .termRegex("quarter")
+                    .termRegex("semester")
                     .termDescription("quarter")
                     .termError("error")
                     .build();        
         School school2 = School.builder()
                     .abbrev("umn")
                     .name("mich")
-                    .termRegex("quarter")
-                    .termDescription("quarter")
+                    .termRegex("semester")
+                    .termDescription("trimester")
                     .termError("error1")
                     .build();  
         
@@ -188,15 +188,15 @@ public class SchoolControllerTests extends ControllerTestCase{
         School origSchool = School.builder()
                         .abbrev("ucsb")
                         .name("Ubarbara")
-                        .termRegex("quarter")
+                        .termRegex("semester")
                         .termDescription("quarter")
                         .termError("error")
                         .build();
         School editedSchool = School.builder()
                         .abbrev("ucsb")
                         .name("UBarbara")
-                        .termRegex("quarter")
-                        .termDescription("quarter")
+                        .termRegex("trimester")
+                        .termDescription("all_year")
                         .termError("error1")
                         .build();
 
@@ -233,7 +233,7 @@ public class SchoolControllerTests extends ControllerTestCase{
             School editedSchool = School.builder()
                             .abbrev("ucsb")
                             .name("Ubarbara")
-                            .termRegex("quarter")
+                            .termRegex("semester")
                             .build();}
 
 
@@ -250,7 +250,7 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .abbrev("ucsb")
                             .name("University of California Santa Barbara")
                             .termRegex("W")
-                            .termDescription("quarter")
+                            .termDescription("semester")
                             .termError("term error??")
                             .build();
                             
@@ -347,7 +347,7 @@ public class SchoolControllerTests extends ControllerTestCase{
                             .abbrev("ucsb")
                             .name("Ubarbara")
                             .termRegex("[WSMF]\\d\\d")
-                            .termDescription("quarter")
+                            .termDescription("term")
                             .termError("error")
                             .build();
             String requestBody = objectMapper.writeValueAsString(school);
@@ -403,7 +403,7 @@ public class SchoolControllerTests extends ControllerTestCase{
                 School editedSchool = School.builder()
                                     .abbrev(nonExistentAbbrev)
                                     .name("Nonexistent University")
-                                    .termRegex("quarter")
+                                    .termRegex("semester")
                                     .build();
 
             
