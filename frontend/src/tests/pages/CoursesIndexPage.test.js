@@ -303,6 +303,47 @@ describe("CoursesIndexPage tests", () => {
 
     });
 
+    test("Show button appears for instructor", async () => {
+        // arrange
+        setupInstructorUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/all").reply(200, coursesFixtures.threeCourses);
+
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await screen.findByTestId(`CoursesTable-cell-row-0-col-Show-button`);
+
+        const showButton = screen.getByTestId(`CoursesTable-cell-row-0-col-Show-button`);
+        expect(showButton).toBeInTheDocument();
+    });
+
+    test("Show button appears for admin", async () => {
+        // arrange
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/all").reply(200, coursesFixtures.threeCourses);
+
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesIndexPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        await screen.findByTestId(`CoursesTable-cell-row-0-col-Show-button`);
+
+        const showButton = screen.getByTestId(`CoursesTable-cell-row-0-col-Show-button`);
+        expect(showButton).toBeInTheDocument();
+    });
+
 });
 
 
