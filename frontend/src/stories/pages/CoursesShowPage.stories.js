@@ -5,6 +5,7 @@ import { coursesFixtures } from "fixtures/coursesFixtures";
 import { rest } from "msw";
 
 import CoursesShowPage from "main/pages/CoursesShowPage";
+import {studentFixture} from "../../fixtures/studentFixture";
 
 export default {
     title: 'pages/Courses/CoursesShowPage',
@@ -24,6 +25,9 @@ Default.parameters = {
         }),
         rest.get('/api/courses/get', (_req, res, ctx) => {
             return res(ctx.json(coursesFixtures.threeCourses[0]));
+        }),
+        rest.get('/api/students/all', (_req, res, ctx) => {
+            return res(ctx.json(studentFixture.threeStudent));
         }),
     ],
 }
