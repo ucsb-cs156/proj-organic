@@ -5,6 +5,7 @@ import { coursesFixtures } from "fixtures/coursesFixtures";
 import { rest } from "msw";
 
 import CoursesShowPage from "main/pages/CoursesShowPage";
+import {studentFixture} from "../../fixtures/studentFixture";
 
 export default {
     title: 'pages/Courses/CoursesShowPage',
@@ -28,6 +29,9 @@ Default.parameters = {
         rest.post('/api/students/upload/egrades', (req, res, ctx) => {
             window.alert("POST: " + JSON.stringify(req.url));
             return res(ctx.status(200),ctx.json({}));
-        })
+        }),
+        rest.get('/api/students/all', (_req, res, ctx) => {
+            return res(ctx.json(studentFixture.threeStudent));
+        }),
     ],
 }

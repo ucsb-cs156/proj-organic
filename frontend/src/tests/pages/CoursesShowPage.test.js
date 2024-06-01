@@ -261,6 +261,60 @@ describe("CoursesShowPage tests", () => {
     });
 
 
+    test("No crashes when no backend for table, and table doesn't have headers", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
+        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).timeout();
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        expect(screen.queryByTestId(`StudentTable-cell-row-0-col-id`)).not.toBeInTheDocument();
+    });
+
+    test("Table renders correctly for admin", async () => {
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
+        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentFixture.threeStudent);
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(screen.getByTestId(`StudentTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(screen.getByTestId(`StudentTable-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(screen.getByTestId(`StudentTable-cell-row-2-col-id`)).toHaveTextContent("3");
+    });
+
+    test("Table renders correctly for instructor", async () => {
+        setupInstructorUser();
+        const queryClient = new QueryClient();
+        axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
+        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentFixture.threeStudent);
+        // act
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+
+        await waitFor(() => { expect(screen.getByTestId(`StudentTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(screen.getByTestId(`StudentTable-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(screen.getByTestId(`StudentTable-cell-row-2-col-id`)).toHaveTextContent("3");
+    });
+
 });
 
 

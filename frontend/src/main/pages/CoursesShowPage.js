@@ -7,6 +7,7 @@ import {useParams} from "react-router-dom";
 import StudentsForm from "../components/Students/StudentsForm";
 import {toast} from "react-toastify";
 import axios from "axios";
+import StudentTable from "../components/Student/StudentTable";
 
 export default function CoursesShowPage() {
     let { id } = useParams();
@@ -24,6 +25,20 @@ export default function CoursesShowPage() {
                 },
             },
     []
+        );
+
+    const { data: students, error: _studenterror, status: _studentStatus } =
+        useBackend(
+            // Stryker disable next-line all : don't test internal caching of React Query
+            [`/api/students/all?courseId=${id}`],
+
+            { // Stryker disable next-line all : GET is the default
+                method: "GET", url: "/api/students/all",
+                params: {
+                    courseId:id
+                },
+            },
+            []
         );
     //this ensures the table row doesn't show up when there's no backend
     let passIn;
@@ -68,13 +83,13 @@ export default function CoursesShowPage() {
             <div>
                 <div className="row pt-3">
                     <div className="col col-8">
-                        <p>This is a placeholder for the not-yet-implemented Student Table. </p>
+                        <StudentTable student={students}/>
                     </div>
                     <div className="col col-4">
-                        <StudentsForm submitAction={onSubmit} />
+                        <StudentsForm submitAction={onSubmit}/>
                     </div>
                 </div>
             </div>
         </BasicLayout>
-    )
+);
 }
