@@ -84,7 +84,7 @@ describe("CoursesStaffPage tests", () => {
             expect(screen.getByText(/Add Staff Member/)).toBeInTheDocument();
         });
         const button = screen.getByText(/Add Staff Member/);
-        expect(button).toHaveAttribute("href", "/courses/addStaff");
+        expect(button).toHaveAttribute("href", "/courses/17/addStaff");
         expect(button).toHaveAttribute("style", "float: right;");
     });
 
@@ -108,7 +108,7 @@ describe("CoursesStaffPage tests", () => {
             expect(screen.getByText(/Add Staff Member/)).toBeInTheDocument();
         });
         const button = screen.getByText(/Add Staff Member/);
-        expect(button).toHaveAttribute("href", "/courses/addStaff");
+        expect(button).toHaveAttribute("href", "/courses/17/addStaff");
         expect(button).toHaveAttribute("style", "float: right;");
     });
     
@@ -230,7 +230,7 @@ describe("CoursesStaffPage tests", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
-        // axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
+        axiosMock.onDelete("/api/courses/staff").reply(200, "Staff with id 1 was deleted");
 
         // act
         render(
@@ -262,7 +262,7 @@ describe("CoursesStaffPage tests", () => {
         setupInstructorUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/getStaff").reply(200, staffFixture.threeStaff);
-        // axiosMock.onDelete("/api/courses/delete").reply(200, "Course with id 1 was deleted");
+        axiosMock.onDelete("/api/courses/staff").reply(200, "Staff with id 1 was deleted");
 
         // act
         render(
@@ -285,7 +285,7 @@ describe("CoursesStaffPage tests", () => {
         fireEvent.click(deleteButton);
 
         // assert
-        // await waitFor(() => { expect(mockToast).toBeCalledWith("Course with id 1 was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("Staff with id 1 was deleted") });
 
     });
 
