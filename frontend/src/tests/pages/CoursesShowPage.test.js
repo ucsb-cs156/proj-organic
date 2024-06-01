@@ -9,7 +9,6 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 import userEvent from "@testing-library/user-event";
-import {act} from "react-dom/test-utils";
 
 
 const mockToast = jest.fn();
@@ -199,9 +198,7 @@ describe("CoursesShowPage tests", () => {
         const upload = screen.getByTestId("StudentsForm-upload");
         const submitButton = screen.getByTestId("StudentsForm-submit");
         await user.upload(upload, file);
-        await act(async () => {
-            fireEvent.click(submitButton);
-        });
+        fireEvent.click(submitButton);
         expect(axiosMock.history.post[0].params).toEqual({
                 "courseId": 17
             }
@@ -232,9 +229,7 @@ describe("CoursesShowPage tests", () => {
         const upload = screen.getByTestId("StudentsForm-upload");
         const submitButton = screen.getByTestId("StudentsForm-submit");
         await user.upload(upload, file);
-        await act(async () => {
-            fireEvent.click(submitButton);
-        });
+        fireEvent.click(submitButton);
 
         expect(mockToast).toBeCalledWith("Error communicating with backend on /api/students/upload/egrades");
     });
@@ -260,9 +255,7 @@ describe("CoursesShowPage tests", () => {
         const upload = screen.getByTestId("StudentsForm-upload");
         const submitButton = screen.getByTestId("StudentsForm-submit");
         await user.upload(upload, file);
-        await act(async () => {
-            fireEvent.click(submitButton);
-        });
+        fireEvent.click(submitButton);
 
         expect(mockToast).toBeCalledWith("File Rejected");
     });
