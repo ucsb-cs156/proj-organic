@@ -206,6 +206,10 @@ describe("CoursesShowPage tests", () => {
                 "courseId": 17
             }
         );
+        expect(axiosMock.history.post[0].headers).toEqual({
+            Accept: 'application/json, text/plain, */*',
+            'Content-Type': 'multipart/form-data'
+        })
         expect(axiosMock.history.post[0].data.get("file")).toEqual(file);
         expect(mockToast).toBeCalledWith("Student roster successfully uploaded.");
     });
@@ -233,7 +237,36 @@ describe("CoursesShowPage tests", () => {
         });
 
         expect(mockToast).toBeCalledWith("Error communicating with backend on /api/students/upload/egrades");
-    })
+    });
+
+    test("Correctly Transmit backend reject", async () => {
+        const file = new File(['there'], 'egrades.csv', {type: 'text/csv'});
+        setupAdminUser();
+        const queryClient = new QueryClient();
+        axiosMock.onPost("/api/students/upload/egrades").reply(400, {
+            "filename":"egrades.csv",
+            "message":"File Rejected"
+        });
+        const user = userEvent.setup();
+        render(
+            <QueryClientProvider client={queryClient}>
+                <MemoryRouter>
+                    <CoursesShowPage />
+                </MemoryRouter>
+            </QueryClientProvider>
+        );
+        await screen.findByTestId("StudentsForm-upload");
+
+        const upload = screen.getByTestId("StudentsForm-upload");
+        const submitButton = screen.getByTestId("StudentsForm-submit");
+        await user.upload(upload, file);
+        await act(async () => {
+            fireEvent.click(submitButton);
+        });
+
+        expect(mockToast).toBeCalledWith("File Rejected");
+    });
+
 
 });
 

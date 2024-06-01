@@ -36,7 +36,6 @@ export default function CoursesShowPage() {
     * https://stackoverflow.com/questions/71035309/file-upload-using-axios-in-react
     * and useBackend.js*/
     const onSubmit = async (data) => {
-        console.log("It actually calls!")
         const formData = new FormData();
         formData.append("file", data.upload[0]);
         try {
@@ -50,7 +49,7 @@ export default function CoursesShowPage() {
             });
             toast("Student roster successfully uploaded.");
         }catch(e){
-            if (e.response?.data?.message) {
+            if (e.response.data?.message) {
                 toast(e.response.data.message);
             } else {
                 const errorMessage = `Error communicating with backend on /api/students/upload/egrades`;
