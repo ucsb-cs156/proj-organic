@@ -74,7 +74,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Row>
                 <Col>
                     <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="termDescription">Term Description(Quarter, Semester or Session)</Form.Label>
+                        <Form.Label htmlFor="termDescription">Term Description (e.g. Quarter, Semester, Session)</Form.Label>
                         <Form.Control
                             data-testid="SchoolForm-termDescription"
                             id="termDescription"
