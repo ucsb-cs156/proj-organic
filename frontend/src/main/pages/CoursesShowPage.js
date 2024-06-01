@@ -51,7 +51,7 @@ export default function CoursesShowPage() {
                 <h1>Course</h1>
                 <CoursesTable courses={passIn} currentUser={currentUser}/>
             </div>
-            <div className="row">
+            <div className="row pt-3">
                 <div className="col col-8">
                     <StudentTable student={students} />
                 </div>
