@@ -1,17 +1,17 @@
 import React from 'react';
-import StudentTable from 'main/components/Student/StudentTable';
+import StudentsTable from 'main/components/Students/StudentsTable';
 import { studentFixture } from 'fixtures/studentFixture';
 import { currentUserFixtures } from 'fixtures/currentUserFixtures';
 import { rest } from "msw";
 
 export default {
-    title: 'components/Student/StudentTable',
-    component: StudentTable
+    title: 'components/Student/StudentsTable',
+    component: StudentsTable
 };
 
 const Template = (args) => {
     return (
-        <StudentTable {...args} />
+        <StudentsTable {...args} />
     )
 };
 

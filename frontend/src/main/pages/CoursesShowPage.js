@@ -7,7 +7,7 @@ import {useParams} from "react-router-dom";
 import StudentsForm from "../components/Students/StudentsForm";
 import {toast} from "react-toastify";
 import axios from "axios";
-import StudentTable from "../components/Student/StudentTable";
+import StudentsTable from "../components/Students/StudentsTable";
 
 export default function CoursesShowPage() {
     let { id } = useParams();
@@ -83,7 +83,8 @@ export default function CoursesShowPage() {
             <div>
                 <div className="row pt-3">
                     <div className="col col-8">
-                        <StudentTable student={students}/>
+                        <h2>Student Roster</h2>
+                        <StudentsTable student={students}/>
                     </div>
                     <div className="col col-4">
                         <StudentsForm submitAction={onSubmit}/>

@@ -1,4 +1,4 @@
-import StudentTable from "main/components/Student/StudentTable"
+import StudentsTable from "main/components/Students/StudentsTable"
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 // import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import {  render, screen } from "@testing-library/react";
@@ -14,11 +14,11 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedNavigate
 }));
 
-describe("StudentTable tests", () => {
+describe("StudentsTable tests", () => {
   const queryClient = new QueryClient();
   const expectedHeaders = ["id", "courseId", "githubId"];
   const expectedFields = ["id", "courseId", "githubId"]; 
-  const testId = "StudentTable";
+  const testId = "StudentsTable";
 
   test("Has the expected column headers and content for ordinary user", () => {
 
@@ -27,7 +27,7 @@ describe("StudentTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <StudentTable student={studentFixture.threeStudent} currentUser={currentUser} />
+          <StudentsTable student={studentFixture.threeStudent} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -78,7 +78,7 @@ describe("StudentTable tests", () => {
     render(
         <QueryClientProvider client={queryClient}>
           <MemoryRouter>
-          <StudentTable student={[]} currentUser={currentUser} />
+          <StudentsTable student={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
     );
@@ -105,7 +105,7 @@ describe("StudentTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <StudentTable student={studentFixture.threeStudent} currentUser={currentUser} />
+            <StudentsTable student={studentFixture.threeStudent} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
