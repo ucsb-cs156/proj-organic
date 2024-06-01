@@ -63,7 +63,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                             id="termRegex"
                             type="text"
                             isInvalid={Boolean(errors.termRegex)}
-                            {...register("termRegex", { required: true, pattern: term_regex })}
+                            {...register("termRegex", { required: true})}
                         />
                         <Form.Control.Feedback type="invalid">
                             {errors.termRegex && 'Term regex is required.'}
