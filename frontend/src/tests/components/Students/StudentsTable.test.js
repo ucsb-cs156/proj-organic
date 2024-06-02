@@ -1,7 +1,7 @@
 import StudentsTable from "main/components/Students/StudentsTable"
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import {  render, screen } from "@testing-library/react";
-import { studentFixture } from "fixtures/studentFixture";
+import { studentsFixtures } from "fixtures/studentsFixtures";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -23,7 +23,7 @@ describe("StudentsTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <StudentsTable students={studentFixture.threeStudents} currentUser={currentUser} />
+          <StudentsTable students={studentsFixtures.threeStudents} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
