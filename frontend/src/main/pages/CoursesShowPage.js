@@ -84,7 +84,7 @@ export default function CoursesShowPage() {
                 <div className="row pt-3">
                     <div className="col col-8">
                         <h2>Student Roster</h2>
-                        <StudentsTable student={students}/>
+                        <StudentsTable students={students}/>
                     </div>
                     <div className="col col-4">
                         <StudentsForm submitAction={onSubmit}/>

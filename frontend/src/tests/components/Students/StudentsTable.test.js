@@ -1,4 +1,4 @@
-import StudentTable from "main/components/Student/StudentTable"
+import StudentsTable from "main/components/Students/StudentsTable"
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 import {  render, screen } from "@testing-library/react";
 import { studentFixture } from "fixtures/studentFixture";
@@ -13,7 +13,7 @@ jest.mock('react-router-dom', () => ({
     useNavigate: () => mockedNavigate
 }));
 
-describe("StudentTable tests", () => {
+describe("StudentsTable tests", () => {
   const queryClient = new QueryClient();
 
   test("Has the expected column headers and content for ordinary user", () => {
@@ -23,7 +23,7 @@ describe("StudentTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <StudentTable students={studentFixture.threeStudents} currentUser={currentUser} />
+          <StudentsTable students={studentFixture.threeStudents} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
@@ -31,7 +31,7 @@ describe("StudentTable tests", () => {
 
     const expectedHeaders = ["id", "courseId", "fname", "lname", "studentId", "email", "githubId", "user"];
     const expectedFields = ["id", "courseId", "fname", "lname", "studentId", "email", "githubId", "user"];
-    const testId = "StudentTable";
+    const testId = "StudentsTable";
 
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
@@ -66,13 +66,13 @@ describe("StudentTable tests", () => {
     const currentUser = currentUserFixtures.adminUser;
     const expectedHeaders = ["id", "courseId", "fname", "lname", "studentId", "email", "githubId", "user"];
     const expectedFields = ["id", "courseId", "fname", "lname", "studentId", "email", "githubId", "user"];
-    const testId = "StudentTable";
+    const testId = "StudentsTable";
     
     // act
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <StudentTable students={[]} currentUser={currentUser} />
+          <StudentsTable students={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
     );

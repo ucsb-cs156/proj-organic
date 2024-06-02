@@ -282,7 +282,7 @@ describe("CoursesShowPage tests", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
-        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentsFixtures.threeStudent);
+        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentsFixtures.threeStudents);
         // act
         render(
             <QueryClientProvider client={queryClient}>
@@ -301,7 +301,7 @@ describe("CoursesShowPage tests", () => {
         setupInstructorUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
-        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentsFixtures.threeStudent);
+        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentsFixtures.threeStudents);
         // act
         render(
             <QueryClientProvider client={queryClient}>

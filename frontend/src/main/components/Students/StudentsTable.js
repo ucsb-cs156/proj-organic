@@ -1,7 +1,7 @@
 import React from "react";
 import OurTable from "main/components/OurTable"
 
- export default function StudentsTable({ student }) {
+ export default function StudentsTable({ students }) {
      // Stryker disable next-line all : TODO try to make a good test for this
 
      const columns = [
@@ -43,7 +43,7 @@ import OurTable from "main/components/OurTable"
      return (
         <>
             <div>Total Students: {students.length}</div>
-          <OurTable data={students} columns={columns} testid={"StudentTable"} />
+          <OurTable data={students} columns={columns} testid={"StudentsTable"} />
         </>
       );
     };
