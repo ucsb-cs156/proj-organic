@@ -28,7 +28,7 @@ export default function CoursesEditPage({storybook=false}) {
     params: {
       id: course.id,
       name: course.name,
-      school: course.school,
+      schoolAbbrev: course.schoolAbbrev,
       term: course.term,
       startDate: course.startDate,
       endDate: course.endDate,

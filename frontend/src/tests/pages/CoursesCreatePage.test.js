@@ -60,7 +60,7 @@ describe("CourseCreatePage tests", () => {
         const course = {
             id: 1,
             name: "CS156",
-            school: "UC Santa Barbara",
+            schoolAbbrev: "ucsb",
             term: "F23",
             startDate: "2023-09-24T12:00:00",
             endDate: "2023-12-15T12:00:00",
@@ -90,7 +90,7 @@ describe("CourseCreatePage tests", () => {
         const submitButton = screen.getByTestId("CoursesForm-submit");
 
         fireEvent.change(nameField, { target: { value: 'CS156' } });
-        fireEvent.change(schoolField, { target: { value: 'UC Santa Barbara' } });
+        fireEvent.change(schoolField, { target: { value: 'ucsb' } });
         fireEvent.change(termField, { target: { value: 'F23' } });
         fireEvent.change(startDateField, { target: { value: '2023-09-24T12:00:00' } });
         fireEvent.change(endDateField, { target: { value: '2023-12-15T12:00:00' } });
@@ -105,7 +105,7 @@ describe("CourseCreatePage tests", () => {
         expect(axiosMock.history.post[0].params).toEqual(
             {
                 "name": "CS156",
-                "school": "UC Santa Barbara",
+                "schoolAbbrev": "ucsb",
                 "term": "F23",
                 "startDate": "2023-09-24T12:00",
                 "endDate": "2023-12-15T12:00",
