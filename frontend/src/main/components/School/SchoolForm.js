@@ -1,4 +1,4 @@
-import { Button, Form, Row, Col } from 'react-bootstrap';
+import { Button, Form, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -26,6 +26,11 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
             <Col>
                     <Form.Group className="mb-3" >
                         <Form.Label htmlFor="abbrev">Abbreviation</Form.Label>
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>'abbrev' field should be all lowercase</Tooltip>}
+                            delay='5'
+                        >
                         <Form.Control
                         data-testid="SchoolForm-abbrev"
                         id="abbrev"
@@ -34,6 +39,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                         {...register("abbrev", {required: true, pattern: abbrev_regex})}
                         disabled={Boolean(initialContents)}
                         />
+                        </OverlayTrigger>
                         <Form.Control.Feedback type="invalid">
                             {errors.abbrev?.type === 'required' && 'Abbreviation is required. '}
                             {errors.abbrev?.type === 'pattern' && 'Abbreviation must be lowercase letters (_ and . allowed), e.g. ucsb'}
@@ -58,6 +64,11 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 <Col>
                     <Form.Group className="mb-3" >
                         <Form.Label htmlFor="termRegex">Term Regex</Form.Label>
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>regular expression for the format of terms (e.g. '[WSMF]\d\d' for quarters of the form F24, W25, S25, M25)</Tooltip>}
+                            delay='5'
+                        >
                         <Form.Control
                             data-testid="SchoolForm-termRegex"
                             id="termRegex"
@@ -65,6 +76,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                             isInvalid={Boolean(errors.termRegex)}
                             {...register("termRegex", { required: true })}
                         />
+                        </OverlayTrigger>
                         <Form.Control.Feedback type="invalid">
                             {errors.termRegex && 'Term Regex is required. '}
                         </Form.Control.Feedback>
@@ -76,6 +88,11 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                 <Col>
                     <Form.Group className="mb-3" >
                         <Form.Label htmlFor="termDescription">Term Description</Form.Label>
+                        <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip>E.g. Quarter, Semester or Session</Tooltip>}
+                            delay='5'
+                        >
                         <Form.Control
                             data-testid="SchoolForm-termDescription"
                             id="termDescription"
@@ -83,6 +100,7 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
                             isInvalid={Boolean(errors.termDescription)}
                             {...register("termDescription", { required: true})}
                         />
+                        </OverlayTrigger>
                         <Form.Control.Feedback type="invalid">
                             {errors.termDescription && 'Term Description is required.'}
                         </Form.Control.Feedback>
