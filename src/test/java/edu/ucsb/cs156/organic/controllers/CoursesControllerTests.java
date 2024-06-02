@@ -260,16 +260,8 @@ public class CoursesControllerTests extends ControllerTestCase {
     @Test
     public void an_admin_user_can_post_a_new_course() throws Exception {
         // arrange
-        School school = School.builder()
-                .abbrev("UCSB")
-                .name("UC Santa Barbara")
-                .termRegex("[WSMF]\\d\\d")
-                .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
-                .termError("Quarter must be entered in the correct format")
-                .build();
 
         Course courseBefore = Course.builder()
-                .id(1L)
                 .name("CS156")
                 .schoolAbbrev(school.getAbbrev())
                 .term("F23")
@@ -290,8 +282,9 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .school(school)
                 .build();
 
+        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.of(school));
         when(courseRepository.save(eq(courseBefore))).thenReturn(courseAfter);
-        when(schoolRepository.findById(any())).thenReturn(Optional.of(school));
+
         // act
         MvcResult response = mockMvc.perform(
                 post("/api/courses/post?name=CS156&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs156-f23")
@@ -309,16 +302,8 @@ public class CoursesControllerTests extends ControllerTestCase {
     @Test
     public void an_instructor_can_post_a_new_course() throws Exception {
         // arrange
-        School school = School.builder()
-                .abbrev("UCSB")
-                .name("UC Santa Barbara")
-                .termRegex("[WSMF]\\d\\d")
-                .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
-                .termError("Quarter must be entered in the correct format")
-                .build();
-        System.out.println(school);
+
         Course courseBefore = Course.builder()
-                .id(1L)
                 .name("CS156")
                 .schoolAbbrev(school.getAbbrev())
                 .term("F23")
@@ -338,13 +323,12 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .githubOrg("ucsb-cs148-w24")
                 .school(school)
                 .build();
-
-        when(schoolRepository.findById(any())).thenReturn(Optional.of(school));
+        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.of(school));
         when(courseRepository.save(eq(courseBefore))).thenReturn(courseAfter);
 
         // act
         MvcResult response = mockMvc.perform(
-                post("/api/courses/post?name=CS156&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                post("/api/courses/post?name=CS156&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs156-f23")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -362,7 +346,6 @@ public class CoursesControllerTests extends ControllerTestCase {
         // arrange
 
         Course courseBefore = Course.builder()
-                .id(1L)
                 .name("CS156")
                 .schoolAbbrev(school.getAbbrev())
                 .term("F23")
@@ -387,10 +370,45 @@ public class CoursesControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                post("/api/courses/post?name=CS156&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs156-f23")
+                post("/api/courses/post?name=CS16&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                         .with(csrf()))
                 .andExpect(status().isForbidden()).andReturn();
     
+    }
+
+    @WithMockUser(roles = {"ADMIN", "USER"})
+    @Test
+    public void cannot_create_with_nonexistent_school() throws Exception{
+        Course courseBefore = Course.builder()
+                .name("CS32")
+                .schoolAbbrev(school.getAbbrev())
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs32-f23")
+                .school(school)
+                .build();
+        Course courseAfter = Course.builder()
+                .id(1L)
+                .name("CS32")
+                .schoolAbbrev(school.getAbbrev())
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs32-f23")
+                .school(school)
+                .build();
+
+        when(courseRepository.save(eq(courseBefore))).thenReturn(courseAfter);
+        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.empty());
+        MvcResult response = mockMvc.perform(
+                        post("/api/courses/post?name=CS32&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs32-f23")
+                                .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        Map<String,String> responseMap = mapper.readValue(response.getResponse().getContentAsString(), new TypeReference<Map<String,String>>(){});
+        Map<String,String> expectedMap = Map.of("message", "School with id UCSB not found", "type", "EntityNotFoundException");
+        assertEquals(expectedMap, responseMap);
     }
 
     @WithMockUser(roles = { "ADMIN", "USER" })
@@ -592,19 +610,12 @@ public class CoursesControllerTests extends ControllerTestCase {
     @Test
     public void an_admin_user_cannot_update_non_existing_course() throws Exception {
         // arrange
-        School school = School.builder()
-                .abbrev("UCSB")
-                .name("UC Santa Barbara")
-                .termRegex("[WSMF]\\d\\d")
-                .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
-                .termError("Quarter must be entered in the correct format")
-                .build();
+
         when(courseRepository.findById(eq(42L))).thenReturn(Optional.empty());
-        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.of(school));
         // act
 
         MvcResult response = mockMvc.perform(
-                put("/api/courses/update?id=42&name=CS156&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs156-f23")
+                put("/api/courses/update?id=42&name=CS16&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                                 .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
         // assert
@@ -618,13 +629,7 @@ public class CoursesControllerTests extends ControllerTestCase {
     @Test
     public void an_admin_user_can_update_a_course() throws Exception {
         // arrange
-        School school = School.builder()
-                .abbrev("UCSB")
-                .name("UC Santa Barbara")
-                .termRegex("[WSMF]\\d\\d")
-                .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
-                .termError("Quarter must be entered in the correct format")
-                .build();
+
         Course courseBefore = course1;
 
         Course courseAfter = course2;
@@ -638,8 +643,8 @@ public class CoursesControllerTests extends ControllerTestCase {
         courseAfter.setSchoolAbbrev(ucsd.getAbbrev());
         courseAfter.setSchool(ucsd);
 
-        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.of(school));
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        when(schoolRepository.findById(eq(ucsd.getAbbrev()))).thenReturn(Optional.of(ucsd));
         when(courseRepository.save(eq(courseAfter))).thenReturn(courseAfter);
 
         String urlTemplate = String.format(
@@ -666,13 +671,7 @@ public class CoursesControllerTests extends ControllerTestCase {
 
         // get current user, make sure that when courseStaffRepository.findByCourseId is
         // called, it returns the current user
-        School school = School.builder()
-                .abbrev("UCSB")
-                .name("UC Santa Barbara")
-                .termRegex("[WSMF]\\d\\d")
-                .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
-                .termError("Quarter must be entered in the correct format")
-                .build();
+
         Course courseBefore = course1;
 
         Course courseAfter = course2;
@@ -687,6 +686,7 @@ public class CoursesControllerTests extends ControllerTestCase {
         courseAfter.setSchool(ucsd);
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        when(schoolRepository.findById(eq(ucsd.getAbbrev()))).thenReturn(Optional.of(ucsd));
         when(courseRepository.save(eq(courseAfter))).thenReturn(courseAfter);
 
         // get current user
@@ -696,7 +696,7 @@ public class CoursesControllerTests extends ControllerTestCase {
         when(courseStaffRepository.findByCourseIdAndGithubId(courseBefore.getId(), user.getGithubId()))
                 .thenReturn(Optional
                         .of(courseStaff));
-        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.of(school));
+
         // act
         // get urlTemplate from courseAfter using string interpolation
         String urlTemplate = String.format(
@@ -755,7 +755,7 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .thenReturn(notStaff);
         // act
         MvcResult response = mockMvc.perform(
-                put("/api/courses/update?id=1&name=CS16&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs156-f23")
+                put("/api/courses/update?id=1&name=CS16&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                         .with(csrf()))
                 .andExpect(status().isForbidden()).andReturn();
 
@@ -817,6 +817,42 @@ public class CoursesControllerTests extends ControllerTestCase {
                 });
         Map<String, String> expectedMap = Map.of("message", "Access Denied", "type",
                 "AccessDeniedException");
+        assertEquals(expectedMap, responseMap);
+    }
+
+    @WithMockUser(roles = {"ADMIN", "USER"})
+    @Test
+    public void cannot_edit_with_nonexistent_school() throws Exception{
+        Course courseBefore = Course.builder()
+                .id(1L)
+                .name("CS16")
+                .schoolAbbrev(school.getAbbrev())
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs16-f23")
+                .school(school)
+                .build();
+
+        Course courseAfter = Course.builder()
+                .id(1L)
+                .name("CS32")
+                .schoolAbbrev(school.getAbbrev())
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs32-f23")
+                .school(school)
+                .build();
+        when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.empty());
+        MvcResult response = mockMvc.perform(
+                        put("/api/courses/update?id=1&name=CS32&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs32-f23")
+                                .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        Map<String,String> responseMap = mapper.readValue(response.getResponse().getContentAsString(), new TypeReference<Map<String,String>>(){});
+        Map<String,String> expectedMap = Map.of("message", "School with id UCSB not found", "type", "EntityNotFoundException");
         assertEquals(expectedMap, responseMap);
     }
 
