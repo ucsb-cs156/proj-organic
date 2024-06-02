@@ -1,6 +1,6 @@
 import React from 'react';
 import StudentsTable from 'main/components/Students/StudentsTable';
-import { studentFixture } from 'fixtures/studentFixture';
+import { studentsFixtures } from 'fixtures/studentsFixtures';
 import { currentUserFixtures } from 'fixtures/currentUserFixtures';
 import { rest } from "msw";
 
@@ -24,13 +24,13 @@ Empty.args = {
 export const ThreeItemsOrdinaryUser = Template.bind({});
 
 ThreeItemsOrdinaryUser.args = {
-    student: studentFixture.threeStudent,
+    student: studentsFixtures.threeStudent,
     currentUser: currentUserFixtures.userOnly,
 };
 
 export const ThreeItemsAdminUser = Template.bind({});
 ThreeItemsAdminUser.args = {
-    student: studentFixture.threeStudent,
+    student: studentsFixtures.threeStudent,
     currentUser: currentUserFixtures.adminUser,
 }
 

@@ -2,7 +2,7 @@ import StudentsTable from "main/components/Students/StudentsTable"
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
 // import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import {  render, screen } from "@testing-library/react";
-import { studentFixture } from "fixtures/studentFixture";
+import { studentsFixtures } from "fixtures/studentsFixtures";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -27,21 +27,21 @@ describe("StudentsTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <StudentsTable student={studentFixture.threeStudent} currentUser={currentUser} />
+          <StudentsTable student={studentsFixtures.threeStudent} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
     );
 
-    const expectedStudentgithub = studentFixture.threeStudent;
+    const expectedStudentgithub = studentsFixtures.threeStudent;
     expectedStudentgithub.forEach((student, index) => {
-      const githubIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-githubId`);
+      const githubIdCell = screen.getByTestId(`StudentsTable-cell-row-${index}-col-githubId`);
       expect(githubIdCell).toHaveTextContent(student.githubId);
     });
 
-    const expectedStudentcourse = studentFixture.threeStudent;
+    const expectedStudentcourse = studentsFixtures.threeStudent;
     expectedStudentcourse.forEach((studentMember, index) => {
-      const courseIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-courseId`);
+      const courseIdCell = screen.getByTestId(`StudentsTable-cell-row-${index}-col-courseId`);
       expect(courseIdCell).toHaveTextContent(studentMember.courseId);
     });
 
@@ -105,7 +105,7 @@ describe("StudentsTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-            <StudentsTable student={studentFixture.threeStudent} currentUser={currentUser} />
+            <StudentsTable student={studentsFixtures.threeStudent} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 

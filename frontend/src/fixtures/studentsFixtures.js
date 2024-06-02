@@ -1,4 +1,4 @@
-const studentFixture = {
+const studentsFixtures = {
 
     oneStudent: {
         "id": 1,
@@ -27,4 +27,4 @@ const studentFixture = {
 };
 
 
-export { studentFixture };
+export { studentsFixtures };

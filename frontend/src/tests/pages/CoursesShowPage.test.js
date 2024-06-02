@@ -9,6 +9,7 @@ import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 import mockConsole from "jest-mock-console";
 import userEvent from "@testing-library/user-event";
+import {studentsFixtures} from "../../fixtures/studentsFixtures";
 
 
 const mockToast = jest.fn();
@@ -199,10 +200,10 @@ describe("CoursesShowPage tests", () => {
         const submitButton = screen.getByTestId("StudentsForm-submit");
         await user.upload(upload, file);
         fireEvent.click(submitButton);
-        expect(axiosMock.history.post[0].params).toEqual({
+        await waitFor(() => {expect(axiosMock.history.post[0].params).toEqual({
                 "courseId": 17
             }
-        );
+        );});
         expect(axiosMock.history.post[0].headers).toEqual({
             Accept: 'application/json, text/plain, */*',
             'Content-Type': 'multipart/form-data'
@@ -231,7 +232,7 @@ describe("CoursesShowPage tests", () => {
         await user.upload(upload, file);
         fireEvent.click(submitButton);
 
-        expect(mockToast).toBeCalledWith("Error communicating with backend on /api/students/upload/egrades");
+        await waitFor(() => {expect(mockToast).toBeCalledWith("Error communicating with backend on /api/students/upload/egrades");});
     });
 
     test("Correctly Transmit backend reject", async () => {
@@ -257,7 +258,7 @@ describe("CoursesShowPage tests", () => {
         await user.upload(upload, file);
         fireEvent.click(submitButton);
 
-        expect(mockToast).toBeCalledWith("File Rejected");
+        await waitFor(() => {expect(mockToast).toBeCalledWith("File Rejected");});
     });
 
 
@@ -274,14 +275,14 @@ describe("CoursesShowPage tests", () => {
                 </MemoryRouter>
             </QueryClientProvider>
         );
-        expect(screen.queryByTestId(`StudentTable-cell-row-0-col-id`)).not.toBeInTheDocument();
+        expect(screen.queryByTestId(`StudentsTable-cell-row-0-col-id`)).not.toBeInTheDocument();
     });
 
     test("Table renders correctly for admin", async () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
-        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentFixture.threeStudent);
+        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentsFixtures.threeStudent);
         // act
         render(
             <QueryClientProvider client={queryClient}>
@@ -291,16 +292,16 @@ describe("CoursesShowPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(screen.getByTestId(`StudentTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
-        expect(screen.getByTestId(`StudentTable-cell-row-1-col-id`)).toHaveTextContent("2");
-        expect(screen.getByTestId(`StudentTable-cell-row-2-col-id`)).toHaveTextContent("3");
+        await waitFor(() => { expect(screen.getByTestId(`StudentsTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(screen.getByTestId(`StudentsTable-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(screen.getByTestId(`StudentsTable-cell-row-2-col-id`)).toHaveTextContent("3");
     });
 
     test("Table renders correctly for instructor", async () => {
         setupInstructorUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, coursesFixtures.threeCourses[0]);
-        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentFixture.threeStudent);
+        axiosMock.onGet("/api/students/all", {params: {courseId: 17}}).reply(200, studentsFixtures.threeStudent);
         // act
         render(
             <QueryClientProvider client={queryClient}>
@@ -310,9 +311,9 @@ describe("CoursesShowPage tests", () => {
             </QueryClientProvider>
         );
 
-        await waitFor(() => { expect(screen.getByTestId(`StudentTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
-        expect(screen.getByTestId(`StudentTable-cell-row-1-col-id`)).toHaveTextContent("2");
-        expect(screen.getByTestId(`StudentTable-cell-row-2-col-id`)).toHaveTextContent("3");
+        await waitFor(() => { expect(screen.getByTestId(`StudentsTable-cell-row-0-col-id`)).toHaveTextContent("1"); });
+        expect(screen.getByTestId(`StudentsTable-cell-row-1-col-id`)).toHaveTextContent("2");
+        expect(screen.getByTestId(`StudentsTable-cell-row-2-col-id`)).toHaveTextContent("3");
     });
 
 });
