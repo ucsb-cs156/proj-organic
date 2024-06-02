@@ -2,27 +2,46 @@ const studentFixture = {
 
     oneStudent: {
         "id": 1,
-        "courseId": 1,
-        "githubId": "gubinhti"
+        "courseId": 3,
+        "fname": "CHRIS FAKE",
+        "lname": "GAUCHO",
+        "studentId": "A123456",
+        "email": "cgaucho@umail.ucsb.edu",
+        "githubId": null,
+        "user": null
     },
 
-    threeStudent: [
-        { 
+    threeStudents: [
+        {
             "id": 1,
-            "courseId": 1,
-            "githubId": "gubinhti"
-     
-        },
-        {
+            "courseId": 3,
+            "fname": "CHRIS FAKE",
+            "lname": "GAUCHO",
+            "studentId": "A123456",
+            "email": "cgaucho@umail.ucsb.edu",
+            "githubId": null,
+            "user": null
+          },
+          {
             "id": 2,
-            "courseId": 2,
-            "githubId": "royalslate"
-        },
-        {
+            "courseId": 3,
+            "fname": "LAUREN",
+            "lname": "DEL PLAYA",
+            "studentId": "A987654",
+            "email": "ldelplaya@umail.ucsb.edu",
+            "githubId": null,
+            "user": null
+          },
+          {
             "id": 3,
             "courseId": 3,
-            "githubId": "division7"
-        }
+            "fname": "SABADO",
+            "lname": "TARDE",
+            "studentId": "1234567",
+            "email": "sabadotarde@umail.ucsb.edu",
+            "githubId": null,
+            "user": null
+          }
     ]
 };
 

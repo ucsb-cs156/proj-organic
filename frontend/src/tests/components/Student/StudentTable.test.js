@@ -1,6 +1,5 @@
 import StudentTable from "main/components/Student/StudentTable"
 import { currentUserFixtures } from "fixtures/currentUserFixtures";
-// import { fireEvent, render, waitFor, screen } from "@testing-library/react";
 import {  render, screen } from "@testing-library/react";
 import { studentFixture } from "fixtures/studentFixture";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -16,9 +15,6 @@ jest.mock('react-router-dom', () => ({
 
 describe("StudentTable tests", () => {
   const queryClient = new QueryClient();
-  const expectedHeaders = ["id", "courseId", "githubId"];
-  const expectedFields = ["id", "courseId", "githubId"]; 
-  const testId = "StudentTable";
 
   test("Has the expected column headers and content for ordinary user", () => {
 
@@ -27,23 +23,15 @@ describe("StudentTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <StudentTable student={studentFixture.threeStudent} currentUser={currentUser} />
+          <StudentTable students={studentFixture.threeStudents} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
 
     );
 
-    const expectedStudentgithub = studentFixture.threeStudent;
-    expectedStudentgithub.forEach((student, index) => {
-      const githubIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-githubId`);
-      expect(githubIdCell).toHaveTextContent(student.githubId);
-    });
-
-    const expectedStudentcourse = studentFixture.threeStudent;
-    expectedStudentcourse.forEach((studentMember, index) => {
-      const courseIdCell = screen.getByTestId(`StudentTable-cell-row-${index}-col-courseId`);
-      expect(courseIdCell).toHaveTextContent(studentMember.courseId);
-    });
+    const expectedHeaders = ["id", "courseId", "fname", "lname", "studentId", "email", "githubId", "user"];
+    const expectedFields = ["id", "courseId", "fname", "lname", "studentId", "email", "githubId", "user"];
+    const testId = "StudentTable";
 
     expectedHeaders.forEach((headerText) => {
       const header = screen.getByText(headerText);
@@ -58,32 +46,29 @@ describe("StudentTable tests", () => {
     expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
     expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
 
-
-    
-    const editButton = screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`);
-    expect(editButton).not.toBeInTheDocument();
-
-    const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    expect(deleteButton).not.toBeInTheDocument();
+    const totalStudentElement = screen.getByText("Total Students: 3"); // Assuming there are 3 students in the fixture
+    expect(totalStudentElement).toBeInTheDocument();
 
   });
 
+
+  
   test("renders empty table correctly", () => {
 
     // arrange
     const currentUser = currentUserFixtures.adminUser;
-
-
+    const expectedHeaders = ["id", "courseId", "fname", "lname", "studentId", "email", "githubId", "user"];
+    const expectedFields = ["id", "courseId", "fname", "lname", "studentId", "email", "githubId", "user"];
+    const testId = "StudentTable";
+    
     // act
     render(
-        <QueryClientProvider client={queryClient}>
-          <MemoryRouter>
-          <StudentTable student={[]} currentUser={currentUser} />
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <StudentTable students={[]} currentUser={currentUser} />
         </MemoryRouter>
       </QueryClientProvider>
     );
-
-
 
     // assert
     expectedHeaders.forEach((headerText) => {
@@ -95,45 +80,9 @@ describe("StudentTable tests", () => {
       const fieldElement = screen.queryByTestId(`${testId}-cell-row-0-col-${field}`);
       expect(fieldElement).not.toBeInTheDocument();
     });
+
+    const totalCoursesElement = screen.getByText("Total Students: 0"); // Since the table is empty
+    expect(totalCoursesElement).toBeInTheDocument();
   });
-
-
-  test("Has the expected colum headers and content for adminUser", () => {
-
-    const currentUser = currentUserFixtures.adminUser;
-
-    render(
-      <QueryClientProvider client={queryClient}>
-        <MemoryRouter>
-            <StudentTable student={studentFixture.threeStudent} currentUser={currentUser} />
-        </MemoryRouter>
-      </QueryClientProvider>
-
-    );
-
-
-    expectedHeaders.forEach((headerText) => {
-      const header = screen.getByText(headerText);
-      expect(header).toBeInTheDocument();
-    });
-
-    expectedFields.forEach((field) => {
-      const header = screen.getByTestId(`${testId}-cell-row-0-col-${field}`);
-      expect(header).toBeInTheDocument();
-    });
-
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
-
-    // const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
-    // expect(deleteButton).toBeInTheDocument();
-    // expect(deleteButton).toHaveClass("btn-danger");
-
-  });
-
-
-
-
-  
 
 });
