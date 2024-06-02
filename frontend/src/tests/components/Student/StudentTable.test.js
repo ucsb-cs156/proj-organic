@@ -49,6 +49,13 @@ describe("StudentTable tests", () => {
     const totalStudentElement = screen.getByText("Total Students: 3"); // Assuming there are 3 students in the fixture
     expect(totalStudentElement).toBeInTheDocument();
 
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-courseId`)).toHaveTextContent(3);
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-fname`)).toHaveTextContent("CHRIS FAKE");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-lname`)).toHaveTextContent("GAUCHO");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-studentId`)).toHaveTextContent("A123456");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-email`)).toHaveTextContent("cgaucho@umail.ucsb.edu");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-githubId`)).toHaveTextContent("banana");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-user`)).toHaveTextContent("mama mia");
   });
 
 

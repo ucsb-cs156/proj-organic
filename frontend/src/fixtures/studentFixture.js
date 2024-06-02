@@ -19,8 +19,8 @@ const studentFixture = {
             "lname": "GAUCHO",
             "studentId": "A123456",
             "email": "cgaucho@umail.ucsb.edu",
-            "githubId": null,
-            "user": null
+            "githubId": "banana",
+            "user": "mama mia"
           },
           {
             "id": 2,
