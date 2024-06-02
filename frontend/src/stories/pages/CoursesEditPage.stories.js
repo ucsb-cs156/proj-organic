@@ -9,7 +9,7 @@ import CoursesEditPage from 'main/pages/CoursesEditPage';
 import {schoolsFixtures} from "../../fixtures/schoolsFixtures";
 
 export default {
-    title: 'pages/CoursesEditPage',
+    title: 'pages/Courses/CoursesEditPage',
     component: CoursesEditPage
 };
 
@@ -37,5 +37,3 @@ Default.parameters = {
         }),
     ],
 }
-
-
