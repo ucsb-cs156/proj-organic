@@ -119,7 +119,7 @@ describe("CoursesForm tests", () => {
         const submitButton = screen.getByTestId("CoursesForm-submit");
 
         fireEvent.change(nameField, { target: { value: "CMPSC 156" } });
-        fireEvent.change(schoolField, { target: { value: 'UC Santa Barbara' } });
+        fireEvent.change(schoolField, { target: { value: 'ucsb' } });
         fireEvent.change(termField, { target: { value: 'f23' } });
         fireEvent.change(startDateField, { target: { value: '2022-01-02T12:00' } });
         fireEvent.change(endDateField, { target: { value: '2022-02-02T12:00' } });

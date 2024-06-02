@@ -12,20 +12,20 @@ const SchoolDropdown = ({schools = [], testId}) => {
         <Form.Label htmlFor="school">School</Form.Label>
         <Form.Control data-testid={`${testId}-school`} id="school"  as="select"
           isInvalid={Boolean(errors.school)}
-          {...register("school", {required: true, minLength: 2})}
+          {...register("schoolAbbrev", {required: true, minLength: 2})}
         >
             <option value=""></option>
             {schools.map(function (object, i) {
                 const key = `${testId}-option-${i}`
                 return(
-                    <option key={key} data-testid={key} value={object.name}>
+                    <option key={key} data-testid={key} value={object.abbrev}>
                         {object.name}
                     </option>
                 );
             })}
         </Form.Control>
         <Form.Control.Feedback type="invalid">
-            {errors.school && 'School is required. '}
+            {errors.schoolAbbrev && 'School is required. '}
         </Form.Control.Feedback>
     </Form.Group>);
 }
