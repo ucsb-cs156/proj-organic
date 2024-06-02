@@ -18,19 +18,19 @@ const Template = (args) => {
 export const Empty = Template.bind({});
 
 Empty.args = {
-    student: []
+    students: []
 };
 
 export const ThreeItemsOrdinaryUser = Template.bind({});
 
 ThreeItemsOrdinaryUser.args = {
-    student: studentFixture.threeStudents,
+    students: studentFixture.threeStudents,
     currentUser: currentUserFixtures.userOnly,
 };
 
 export const ThreeItemsAdminUser = Template.bind({});
 ThreeItemsAdminUser.args = {
-    student: studentFixture.threeStudents,
+    students: studentFixture.threeStudents,
     currentUser: currentUserFixtures.adminUser,
 }
 
