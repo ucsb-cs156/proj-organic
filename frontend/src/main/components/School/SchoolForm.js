@@ -23,15 +23,16 @@ function SchoolForm({ initialContents, submitAction, buttonLabel = "Create" }) {
 
         <Form onSubmit={handleSubmit(submitAction)}>
             <Row>
-                <Col>
+            <Col>
                     <Form.Group className="mb-3" >
                         <Form.Label htmlFor="abbrev">Abbreviation</Form.Label>
                         <Form.Control
-                            data-testid="SchoolForm-abbrev"
-                            id="abbrev"
-                            type="text"
-                            isInvalid={Boolean(errors.abbrev)}
-                            {...register("abbrev", { required: true, pattern: abbrev_regex })}
+                        data-testid="SchoolForm-abbrev"
+                        id="abbrev"
+                        type="text"
+                        isInvalid={Boolean(errors.abbrev)}
+                        {...register("abbrev", {required: true, pattern: abbrev_regex})}
+                        disabled={Boolean(initialContents)}
                         />
                         <Form.Control.Feedback type="invalid">
                             {errors.abbrev?.type === 'required' && 'Abbreviation is required. '}
