@@ -81,8 +81,8 @@ describe("StudentTable tests", () => {
       expect(fieldElement).not.toBeInTheDocument();
     });
 
-    const totalCoursesElement = screen.getByText("Total Students: 0"); // Since the table is empty
-    expect(totalCoursesElement).toBeInTheDocument();
+    const totalStudentsElement = screen.getByText("Total Students: 0"); // Since the table is empty
+    expect(totalStudentsElement).toBeInTheDocument();
   });
 
 });
