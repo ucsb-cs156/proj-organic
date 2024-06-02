@@ -1,7 +1,6 @@
 import {render, fireEvent, screen} from "@testing-library/react";
 import StudentsForm from "../../../main/components/Students/StudentsForm";
 import userEvent from "@testing-library/user-event";
-import {act} from "react-dom/test-utils";
 
 const mockedNavigate = jest.fn();
 
