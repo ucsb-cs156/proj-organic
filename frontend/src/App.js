@@ -58,13 +58,6 @@ function App() {
   const schoolRoutes = (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) ? (
     <>
       <Route path="/schools/create" element={<SchoolCreatePage />} />
-      <Route path="/schools" element={<SchoolIndexPage />} />
-    </>
-  ) : null;
-
-  const schoolRoutes = (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) ? (
-    <>
-      <Route path="/schools/create" element={<SchoolCreatePage />} />
       <Route path="/schools/edit/:abbrev" element={<SchoolEditPage />} />
       <Route path="/schools" element={<SchoolIndexPage />} />
     </>
