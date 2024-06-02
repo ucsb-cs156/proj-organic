@@ -18,9 +18,6 @@ import CoursesStaffPage from "main/pages/CoursesStaffPage";
 
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
 import SchoolIndexPage from "main/pages/SchoolIndexPage";
-
-import SchoolCreatePage from "main/pages/SchoolCreatePage";
-import SchoolIndexPage from "main/pages/SchoolIndexPage";
 import SchoolEditPage from "main/pages/SchoolEditPage";
 
 
