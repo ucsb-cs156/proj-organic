@@ -1,9 +1,11 @@
 package edu.ucsb.cs156.organic.controllers;
 
 import edu.ucsb.cs156.organic.entities.Course;
+import edu.ucsb.cs156.organic.entities.School;
 import edu.ucsb.cs156.organic.entities.Staff;
 import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.repositories.CourseRepository;
+import edu.ucsb.cs156.organic.repositories.SchoolRepository;
 import edu.ucsb.cs156.organic.repositories.StaffRepository;
 import edu.ucsb.cs156.organic.repositories.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +32,6 @@ import org.springframework.security.access.AccessDeniedException;
 
 import java.time.LocalDateTime;
 
-import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import java.util.Optional;
@@ -49,6 +50,9 @@ public class CoursesController extends ApiController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    SchoolRepository schoolRepository;
 
     @Operation(summary = "List all courses")
     @PreAuthorize("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')")
@@ -87,20 +91,24 @@ public class CoursesController extends ApiController {
     @PostMapping("/post")
     public Course postCourse(
             @Parameter(name = "name", description = "course name, e.g. CMPSC 156") @RequestParam String name,
-            @Parameter(name = "school", description = "school abbreviation e.g. UCSB") @RequestParam String school,
+            @Parameter(name = "schoolAbbrev", description = "school abbreviation e.g. UCSB") @RequestParam String schoolAbbrev,
             @Parameter(name = "term", description = "quarter or semester, e.g. F23") @RequestParam String term,
             @Parameter(name = "startDate", description = "in iso format, i.e. YYYY-mm-ddTHH:MM:SS; e.g. 2023-10-01T00:00:00 see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
             @Parameter(name = "endDate", description = "in iso format, i.e. YYYY-mm-ddTHH:MM:SS; e.g. 2023-12-31T11:59:59 see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
             @Parameter(name = "githubOrg", description = "for example ucsb-cs156-f23") @RequestParam String githubOrg)
             throws JsonProcessingException {
 
+        School school =  schoolRepository.findById(schoolAbbrev)
+                .orElseThrow(() -> new EntityNotFoundException(School.class, schoolAbbrev));
+
         Course course = Course.builder()
                 .name(name)
-                .school(school)
+                .schoolAbbrev(schoolAbbrev)
                 .term(term)
                 .startDate(startDate)
                 .endDate(endDate)
                 .githubOrg(githubOrg)
+                .school(school)
                 .build();
 
         Course savedCourse = courseRepository.save(course);
@@ -177,7 +185,7 @@ public class CoursesController extends ApiController {
     public Course updateCourse(
             @Parameter(name = "id") @RequestParam Long id,
             @Parameter(name = "name", description = "course name, e.g. CMPSC 156") @RequestParam String name,
-            @Parameter(name = "school", description = "school abbreviation e.g. UCSB") @RequestParam String school,
+            @Parameter(name = "schoolAbbrev", description = "school abbreviation e.g. UCSB") @RequestParam String schoolAbbrev,
             @Parameter(name = "term", description = "quarter or semester, e.g. F23") @RequestParam String term,
             @Parameter(name = "startDate", description = "in iso format, i.e. YYYY-mm-ddTHH:MM:SS; e.g. 2023-10-01T00:00:00 see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("startDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
             @Parameter(name = "endDate", description = "in iso format, i.e. YYYY-mm-ddTHH:MM:SS; e.g. 2023-12-31T11:59:59 see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("endDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate,
@@ -197,12 +205,16 @@ public class CoursesController extends ApiController {
                             "User is not a staff member for this course"));
         }
 
+        School school =  schoolRepository.findById(schoolAbbrev)
+                .orElseThrow(() -> new EntityNotFoundException(School.class, schoolAbbrev));
+
         course.setName(name);
         course.setSchool(school);
         course.setTerm(term);
         course.setStartDate(startDate);
         course.setEndDate(endDate);
         course.setGithubOrg(githubOrg);
+        course.setSchoolAbbrev(school.getAbbrev());
 
         course = courseRepository.save(course);
         log.info("course={}", course);
