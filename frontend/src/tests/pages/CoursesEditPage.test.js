@@ -83,17 +83,24 @@ describe("CoursesEditPage tests", () => {
             axiosMock.onGet("/api/schools/all").reply(200, schoolsFixtures.threeSchools);
             axiosMock.onGet("/api/courses/get", { params: { id: 17 } }).reply(200, {
                 id: 17,
-                name: "CS 156",
-                school: "UC Santa Barbara",
+                name: "CS156",
+                schoolAbbrev: "ucsb",
                 term: "f23",
-                startDate: "2023-09-29T00:00",
-                endDate: "2023-12-15T00:00",
-                githubOrg: "ucsb-cs156-f23"
+                startDate: "2023-09-24T12:00:00",
+                endDate: "2023-12-15T12:00:00",
+                githubOrg: "ucsb-cs156-f23",
+                school: {
+                    abbrev: "ucsb",
+                    name: "UC Santa Barbara",
+                    termRegex: ".*",
+                    termDescription: "f23",
+                    termError: "ucsb"
+                }
             });
             axiosMock.onPut('/api/courses/update').reply(200, {
                 id: "17",
                 name: "CS 148",
-                school: "UC Santa Barbara",
+                schoolAbbrev: "ucsb",
                 term: "w23",
                 startDate: "2024-01-10T00:00",
                 endDate: "2023-03-12T00:00",
@@ -134,11 +141,11 @@ describe("CoursesEditPage tests", () => {
             const submitButton = screen.getByTestId("CoursesForm-submit");
 
             expect(idField).toHaveValue("17");
-            expect(nameField).toHaveValue("CS 156");
-            expect(schoolField).toHaveValue("UC Santa Barbara");
+            expect(nameField).toHaveValue("CS156");
+            expect(schoolField).toHaveValue("ucsb");
             expect(termField).toHaveValue("f23");
-            expect(startField).toHaveValue("2023-09-29T00:00");
-            expect(endField).toHaveValue("2023-12-15T00:00");
+            expect(startField).toHaveValue("2023-09-24T12:00");
+            expect(endField).toHaveValue("2023-12-15T12:00");
             expect(githubOrgField).toHaveValue("ucsb-cs156-f23");
             expect(submitButton).toBeInTheDocument();
         });
@@ -165,16 +172,16 @@ describe("CoursesEditPage tests", () => {
             const submitButton = screen.getByTestId("CoursesForm-submit");
 
             expect(idField).toHaveValue("17");
-            expect(nameField).toHaveValue("CS 156");
-            expect(schoolField).toHaveValue("UC Santa Barbara");
+            expect(nameField).toHaveValue("CS156");
+            expect(schoolField).toHaveValue("ucsb");
             expect(termField).toHaveValue("f23");
-            expect(startField).toHaveValue("2023-09-29T00:00");
-            expect(endField).toHaveValue("2023-12-15T00:00");
+            expect(startField).toHaveValue("2023-09-24T12:00");
+            expect(endField).toHaveValue("2023-12-15T12:00");
             expect(githubOrgField).toHaveValue("ucsb-cs156-f23");
             expect(submitButton).toBeInTheDocument();
 
             fireEvent.change(nameField, { target: { value: "CS 148" } })
-            fireEvent.change(schoolField, { target: { value: "University of Minnesota" } })
+            fireEvent.change(schoolField, { target: { value: "umn" } })
             fireEvent.change(termField, { target: { value: "w23" } })
             fireEvent.change(startField, { target: { value: "2024-01-10T00:00" } })
             fireEvent.change(endField, { target: { value: "2023-03-12T00:00" } })
@@ -187,7 +194,9 @@ describe("CoursesEditPage tests", () => {
             expect(mockNavigate).toBeCalledWith({ "to": "/courses" });
 
             expect(axiosMock.history.put.length).toBe(1); // times called
-            expect(axiosMock.history.put[0].params).toEqual({ id: 17, name: "CS 148", endDate: "2023-03-12T00:00", startDate: "2024-01-10T00:00", school: "University of Minnesota", term: "w23", githubOrg: "ucsb-cs156-w23" });
+            expect(axiosMock.history.put[0].params).toEqual({ id: 17, name: "CS 148", endDate: "2023-03-12T00:00", startDate: "2024-01-10T00:00", schoolAbbrev: "umn", term: "w23", githubOrg: "ucsb-cs156-w23",
+
+            });
 
         });
 

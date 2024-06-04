@@ -52,7 +52,7 @@
               },
               {
                 "column": {
-                  "name": "SCHOOL",
+                  "name": "SCHOOL_ABBREV",
                   "type": "VARCHAR(255)"
                 }
               },

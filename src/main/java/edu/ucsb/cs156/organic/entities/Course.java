@@ -17,10 +17,14 @@ public class Course {
   private long id;
 
   private String name;
-  private String school;
+  private String schoolAbbrev;
   private String term;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
   private String githubOrg;
+
+  @OneToOne
+  @JoinColumn(name = "schoolAbbrev", referencedColumnName = "abbrev", insertable = false, updatable = false)
+  private School school;
   
 }
