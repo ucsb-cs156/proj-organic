@@ -48,7 +48,7 @@ import React from "react";
          },
          {
              Header: 'School',
-             accessor: 'school',
+             accessor: d=> d.school.name,
          },
          {
              Header: 'Term',

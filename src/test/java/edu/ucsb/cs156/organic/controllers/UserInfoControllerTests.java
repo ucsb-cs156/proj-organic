@@ -1,5 +1,6 @@
 package edu.ucsb.cs156.organic.controllers;
 
+import edu.ucsb.cs156.organic.entities.School;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -121,24 +122,34 @@ public class UserInfoControllerTests extends ControllerTestCase {
     CurrentUser currentUser = currentUserService.getCurrentUser();
     User user = currentUser.getUser();
 
+    School school = School.builder()
+            .abbrev("UCSB")
+            .name("UC Santa Barbara")
+            .termRegex("[WSMF]\\d\\d")
+            .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
+            .termError("Quarter must be entered in the correct format")
+            .build();
+
     Course course1 = Course.builder()
         .id(1L)
         .name("CS156")
-        .school("UCSB")
+        .school(school)
         .term("F23")
         .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
         .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
         .githubOrg("ucsb-cs156-f23")
+        .schoolAbbrev(school.getAbbrev())
         .build();
 
     Course course2 = Course.builder()
         .id(1L)
         .name("CS148")
-        .school("UCSB")
+        .school(school)
         .term("S24")
         .startDate(LocalDateTime.parse("2024-01-01T00:00:00"))
         .endDate(LocalDateTime.parse("2024-03-31T00:00:00"))
         .githubOrg("ucsb-cs148-w24")
+        .schoolAbbrev(school.getAbbrev())
         .build();
 
      ArrayList<Course> expectedCourses = new ArrayList<>();
