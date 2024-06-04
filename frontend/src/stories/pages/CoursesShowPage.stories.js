@@ -1,19 +1,18 @@
-
 import React from 'react';
 import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
-import { coursesFixtures } from 'fixtures/coursesFixtures';
+import { coursesFixtures } from "fixtures/coursesFixtures";
 import { rest } from "msw";
 
-import CoursesEditPage from 'main/pages/CoursesEditPage';
-import {schoolsFixtures} from "../../fixtures/schoolsFixtures";
+import CoursesShowPage from "main/pages/CoursesShowPage";
+import {studentsFixtures} from "../../fixtures/studentsFixtures";
 
 export default {
-    title: 'pages/Courses/CoursesEditPage',
-    component: CoursesEditPage
+    title: 'pages/Courses/CoursesShowPage',
+    component: CoursesShowPage
 };
 
-const Template = () => <CoursesEditPage storybook={true}/>;
+const Template = () => <CoursesShowPage/>;
 
 export const Default = Template.bind({});
 Default.parameters = {
@@ -24,18 +23,15 @@ Default.parameters = {
         rest.get('/api/systemInfo', (_req, res, ctx) => {
             return res(ctx.json(systemInfoFixtures.showingNeither));
         }),
-        rest.get('/api/courses', (_req, res, ctx) => {
+        rest.get('/api/courses/get', (_req, res, ctx) => {
             return res(ctx.json(coursesFixtures.threeCourses[0]));
         }),
-        rest.get('/api/schools/all', (_req, res, ctx) => {
-            return res(ctx.json(schoolsFixtures.threeSchools));
-        }),
-        rest.put('/api/courses', async (req, res, ctx) => {
-            var reqBody = await req.text();
-            window.alert("PUT: " + req.url + " and body: " + reqBody);
+        rest.post('/api/students/upload/egrades', (req, res, ctx) => {
+            window.alert("POST: " + JSON.stringify(req.url));
             return res(ctx.status(200),ctx.json({}));
+        }),
+        rest.get('/api/students/all', (_req, res, ctx) => {
+            return res(ctx.json(studentsFixtures.threeStudent));
         }),
     ],
 }
-
-

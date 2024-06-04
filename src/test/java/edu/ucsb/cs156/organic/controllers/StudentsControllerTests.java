@@ -25,6 +25,7 @@ import java.util.Optional;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.ucsb.cs156.organic.entities.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +46,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-import edu.ucsb.cs156.organic.entities.Course;
-import edu.ucsb.cs156.organic.entities.Staff;
-import edu.ucsb.cs156.organic.entities.Student;
-import edu.ucsb.cs156.organic.entities.User;
 import edu.ucsb.cs156.organic.entities.jobs.Job;
 import edu.ucsb.cs156.organic.repositories.CourseRepository;
 import edu.ucsb.cs156.organic.repositories.StaffRepository;
@@ -84,24 +81,34 @@ public class StudentsControllerTests extends ControllerTestCase {
         @Autowired
         ObjectMapper objectMapper;
 
+        School school = School.builder()
+                .abbrev("UCSB")
+                .name("UC Santa Barbara")
+                .termRegex("[WSMF]\\d\\d")
+                .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
+                .termError("Quarter must be entered in the correct format")
+                .build();
+
         Course course1 = Course.builder()
                         .id(1L)
                         .name("CS156")
-                        .school("UCSB")
+                        .school(school)
                         .term("F23")
                         .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                         .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                         .githubOrg("ucsb-cs156-f23")
+                        .schoolAbbrev(school.getAbbrev())
                         .build();
 
         Course course2 = Course.builder()
                         .id(1L)
                         .name("CS148")
-                        .school("UCSB")
+                        .school(school)
                         .term("S24")
                         .startDate(LocalDateTime.parse("2024-01-01T00:00:00"))
                         .endDate(LocalDateTime.parse("2024-03-31T00:00:00"))
                         .githubOrg("ucsb-cs148-w24")
+                        .schoolAbbrev(school.getAbbrev())
                         .build();
 
         Student student1 = Student.builder()
