@@ -18,9 +18,6 @@ import CoursesStaffPage from "main/pages/CoursesStaffPage";
 
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
 import SchoolIndexPage from "main/pages/SchoolIndexPage";
-
-import SchoolCreatePage from "main/pages/SchoolCreatePage";
-import SchoolIndexPage from "main/pages/SchoolIndexPage";
 import SchoolEditPage from "main/pages/SchoolEditPage";
 
 
@@ -55,13 +52,6 @@ function App() {
       <Route path="/courses/:id/staff" element={<CoursesStaffPage />} />
       <Route path="/courses/addStaff" element={<StaffCreatePage />} />
       <Route path="/courses/:id" element={<CoursesShowPage />} />
-    </>
-  ) : null;
-
-  const schoolRoutes = (hasRole(currentUser, "ROLE_ADMIN") || hasRole(currentUser, "ROLE_INSTRUCTOR")) ? (
-    <>
-      <Route path="/schools/create" element={<SchoolCreatePage />} />
-      <Route path="/schools" element={<SchoolIndexPage />} />
     </>
   ) : null;
 
