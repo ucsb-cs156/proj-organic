@@ -62,11 +62,7 @@ describe("SchoolCreatePage tests", () => {
             name: "UC Santa Barbara",
             termRegex: "[WSMF]\\d\\d",
             termDescription: "quarter",
-<<<<<<< Sreeganesh-SchoolsCRUD-UIImprovements
             termError: ""
-=======
-            termError: "test"
->>>>>>> main
         };
 
         axiosMock.onPost("/api/schools/post").reply(200, school);
@@ -86,10 +82,6 @@ describe("SchoolCreatePage tests", () => {
         const nameField = screen.getByTestId("SchoolForm-name");
         const termRegexField = screen.getByTestId("SchoolForm-termRegex");
         const termDescriptionField = screen.getByTestId("SchoolForm-termDescription");
-<<<<<<< Sreeganesh-SchoolsCRUD-UIImprovements
-=======
-        const termErrorField = screen.getByTestId("SchoolForm-termError");
->>>>>>> main
         const submitButton = screen.getByTestId("SchoolForm-submit");
 
 
@@ -97,10 +89,6 @@ describe("SchoolCreatePage tests", () => {
         fireEvent.change(nameField, { target: { value: 'UC Santa Barbara' } });
         fireEvent.change(termRegexField, { target: { value: '[WSMF]\\d\\d' } });
         fireEvent.change(termDescriptionField, { target: { value: 'quarter' } });
-<<<<<<< Sreeganesh-SchoolsCRUD-UIImprovements
-=======
-        fireEvent.change(termErrorField, { target: { value: 'test' } });
->>>>>>> main
 
 
         fireEvent.click(submitButton);
@@ -113,11 +101,8 @@ describe("SchoolCreatePage tests", () => {
                 "name": "UC Santa Barbara",
                 "termRegex": "[WSMF]\\d\\d",
                 "termDescription": "quarter",
-<<<<<<< Sreeganesh-SchoolsCRUD-UIImprovements
                 "termError": ""
-=======
-                "termError": "test"
->>>>>>> main
+
         }));
 
         expect(mockToast).toBeCalledWith("New school created - id: ucsb");
