@@ -6,7 +6,7 @@ import { Button } from 'react-bootstrap';
 import { useCurrentUser, hasRole} from 'main/utils/currentUser';
 import { useParams } from "react-router-dom";
 
-export default function CourseIndexPage() {
+export default function CoursesStaffPage() {
 
   const { data: currentUser } = useCurrentUser();
   let { id } = useParams();
@@ -15,7 +15,7 @@ export default function CourseIndexPage() {
       return (
           <Button
               variant="primary"
-              href="/courses/addStaff"
+              href={"/courses/" + id + "/addStaff"}
               style={{ float: "right" }}
           >
               Add Staff Member
