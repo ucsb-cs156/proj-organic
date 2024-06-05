@@ -126,7 +126,6 @@ describe("SchoolEditPage tests", () => {
             expect(termRegexField).toHaveValue("[wsmf]\\d\\d");
             expect(termDescriptionField).toBeInTheDocument();
             expect(termDescriptionField).toHaveValue("semester");
-
             expect(submitButton).toHaveTextContent("Update");
 
             fireEvent.change(nameField, { target: { value: "Edited UC Santa Barbara" } });
@@ -174,6 +173,7 @@ describe("SchoolEditPage tests", () => {
             fireEvent.change(nameField, { target: { value: "Edited UC Santa Barbara" } });
             fireEvent.change(termRegexField, { target: { value: "[wsmf]\\d\\d" } });
             fireEvent.change(termDescriptionField, { target: { value: "quarter" } });
+
             fireEvent.click(submitButton);
 
             await waitFor(() => expect(mockToast).toBeCalled());
