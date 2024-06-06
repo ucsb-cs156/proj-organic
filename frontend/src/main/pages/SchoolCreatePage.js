@@ -10,7 +10,13 @@ export default function SchoolCreatePage({storybook=false}) {
     const objectToAxiosParams = (school) => ({
         url: "/api/schools/post",
         method: "POST",
-        data: school
+        data: {
+        abbrev: school.abbrev,
+        name: school.name,
+        termRegex: school.termRegex,
+        termDescription: school.termDescription,
+        termError: ""
+        }
     });
 
     const onSuccess = (school) => {
