@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 
 function DropdownOption({ label, isSelected, onClickFunc, testid, rawKey, isGhost }) {
@@ -72,23 +72,31 @@ export default function OurAddDropdownForm({
     });
     // Stryker restore all
 
-    // if there is already a selection as the form is created, filter the content so that the dropdown will 
-    // only show options that have a matching prefix
-    // if basis is undefined, then all content should be render
-    const fixedContent = [];
-    for(let i = 0; i < content.length; ++i){
-        if(!autocomplete || !basis || content[i].label.startsWith(basis.label)){
-            fixedContent.push(content[i]);
+    const [filteredContent, changeFilteredContent] = useState(content);
+
+    // Stryker disable all
+    useEffect(() => {
+        const fixedContent = [];
+        for (let i = 0; i < content.length; ++i) {
+            if (!autocomplete || !basis || content[i].label.startsWith(basis.label)) {
+                fixedContent.push(content[i]);
+            }
         }
-    }
+        changeFilteredContent(fixedContent);
+        if(fixedContent.length > 0){
+            changeGhostContent(fixedContent[0]);
+        }
+    }, [content, basis, autocomplete]);
+    // Stryker restore all
+
     const [selectedContent, changeSelectedContent] = useState(basis);
     const [userTypedContent, changeUserTypContent] = useState(basis !== null ? basis.label : "");
     const [showingDropdown, changeShowingDropdown] = useState(false);
-    const [filteredContent, changeFilteredContent] = useState(fixedContent);
     const [validationStyle, changeValidationStyle] = useState(autocomplete ? {} : {cursor: 'pointer', 'caretColor': 'transparent'});
     // the user can press enter to autocomplete
     // Stryker disable next-line all : there might be a good test for this but since showingDropdown doesn't render anything on fixedContent.length === 0 this might be harder to test
-    const [ghostContent, changeGhostContent] = useState(fixedContent.length > 0 ? fixedContent[0] : null);
+    const [ghostContent, changeGhostContent] = useState(filteredContent.length > 0 ? filteredContent[0] : null);
+    
 
     // Stryker disable all
     const optionWrapperStyle = {
@@ -140,9 +148,7 @@ export default function OurAddDropdownForm({
         } else {
             changeValidationStyle({});
         }
-
         changeFilteredContent(prefixedContent);
-
     };
 
     const internalOnChange = (event) => {
@@ -157,10 +163,8 @@ export default function OurAddDropdownForm({
             onChangeFunc(event);
         }
     };
-
     const fillGhost = (event) => {
         if(event.key === "Enter" && ghostContent !== null) {
-            
             changeUserTypContent(ghostContent.label);
             filterPrefix(ghostContent.label);
             changeShowingDropdown(false);
@@ -168,7 +172,6 @@ export default function OurAddDropdownForm({
             changeShowingDropdown(true);
         }
     };
-
     return (
         <div>
             {label}
@@ -206,10 +209,7 @@ export default function OurAddDropdownForm({
                                     <DropdownOption
                                         testid={`${testId}-dropdown-form-option-${count++}`}
                                         label={innerLabel}
-                                        isSelected={
-                                            selectedContent &&
-                                            key === selectedContent.key
-                                        }
+                                        isSelected={selectedContent && key === selectedContent.key}
                                         isGhost={autocomplete ? (key === ghostContent.key) : false}
                                         rawKey = {key}
                                         // Stryker disable next-line all
