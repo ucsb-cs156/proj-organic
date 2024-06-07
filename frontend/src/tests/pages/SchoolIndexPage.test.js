@@ -110,7 +110,7 @@ describe("SchoolIndexPage tests", () => {
         setupAdminUser();
         const queryClient = new QueryClient();
         axiosMock.onGet("/api/schools/all").reply(200, schoolsFixtures.threeSchools);
-        axiosMock.onDelete("/api/schools/delete").reply(200, "School with id ucsb was deleted");
+        axiosMock.onDelete("/api/schools").reply(200, "School with abbrev ucsb was deleted");
 
         // act
         render(
@@ -133,7 +133,7 @@ describe("SchoolIndexPage tests", () => {
         fireEvent.click(deleteButton);
 
         // assert
-        await waitFor(() => { expect(mockToast).toBeCalledWith("School with id ucsb was deleted") });
+        await waitFor(() => { expect(mockToast).toBeCalledWith("School with abbrev ucsb was deleted") });
 
     });
 

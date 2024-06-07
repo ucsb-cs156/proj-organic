@@ -25,6 +25,8 @@ import java.util.Optional;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.ucsb.cs156.organic.entities.School;
+import edu.ucsb.cs156.organic.repositories.SchoolRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,6 @@ import edu.ucsb.cs156.organic.repositories.UserRepository;
 import edu.ucsb.cs156.organic.repositories.jobs.JobsRepository;
 import edu.ucsb.cs156.organic.services.jobs.JobService;
 import edu.ucsb.cs156.organic.services.CurrentUserService;
-import liquibase.pro.packaged.W;
 import lombok.With;
 import lombok.extern.slf4j.Slf4j;
 
@@ -78,30 +79,42 @@ public class CoursesControllerTests extends ControllerTestCase {
     @MockBean
     StaffRepository courseStaffRepository;
 
+    @MockBean
+    SchoolRepository schoolRepository;
+
     @Autowired
     CurrentUserService userService;
 
     @Autowired
     ObjectMapper objectMapper;
 
+    School school = School.builder()
+            .abbrev("UCSB")
+            .name("UC Santa Barbara")
+            .termRegex("[WSMF]\\d\\d")
+            .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
+            .termError("Quarter must be entered in the correct format")
+            .build();
     Course course1 = Course.builder()
             .id(1L)
             .name("CS156")
-            .school("UCSB")
+            .schoolAbbrev(school.getAbbrev())
             .term("F23")
             .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
             .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
             .githubOrg("ucsb-cs156-f23")
+            .school(school)
             .build();
 
     Course course2 = Course.builder()
             .id(1L)
             .name("CS148")
-            .school("UCSB")
+            .schoolAbbrev(school.getAbbrev())
             .term("S24")
             .startDate(LocalDateTime.parse("2024-01-01T00:00:00"))
             .endDate(LocalDateTime.parse("2024-03-31T00:00:00"))
             .githubOrg("ucsb-cs148-w24")
+            .school(school)
             .build();
 
     @WithMockUser(roles = { "ADMIN" })
@@ -249,29 +262,32 @@ public class CoursesControllerTests extends ControllerTestCase {
         // arrange
 
         Course courseBefore = Course.builder()
-                .name("CS16")
-                .school("UCSB")
+                .name("CS156")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
-                .githubOrg("ucsb-cs16-f23")
+                .githubOrg("ucsb-cs156-f23")
+                .school(school)
                 .build();
 
         Course courseAfter = Course.builder()
-                .id(222L)
-                .name("CS16")
-                .school("UCSB")
-                .term("F23")
-                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
-                .githubOrg("ucsb-cs16-f23")
+                .id(1L)
+                .name("CS148")
+                .schoolAbbrev(school.getAbbrev())
+                .term("S24")
+                .startDate(LocalDateTime.parse("2024-01-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2024-03-31T00:00:00"))
+                .githubOrg("ucsb-cs148-w24")
+                .school(school)
                 .build();
 
+        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.of(school));
         when(courseRepository.save(eq(courseBefore))).thenReturn(courseAfter);
 
         // act
         MvcResult response = mockMvc.perform(
-                post("/api/courses/post?name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                post("/api/courses/post?name=CS156&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs156-f23")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -288,29 +304,31 @@ public class CoursesControllerTests extends ControllerTestCase {
         // arrange
 
         Course courseBefore = Course.builder()
-                .name("CS16")
-                .school("UCSB")
+                .name("CS156")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
-                .githubOrg("ucsb-cs16-f23")
+                .githubOrg("ucsb-cs156-f23")
+                .school(school)
                 .build();
 
         Course courseAfter = Course.builder()
-                .id(222L)
-                .name("CS16")
-                .school("UCSB")
-                .term("F23")
-                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
-                .githubOrg("ucsb-cs16-f23")
+                .id(1L)
+                .name("CS148")
+                .schoolAbbrev(school.getAbbrev())
+                .term("S24")
+                .startDate(LocalDateTime.parse("2024-01-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2024-03-31T00:00:00"))
+                .githubOrg("ucsb-cs148-w24")
+                .school(school)
                 .build();
-
+        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.of(school));
         when(courseRepository.save(eq(courseBefore))).thenReturn(courseAfter);
 
         // act
         MvcResult response = mockMvc.perform(
-                post("/api/courses/post?name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                post("/api/courses/post?name=CS156&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs156-f23")
                         .with(csrf()))
                 .andExpect(status().isOk()).andReturn();
 
@@ -328,32 +346,69 @@ public class CoursesControllerTests extends ControllerTestCase {
         // arrange
 
         Course courseBefore = Course.builder()
-                .name("CS16")
-                .school("UCSB")
+                .name("CS156")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
-                .githubOrg("ucsb-cs16-f23")
+                .githubOrg("ucsb-cs156-f23")
+                .school(school)
                 .build();
 
         Course courseAfter = Course.builder()
-                .id(222L)
-                .name("CS16")
-                .school("UCSB")
-                .term("F23")
-                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
-                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
-                .githubOrg("ucsb-cs16-f23")
+                .id(1L)
+                .name("CS148")
+                .schoolAbbrev(school.getAbbrev())
+                .term("S24")
+                .startDate(LocalDateTime.parse("2024-01-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2024-03-31T00:00:00"))
+                .githubOrg("ucsb-cs148-w24")
+                .school(school)
                 .build();
 
         when(courseRepository.save(eq(courseBefore))).thenReturn(courseAfter);
 
         // act
         MvcResult response = mockMvc.perform(
-                post("/api/courses/post?name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                post("/api/courses/post?name=CS16&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                         .with(csrf()))
                 .andExpect(status().isForbidden()).andReturn();
     
+    }
+
+    @WithMockUser(roles = {"ADMIN", "USER"})
+    @Test
+    public void cannot_create_with_nonexistent_school() throws Exception{
+        Course courseBefore = Course.builder()
+                .name("CS32")
+                .schoolAbbrev(school.getAbbrev())
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs32-f23")
+                .school(school)
+                .build();
+        Course courseAfter = Course.builder()
+                .id(1L)
+                .name("CS32")
+                .schoolAbbrev(school.getAbbrev())
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs32-f23")
+                .school(school)
+                .build();
+
+        when(courseRepository.save(eq(courseBefore))).thenReturn(courseAfter);
+        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.empty());
+        MvcResult response = mockMvc.perform(
+                        post("/api/courses/post?name=CS32&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs32-f23")
+                                .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        Map<String,String> responseMap = mapper.readValue(response.getResponse().getContentAsString(), new TypeReference<Map<String,String>>(){});
+        Map<String,String> expectedMap = Map.of("message", "School with id UCSB not found", "type", "EntityNotFoundException");
+        assertEquals(expectedMap, responseMap);
     }
 
     @WithMockUser(roles = { "ADMIN", "USER" })
@@ -560,7 +615,7 @@ public class CoursesControllerTests extends ControllerTestCase {
         // act
 
         MvcResult response = mockMvc.perform(
-                put("/api/courses/update?id=42&name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                put("/api/courses/update?id=42&name=CS16&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                                 .with(csrf()))
                 .andExpect(status().isNotFound()).andReturn();
         // assert
@@ -578,14 +633,23 @@ public class CoursesControllerTests extends ControllerTestCase {
         Course courseBefore = course1;
 
         Course courseAfter = course2;
-        courseAfter.setSchool("UCSD");
+        School ucsd = School.builder()
+                .abbrev("UCSD")
+                .name("UC San Diego")
+                .termRegex("[WSMF]\\d\\d")
+                .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
+                .termError("Quarter must be entered in the correct format")
+                .build();
+        courseAfter.setSchoolAbbrev(ucsd.getAbbrev());
+        courseAfter.setSchool(ucsd);
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        when(schoolRepository.findById(eq(ucsd.getAbbrev()))).thenReturn(Optional.of(ucsd));
         when(courseRepository.save(eq(courseAfter))).thenReturn(courseAfter);
 
         String urlTemplate = String.format(
-                "/api/courses/update?id=%d&name=%s&school=%s&term=%s&startDate=%s&endDate=%s&githubOrg=%s",
-                courseAfter.getId(), courseAfter.getName(), courseAfter.getSchool(), courseAfter.getTerm(),
+                "/api/courses/update?id=%d&name=%s&schoolAbbrev=%s&term=%s&startDate=%s&endDate=%s&githubOrg=%s",
+                courseAfter.getId(), courseAfter.getName(), courseAfter.getSchoolAbbrev(), courseAfter.getTerm(),
                 courseAfter.getStartDate().toString(), courseAfter.getEndDate().toString(), courseAfter.getGithubOrg());
         MvcResult response = mockMvc.perform(
                 put(urlTemplate)
@@ -611,9 +675,18 @@ public class CoursesControllerTests extends ControllerTestCase {
         Course courseBefore = course1;
 
         Course courseAfter = course2;
-        courseAfter.setSchool("UCSD");
+        School ucsd = School.builder()
+                .abbrev("UCSD")
+                .name("UC San Diego")
+                .termRegex("[WSMF]\\d\\d")
+                .termDescription("Enter quarter, e.g. F23, W24, S24, M24")
+                .termError("Quarter must be entered in the correct format")
+                .build();
+        courseAfter.setSchoolAbbrev(ucsd.getAbbrev());
+        courseAfter.setSchool(ucsd);
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        when(schoolRepository.findById(eq(ucsd.getAbbrev()))).thenReturn(Optional.of(ucsd));
         when(courseRepository.save(eq(courseAfter))).thenReturn(courseAfter);
 
         // get current user
@@ -627,8 +700,8 @@ public class CoursesControllerTests extends ControllerTestCase {
         // act
         // get urlTemplate from courseAfter using string interpolation
         String urlTemplate = String.format(
-                "/api/courses/update?id=%d&name=%s&school=%s&term=%s&startDate=%s&endDate=%s&githubOrg=%s",
-                courseAfter.getId(), courseAfter.getName(), courseAfter.getSchool(), courseAfter.getTerm(),
+                "/api/courses/update?id=%d&name=%s&schoolAbbrev=%s&term=%s&startDate=%s&endDate=%s&githubOrg=%s",
+                courseAfter.getId(), courseAfter.getName(), courseAfter.getSchoolAbbrev(), courseAfter.getTerm(),
                 courseAfter.getStartDate().toString(), courseAfter.getEndDate().toString(), courseAfter.getGithubOrg());
         MvcResult response = mockMvc.perform(
                 put(urlTemplate)
@@ -651,21 +724,23 @@ public class CoursesControllerTests extends ControllerTestCase {
         Course courseBefore = Course.builder()
                 .id(1L)
                 .name("CS16")
-                .school("UCSB")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
+                .school(school)
                 .build();
 
         Course courseAfter = Course.builder()
                 .id(1L)
                 .name("CS16")
-                .school("UCSB")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
+                .school(school)
                 .build();
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
@@ -680,7 +755,7 @@ public class CoursesControllerTests extends ControllerTestCase {
                 .thenReturn(notStaff);
         // act
         MvcResult response = mockMvc.perform(
-                put("/api/courses/update?id=1&name=CS16&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
+                put("/api/courses/update?id=1&name=CS16&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs16-f23")
                         .with(csrf()))
                 .andExpect(status().isForbidden()).andReturn();
 
@@ -705,21 +780,23 @@ public class CoursesControllerTests extends ControllerTestCase {
         Course courseBefore = Course.builder()
                 .id(1L)
                 .name("CS16")
-                .school("UCSB")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
+                .school(school)
                 .build();
 
         Course courseAfter = Course.builder()
                 .id(1L)
                 .name("CS32")
-                .school("UCSB")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs32-f23")
+                .school(school)
                 .build();
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
@@ -727,7 +804,7 @@ public class CoursesControllerTests extends ControllerTestCase {
 
         // act
         MvcResult response = mockMvc.perform(
-                put("/api/courses/update?id=1&name=CS32&school=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs32-f23")
+                put("/api/courses/update?id=1&name=CS32&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs32-f23")
                         .with(csrf()))
                 .andExpect(status().isForbidden()).andReturn();
 
@@ -738,8 +815,44 @@ public class CoursesControllerTests extends ControllerTestCase {
         Map<String, String> responseMap = mapper.readValue(response.getResponse().getContentAsString(),
                 new TypeReference<Map<String, String>>() {
                 });
-        Map<String, String> expectedMap = Map.of("message", "Access is denied", "type",
+        Map<String, String> expectedMap = Map.of("message", "Access Denied", "type",
                 "AccessDeniedException");
+        assertEquals(expectedMap, responseMap);
+    }
+
+    @WithMockUser(roles = {"ADMIN", "USER"})
+    @Test
+    public void cannot_edit_with_nonexistent_school() throws Exception{
+        Course courseBefore = Course.builder()
+                .id(1L)
+                .name("CS16")
+                .schoolAbbrev(school.getAbbrev())
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs16-f23")
+                .school(school)
+                .build();
+
+        Course courseAfter = Course.builder()
+                .id(1L)
+                .name("CS32")
+                .schoolAbbrev(school.getAbbrev())
+                .term("F23")
+                .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
+                .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
+                .githubOrg("ucsb-cs32-f23")
+                .school(school)
+                .build();
+        when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
+        when(schoolRepository.findById(eq(school.getAbbrev()))).thenReturn(Optional.empty());
+        MvcResult response = mockMvc.perform(
+                        put("/api/courses/update?id=1&name=CS32&schoolAbbrev=UCSB&term=F23&startDate=2023-09-01T00:00:00&endDate=2023-12-31T00:00:00&githubOrg=ucsb-cs32-f23")
+                                .with(csrf()))
+                .andExpect(status().isNotFound()).andReturn();
+
+        Map<String,String> responseMap = mapper.readValue(response.getResponse().getContentAsString(), new TypeReference<Map<String,String>>(){});
+        Map<String,String> expectedMap = Map.of("message", "School with id UCSB not found", "type", "EntityNotFoundException");
         assertEquals(expectedMap, responseMap);
     }
 
@@ -772,11 +885,12 @@ public class CoursesControllerTests extends ControllerTestCase {
         Course courseBefore = Course.builder()
                 .id(1L)
                 .name("CS16")
-                .school("UCSB")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
+                .school(school)
                 .build();
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
@@ -806,11 +920,12 @@ public class CoursesControllerTests extends ControllerTestCase {
         Course courseBefore = Course.builder()
                 .id(1L)
                 .name("CS16")
-                .school("UCSB")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
+                .school(school)
                 .build();
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
@@ -844,11 +959,12 @@ public class CoursesControllerTests extends ControllerTestCase {
         Course courseBefore = Course.builder()
                 .id(1L)
                 .name("CS16")
-                .school("UCSB")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
+                .school(school)
                 .build();
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
@@ -887,11 +1003,12 @@ public class CoursesControllerTests extends ControllerTestCase {
         Course courseBefore = Course.builder()
                 .id(1L)
                 .name("CS16")
-                .school("UCSB")
+                .schoolAbbrev(school.getAbbrev())
                 .term("F23")
                 .startDate(LocalDateTime.parse("2023-09-01T00:00:00"))
                 .endDate(LocalDateTime.parse("2023-12-31T00:00:00"))
                 .githubOrg("ucsb-cs16-f23")
+                .school(school)
                 .build();
 
         when(courseRepository.findById(eq(courseBefore.getId()))).thenReturn(Optional.of(courseBefore));
@@ -909,7 +1026,7 @@ public class CoursesControllerTests extends ControllerTestCase {
         Map<String, String> responseMap = mapper.readValue(response.getResponse().getContentAsString(),
                 new TypeReference<Map<String, String>>() {
                 });
-        Map<String, String> expectedMap = Map.of("message", "Access is denied", "type",
+        Map<String, String> expectedMap = Map.of("message", "Access Denied", "type",
                 "AccessDeniedException");
         assertEquals(expectedMap, responseMap);
     }
