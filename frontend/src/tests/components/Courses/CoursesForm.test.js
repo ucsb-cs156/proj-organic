@@ -3,6 +3,10 @@ import CoursesForm from "main/components/Courses/CoursesForm";
 import { coursesFixtures } from "fixtures/coursesFixtures";
 import { BrowserRouter as Router } from "react-router-dom";
 import { enableEndDateValidation } from "main/components/Courses/dateValidation"; // Import the function to test
+import axios from "axios";
+import AxiosMockAdapter from "axios-mock-adapter";
+import { schoolsFixtures } from "fixtures/schoolsFixtures";
+
 
 const mockedNavigate = jest.fn();
 
@@ -17,6 +21,24 @@ jest.mock("main/components/Courses/dateValidation", () => ({
   
 
 describe("CoursesForm tests", () => {
+    const axiosMock = new AxiosMockAdapter(axios);
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        axiosMock.reset();
+        axiosMock.resetHistory();
+        axiosMock.onGet("/api/schools/all").reply(200, schoolsFixtures.threeSchools);
+
+    });
+
+    //newly added for mutation
+    test('initializes with an empty array for school options', () => {
+        render(<CoursesForm initialContents={{}} submitAction={jest.fn()} />);
+      
+        // Check that the initial state does not contain "Stryker was here"
+        const listItem = screen.queryByText('Stryker was here');
+        expect(listItem).not.toBeInTheDocument();
+    });
 
     test("calls enableEndDateValidation on mount", () => {
         render(<CoursesForm />);
@@ -70,7 +92,8 @@ describe("CoursesForm tests", () => {
         expect(screen.getByText(/GithubOrg is required./)).toBeInTheDocument();
     });
 
-    test("No Error messsages on good input", async () => {
+    test("No Error messages on good input", async () => {
+
 
         const mockSubmitAction = jest.fn();
 
@@ -91,7 +114,7 @@ describe("CoursesForm tests", () => {
         const submitButton = screen.getByTestId("CoursesForm-submit");
 
         fireEvent.change(nameField, { target: { value: "CMPSC 156" } });
-        fireEvent.change(schoolField, { target: { value: 'ucsb' } });
+        fireEvent.change(schoolField, { target: { value: 'UC Santa Barbara' } });
         fireEvent.change(termField, { target: { value: 'f23' } });
         fireEvent.change(startDateField, { target: { value: '2022-01-02T12:00' } });
         fireEvent.change(endDateField, { target: { value: '2022-02-02T12:00' } });
@@ -122,4 +145,42 @@ describe("CoursesForm tests", () => {
 
     });
 
+    test("makes API call and sets school options on mount", async () => {
+        render(
+            <Router>
+                <CoursesForm />
+            </Router>
+        );
+
+        // Check if the axios call was made
+        await waitFor(() => expect(axiosMock.history.get.length).toBe(1));
+
+        // Check if the school options are set correctly
+        await waitFor(() => {
+            expect(screen.getByTestId("CoursesForm-school")).toHaveTextContent("UC Santa Barbara");
+        });
+    });
+
+    // Test to ensure useEffect dependency array is correctly handled
+    test('useEffect dependency array is empty and runs only once', async () => {
+        const { rerender } = render(
+            <Router>
+                <CoursesForm />
+            </Router>
+        );
+
+        // First render: should call API and set school options
+        await waitFor(() => expect(axiosMock.history.get.length).toBe(1));
+
+        // Re-render with the same component: should not call API again
+        rerender(
+            <Router>
+                <CoursesForm />
+            </Router>
+        );
+
+        // Ensure no additional API calls are made
+        expect(axiosMock.history.get.length).toBe(1);
+    });
+    
 });
