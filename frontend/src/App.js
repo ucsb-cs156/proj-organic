@@ -13,12 +13,14 @@ import AdminUsersPage from "main/pages/AdminUsersPage";
 import AdminJobsPage from "main/pages/AdminJobsPage";
 import SchoolIndexPage from "main/pages/SchoolIndexPage";
 
+
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
 import SchoolEditPage from "main/pages/SchoolEditPage";
 
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
 import CourseIndexPage from "main/pages/CourseIndexPage";
 import CoursesShowPage from "main/pages/CoursesShowPage";
+
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import NotFoundPage from "main/pages/NotFoundPage";
@@ -102,7 +104,6 @@ function App() {
     </BrowserRouter>
   );
 }
-
 
 
 export default App;
