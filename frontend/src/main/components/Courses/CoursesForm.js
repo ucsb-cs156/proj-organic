@@ -2,13 +2,28 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { enableEndDateValidation } from './dateValidation'; // Import the JavaScript file
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
-function CoursesForm({ initialContents, submitAction, buttonLabel = "Create" }) {
+import axios from 'axios';
+
+
+
+function CoursesForm({ initialContents, submitAction, buttonLabel = "Create"}) { // schooloptions = drop down menu items
+    const [schoolOptions, setSchoolOptions] = useState([]);
     useEffect(() => {
         enableEndDateValidation(); // Call the function to enable end date validation
-    },); // Run only once after component mounts
+        axios.get('/api/schools/all')
+            .then((data) => {
+                return data.data;
+            })
+            .then((jsonData) => {
+                const nameArray = jsonData.map(item => item.name);
+                setSchoolOptions(nameArray);
+            })
+    }, 
     // Stryker disable all
+    []); 
+    // Run only once after component mounts
     const {
         register,
         formState: { errors },
@@ -67,14 +82,26 @@ function CoursesForm({ initialContents, submitAction, buttonLabel = "Create" }) 
             <Row>
                 <Col>
                     <Form.Group className="mb-3" >
-                        <Form.Label htmlFor="school">School</Form.Label>
+                    <Form.Group controlId="school">
+                    <Form.Label>School</Form.Label>
                         <Form.Control
+                            as="select"
                             data-testid="CoursesForm-school"
-                            id="school"
-                            type="text"
                             isInvalid={Boolean(errors.school)}
                             {...register("school", { required: true })}
-                        />
+                        >
+                            <option value="">Select a school</option>
+                            {schoolOptions.map((school, index) => (
+                                <option 
+                                    key={index} 
+                                    value={school}
+                                    selected={school === initialContents?.school ? true : false}
+                                >
+                                    {school}
+                                </option>
+                            ))}
+                        </Form.Control>
+                    </Form.Group>
                         <Form.Control.Feedback type="invalid">
                             {errors.school && 'School is required. '}
                         </Form.Control.Feedback>
