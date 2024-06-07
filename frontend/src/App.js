@@ -15,6 +15,7 @@ import SchoolIndexPage from "main/pages/SchoolIndexPage";
 
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
 import SchoolEditPage from "main/pages/SchoolEditPage";
+
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
 import CourseIndexPage from "main/pages/CourseIndexPage";
 import CoursesShowPage from "main/pages/CoursesShowPage";
@@ -47,7 +48,7 @@ function App() {
       <Route path="/courses/edit/:id" element={<CoursesEditPage />} />
     </>
   ) : null;
-  
+
   const schoolRoutes =(hasRole(currentUser, "ROLE_ADMIN")) ? (
     <>
       <Route path="/schools/create" element={<SchoolCreatePage />} />
@@ -63,7 +64,6 @@ function App() {
 
   /*  Display the LoadingPage while awaiting currentUser 
       response to prevent the NotFoundPage from displaying */
-      
   const updateLastOnlineMutation = useBackendMutation(
     () => ({ method: 'POST', url: '/api/currentUser/last-online' }),
     {}
@@ -77,7 +77,6 @@ function App() {
         updatedOnlineOnMount.current = true;
         updateLastOnlineMutation.mutate();
       }
-      
       const interval = setInterval(() => {
         updateLastOnlineMutation.mutate();
       }, 60000);
@@ -103,6 +102,7 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 
 export default App;
