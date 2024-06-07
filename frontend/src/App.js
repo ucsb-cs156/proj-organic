@@ -13,6 +13,8 @@ import AdminUsersPage from "main/pages/AdminUsersPage";
 import AdminJobsPage from "main/pages/AdminJobsPage";
 import SchoolIndexPage from "main/pages/SchoolIndexPage";
 
+import SchoolCreatePage from "main/pages/SchoolCreatePage";
+import SchoolEditPage from "main/pages/SchoolEditPage";
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
 import CourseIndexPage from "main/pages/CourseIndexPage";
 import CoursesShowPage from "main/pages/CoursesShowPage";
@@ -43,6 +45,14 @@ function App() {
       <Route path="/courses/create" element={<CoursesCreatePage />} />
       <Route path="/courses" element={<CourseIndexPage />} />
       <Route path="/courses/edit/:id" element={<CoursesEditPage />} />
+    </>
+  ) : null;
+  
+  const schoolRoutes =(hasRole(currentUser, "ROLE_ADMIN")) ? (
+    <>
+      <Route path="/schools/create" element={<SchoolCreatePage />} />
+      <Route path="/schools" element={<SchoolIndexPage />} />
+      <Route path="/schools/edit/:abbrev" element={<SchoolEditPage />} />
       <Route path="/courses/:id" element={<CoursesShowPage />} />
     </>
   ) : null;
@@ -85,6 +95,7 @@ function App() {
           {homeRoute}
           {adminRoutes}
           {userRoutes}
+          {schoolRoutes}
           {courseRoutes}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
@@ -92,5 +103,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;
