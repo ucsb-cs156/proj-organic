@@ -16,7 +16,6 @@ import SchoolIndexPage from "main/pages/SchoolIndexPage";
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
 import SchoolEditPage from "main/pages/SchoolEditPage";
 
-
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
 import CourseIndexPage from "main/pages/CourseIndexPage";
 import CoursesShowPage from "main/pages/CoursesShowPage";
@@ -104,5 +103,6 @@ function App() {
   );
 }
 
-export default App;
 
+
+export default App;
