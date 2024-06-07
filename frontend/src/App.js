@@ -15,9 +15,9 @@ import SchoolIndexPage from "main/pages/SchoolIndexPage";
 
 import SchoolCreatePage from "main/pages/SchoolCreatePage";
 import SchoolEditPage from "main/pages/SchoolEditPage";
-
 import CoursesCreatePage from "main/pages/CoursesCreatePage";
 import CourseIndexPage from "main/pages/CourseIndexPage";
+import CoursesShowPage from "main/pages/CoursesShowPage";
 
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 import NotFoundPage from "main/pages/NotFoundPage";
@@ -53,6 +53,7 @@ function App() {
       <Route path="/schools/create" element={<SchoolCreatePage />} />
       <Route path="/schools" element={<SchoolIndexPage />} />
       <Route path="/schools/edit/:abbrev" element={<SchoolEditPage />} />
+      <Route path="/courses/:id" element={<CoursesShowPage />} />
     </>
   ) : null;
 
@@ -102,5 +103,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;
